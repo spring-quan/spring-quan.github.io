@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>Numpy学习笔记 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="这里是numpy学习笔记。">
+<meta name="keywords" content="Numpy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Numpy学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/02/27/Numpy学习笔记/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这里是numpy学习笔记。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-25T13:28:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Numpy学习笔记">
+<meta name="twitter:description" content="这里是numpy学习笔记。">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,216 +65,113 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/24/自然语言处理-会议列表/" class="archive-article-date">
-  <time datetime="2019-04-24T06:55:43.000Z" itemprop="datePublished">Apr 24</time>
+        <section id="main"><article id="post-Numpy学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/27/Numpy学习笔记/" class="article-date">
+  <time datetime="2019-02-27T12:33:15.000Z" itemprop="datePublished">2019-02-27</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/24/自然语言处理-会议列表/">自然语言处理---会议列表</a>
+    <h1 class="article-title" itemprop="name">
+      Numpy学习笔记
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/19/python读写csv文件/" class="archive-article-date">
-  <time datetime="2019-04-19T10:32:22.000Z" itemprop="datePublished">Apr 19</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/19/python读写csv文件/">python读写csv文件</a>
-    </h1>
-  
+        <p>这里是numpy学习笔记。</p>
+<a id="more"></a> 
+<h3 id="np-copy"><a href="#np-copy" class="headerlink" title="np.copy"></a>np.copy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.copy(a)</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/" class="archive-article-date">
-  <time datetime="2019-04-16T09:04:44.000Z" itemprop="datePublished">Apr 16</time>
-</a>
+<p>a为ndarray数组。<a href="https://het.as.utexas.edu/HET/Software/Numpy/reference/generated/numpy.copy.html" target="_blank" rel="noopener">np.copy</a>复制一个与a完全相同的dnarray数组。<br>来看看<code>=</code>与<code>np.copy</code>的区别。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; x = np.array([1,2,3])</span><br><span class="line">&gt;&gt; y = x</span><br><span class="line">&gt;&gt; z = x.copy(x)</span><br><span class="line">&gt;&gt; x[0] = 10</span><br><span class="line">&gt;&gt; x[0] == y[0]</span><br><span class="line">True</span><br><span class="line">&gt;&gt; x[0] == z[0]</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>=</code>，x与y共享同一内存，数据同步改变。一个改变另一个跟着改变。<br>对于<code>np.copy</code>,x与z在不同的内存，数据改变互不影响。</p>
+<h3 id="np-load与np-save"><a href="#np-load与np-save" class="headerlink" title="np.load与np.save"></a>np.load与np.save</h3><p>numpy可以读写磁盘上的二进制数据。为将ndarray数组对象保存到文件，引入了文件格式<code>npy</code>。数组对象ndarray以未压缩的原始二进制格式保存在扩展名为<code>.npy</code>的文件中。</p>
+<ul>
+<li><strong>np.save(file,array)</strong><ol>
+<li>作用： 将数组以二进制格式保存到扩展名为<code>npy</code>的文件中。</li>
+</ol>
+</li>
+<li><strong>np.load(file)</strong><ol>
+<li>作用： 从<code>.npy</code>文件中读取二进制数据还原为数组。<br>举个例子：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np </span><br><span class="line">a = arange(5)</span><br><span class="line">np.save(&apos;a.npy&apos;,a)</span><br><span class="line">b = np.load(&apos;a.npy&apos;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="np-full"><a href="#np-full" class="headerlink" title="np.full"></a><a href="https://het.as.utexas.edu/HET/Software/Numpy/reference/generated/numpy.full.html" target="_blank" rel="noopener">np.full</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.full(shape,fill_value,dtype)</span><br></pre></td></tr></table></figure>
+
+<p>作用： 返回一个 给定形状为<code>shape</code>，数据类型为<code>dtype</code>，全都由<code>fill_value</code>填充后的ndarray。</p>
+<h3 id="np-foat32"><a href="#np-foat32" class="headerlink" title="np.foat32"></a>np.foat32</h3><p><code>np.float32(x)</code><br>作用：变换数据类型为float32</p>
+<h3 id="pad"><a href="#pad" class="headerlink" title="pad()"></a>pad()</h3><p><strong>参数解释</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.pad(array, pad_width, mode, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入<ul>
+<li><code>array</code> 为待填充的数组</li>
+<li>pad_width 为((before_1,after_1),(before_2,after_2),….,(before_N,after_N))在每个维度前后填充的个数</li>
+<li>mode 常用<code>constant</code>,用常数填充。</li>
+</ul>
+</li>
+<li>返回值： 填充后的ndarray</li>
+</ul>
+<p>举个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np </span><br><span class="line">a = range(5)</span><br><span class="line"># 在一维数组前后分别填充2,3位数字；填充的数字分别为0,2</span><br><span class="line">ndarray = np.pad(a,(2,3),&apos;constant&apos;,constant_values=(0,2))</span><br><span class="line">print(a)</span><br><span class="line">print(ndarray)</span><br></pre></td></tr></table></figure>
+
+<p>执行结果为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[0, 1, 2, 3, 4]</span><br><span class="line">[0 0 0 1 2 3 4 2 2 2]</span><br></pre></td></tr></table></figure>
+
+<h3 id="np-random"><a href="#np-random" class="headerlink" title="np.random"></a>np.random</h3><h4 id="np-random-uniform"><a href="#np-random-uniform" class="headerlink" title="np.random.uniform"></a>np.random.uniform</h4><p><code>np.random.uniform(low = 0,high = 1,size = None)</code><br>作用： 生成一个形状为size的随机数矩阵，每个数从均匀分布的半开半闭区间[low,high)中抽样得到。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://docs.scipy.org/doc/numpy/index.html" target="_blank" rel="noopener">Numpy官方手册</a></li>
+</ul>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/">torch.cuda.is_available()返回False,但nvidia-smi正常</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/" class="archive-article-date">
-  <time datetime="2019-03-29T11:47:03.000Z" itemprop="datePublished">Mar 29</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/27/Numpy学习笔记/" data-id="cjxsm22n10000eo1j35xxjatj" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/23/条件随机场CRF/" class="archive-article-date">
-  <time datetime="2019-03-23T05:50:20.000Z" itemprop="datePublished">Mar 23</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/23/条件随机场CRF/">条件随机场CRF</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Numpy/">Numpy</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/05/pytorch学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          pytorch学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/16/2018-群星陨落/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2018-群星陨落</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/" class="archive-article-date">
-  <time datetime="2019-03-20T14:41:10.000Z" itemprop="datePublished">Mar 20</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/">pytorch实现基于LSTM的循环神经网络</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/20/pytorch实现Word-embedding/" class="archive-article-date">
-  <time datetime="2019-03-20T12:16:21.000Z" itemprop="datePublished">Mar 20</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/20/pytorch实现Word-embedding/">pytorch实现Word embedding</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/去新藏线上骑车/" class="archive-article-date">
-  <time datetime="2019-03-14T09:49:34.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/去新藏线上骑车/">去新藏线上骑车</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/11/sublime插件/" class="archive-article-date">
-  <time datetime="2019-03-11T11:41:12.000Z" itemprop="datePublished">Mar 11</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/sublime插件/">sublime插件</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/11/熵、交叉熵与KL散度/" class="archive-article-date">
-  <time datetime="2019-03-11T06:31:33.000Z" itemprop="datePublished">Mar 11</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/熵、交叉熵与KL散度/">熵、交叉熵与KL散度</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

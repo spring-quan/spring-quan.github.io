@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>python的一些函数 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="记录python的一些函数，实现某些功能。">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python的一些函数">
+<meta property="og:url" content="http://yoursite.com/2019/03/10/python的一些函数/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="记录python的一些函数，实现某些功能。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-07T07:07:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="python的一些函数">
+<meta name="twitter:description" content="记录python的一些函数，实现某些功能。">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,216 +65,91 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/24/自然语言处理-会议列表/" class="archive-article-date">
-  <time datetime="2019-04-24T06:55:43.000Z" itemprop="datePublished">Apr 24</time>
+        <section id="main"><article id="post-python的一些函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/10/python的一些函数/" class="article-date">
+  <time datetime="2019-03-10T08:12:51.000Z" itemprop="datePublished">2019-03-10</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/24/自然语言处理-会议列表/">自然语言处理---会议列表</a>
+    <h1 class="article-title" itemprop="name">
+      python的一些函数
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/19/python读写csv文件/" class="archive-article-date">
-  <time datetime="2019-04-19T10:32:22.000Z" itemprop="datePublished">Apr 19</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/19/python读写csv文件/">python读写csv文件</a>
-    </h1>
-  
+        <p>记录python的一些函数，实现某些功能。</p>
+<a id="more"></a> 
+<h2 id="求最大-小值的索引"><a href="#求最大-小值的索引" class="headerlink" title="求最大/小值的索引"></a>求最大/小值的索引</h2><h3 id="对于list"><a href="#对于list" class="headerlink" title="对于list"></a>对于list</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = range(100)</span><br><span class="line">np.random.shuffle(a)</span><br><span class="line">index_max = a.index(max(a)) #求最大值的索引</span><br><span class="line">index_min = a.index(min(a)) #求最小值的索引</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/" class="archive-article-date">
-  <time datetime="2019-04-16T09:04:44.000Z" itemprop="datePublished">Apr 16</time>
-</a>
+<h3 id="对于numpy的数组ndarray"><a href="#对于numpy的数组ndarray" class="headerlink" title="对于numpy的数组ndarray"></a>对于numpy的数组ndarray</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = np.array(a)</span><br><span class="line">index_max = np.argmax(a) #求最大值的索引</span><br><span class="line">index_min = np.argmin(a) #求最小值的索引</span><br><span class="line"># 对于二维的数组</span><br><span class="line">b = np.arange(100).reshape(10,-1)</span><br><span class="line">row_max_list = np.argmax(b,axis = 1) #按行计算最大值在行中的索引</span><br><span class="line">line_max_list = np.argmin(b,axis = 0) #按列计算最小值在列中的索引</span><br></pre></td></tr></table></figure>
+
+<h2 id="sort与sorted"><a href="#sort与sorted" class="headerlink" title="sort与sorted"></a>sort与sorted</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sorted(iterable,key,reverse)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>iterable: 可迭代对象</li>
+<li>key：用来进行比较的元素。常用函数： lambda x:x[i]</li>
+<li>reverse：排序规则。reverse=True按降序排列，reverse=False按升序排列（默认）</li>
+</ul>
+<p>比较sort与sorted:</p>
+<ul>
+<li>作用对象:sort()只能作用于list,sorted()可以作用于所有可迭代对象。</li>
+<li>返回值：sort()没有返回值；sorted()返回一个新的list</li>
+</ul>
+<h2 id="字典的items-方法"><a href="#字典的items-方法" class="headerlink" title="字典的items()方法"></a>字典的items()方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dict.items()</span><br></pre></td></tr></table></figure>
+
+<p>返回可遍历的元素为（键，值）元组的数组。</p>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><h3 id="collections–容器数据类型"><a href="#collections–容器数据类型" class="headerlink" title="collections–容器数据类型"></a>collections–容器数据类型</h3><p><a href="https://docs.python.org/zh-cn/3/library/collections.html#collections.Counter" target="_blank" rel="noopener">collections</a>模块是python内建的一个集合模块，提供了许多有用的集成类。提供了<code>list</code>,<code>dict</code>,<code>set</code>,<code>tuple</code>的替代选择，相当于这几个数据类型的加强版。</p>
+<h4 id="collections-Counter-iterable"><a href="#collections-Counter-iterable" class="headerlink" title="collections.Counter(iterable)"></a>collections.Counter(iterable)</h4><p>Counter是一个计数器，用于计数可哈希对象，统计元素出现的个数。它是一个集合，<code>元素-计数</code>像<code>键-值</code>对一样存储。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; import collections</span><br><span class="line"></span><br><span class="line">&gt;&gt; a = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;a&quot;,&quot;b&quot;,&quot;a&quot;]</span><br><span class="line">&gt;&gt; counter = collections.Counter(a)</span><br><span class="line">&gt;&gt; print(counter)</span><br><span class="line">Counter(&#123;&apos;a&apos;: 3, &apos;b&apos;: 2, &apos;c&apos;: 1&#125;)</span><br></pre></td></tr></table></figure>
+
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/">torch.cuda.is_available()返回False,但nvidia-smi正常</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/" class="archive-article-date">
-  <time datetime="2019-03-29T11:47:03.000Z" itemprop="datePublished">Mar 29</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/10/python的一些函数/" data-id="cjxsm22np0005eo1j3xjfv3fl" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/23/条件随机场CRF/" class="archive-article-date">
-  <time datetime="2019-03-23T05:50:20.000Z" itemprop="datePublished">Mar 23</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/23/条件随机场CRF/">条件随机场CRF</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/11/熵、交叉熵与KL散度/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          熵、交叉熵与KL散度
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/10/全文搜索引擎-Elasticsearch入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">全文搜索引擎-Elasticsearch入门</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/" class="archive-article-date">
-  <time datetime="2019-03-20T14:41:10.000Z" itemprop="datePublished">Mar 20</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/">pytorch实现基于LSTM的循环神经网络</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/20/pytorch实现Word-embedding/" class="archive-article-date">
-  <time datetime="2019-03-20T12:16:21.000Z" itemprop="datePublished">Mar 20</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/20/pytorch实现Word-embedding/">pytorch实现Word embedding</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/去新藏线上骑车/" class="archive-article-date">
-  <time datetime="2019-03-14T09:49:34.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/去新藏线上骑车/">去新藏线上骑车</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/11/sublime插件/" class="archive-article-date">
-  <time datetime="2019-03-11T11:41:12.000Z" itemprop="datePublished">Mar 11</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/sublime插件/">sublime插件</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/11/熵、交叉熵与KL散度/" class="archive-article-date">
-  <time datetime="2019-03-11T06:31:33.000Z" itemprop="datePublished">Mar 11</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/熵、交叉熵与KL散度/">熵、交叉熵与KL散度</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

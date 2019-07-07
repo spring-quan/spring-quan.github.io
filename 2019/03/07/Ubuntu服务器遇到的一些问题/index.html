@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>Ubuntu服务器遇到的一些问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="记录Ubuntu服务器遇到的一些问题。">
+<meta name="keywords" content="linux,服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu服务器遇到的一些问题">
+<meta property="og:url" content="http://yoursite.com/2019/03/07/Ubuntu服务器遇到的一些问题/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="记录Ubuntu服务器遇到的一些问题。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-12T06:13:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Ubuntu服务器遇到的一些问题">
+<meta name="twitter:description" content="记录Ubuntu服务器遇到的一些问题。">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,216 +65,107 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/24/自然语言处理-会议列表/" class="archive-article-date">
-  <time datetime="2019-04-24T06:55:43.000Z" itemprop="datePublished">Apr 24</time>
+        <section id="main"><article id="post-Ubuntu服务器遇到的一些问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/07/Ubuntu服务器遇到的一些问题/" class="article-date">
+  <time datetime="2019-03-07T11:53:00.000Z" itemprop="datePublished">2019-03-07</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术资料/">技术资料</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/24/自然语言处理-会议列表/">自然语言处理---会议列表</a>
+    <h1 class="article-title" itemprop="name">
+      Ubuntu服务器遇到的一些问题
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/19/python读写csv文件/" class="archive-article-date">
-  <time datetime="2019-04-19T10:32:22.000Z" itemprop="datePublished">Apr 19</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/19/python读写csv文件/">python读写csv文件</a>
-    </h1>
-  
+        <p>记录Ubuntu服务器遇到的一些问题。</p>
+<a id="more"></a> 
+<h2 id="linux服务器连不上网"><a href="#linux服务器连不上网" class="headerlink" title="linux服务器连不上网"></a>linux服务器连不上网</h2><ol>
+<li><p>先检查网线是否插好了，若网线口发亮才是插好。检查电脑是否能<code>ping</code>通局域网的其他电脑。</p>
+<ul>
+<li>查看其他电脑的ip地址<br><code>ifconfig | grep inet</code></li>
+<li>ping其他电脑的IP地址<br><code>ping 10.112.0.1</code><br>如果可以ping通其他电脑，再检查下一步。</li>
+</ul>
+</li>
+<li><p>可以ping通其他电脑，但<code>ping 10.3.8.211</code>校园网网关失败。这时可能是路由出错，查看服务器的路由是否正确。</p>
+<ul>
+<li>查看比较服务器与可以正常联网的电脑的路由。<br><code>route -n</code></li>
+<li>添加正确的默认路由。<br><code>route add default gw 10.112.0.1</code></li>
+<li>检查能否连接到校园网。<br><code>ping 10.3.8.211</code><br>Ubuntu配置路由参见: <a href="https://blog.51cto.com/solin/1900865" target="_blank" rel="noopener">ubuntu配置静态路由及重启生效</a></li>
+</ul>
+</li>
+<li><p>连接到校园网，但是<code>ping www.baidu.com</code>失败。服务器ping不通域名，但可以ping通百度的ip地址<code>112.34.112.40</code>。这是服务器的DNS配置出错了，无法解析域名。</p>
+<ul>
+<li><p>修改文件<code>/etc/resolv.conf</code>，必须有sudo权限。<br><code>sudo vim /etc/resolv.conf</code></p>
+</li>
+<li><p>添加以下内容<br><code>nameserver 8.8.8.8</code></p>
+</li>
+<li><p>重启网络使修改立即生效。<br><code>sudo /etc/init.d/networking restart</code></p>
+</li>
+<li><p>这时应该能ping通百度了。</p>
+<p>重启电源后，以上方法会被清除而失效，导致开机后需要重新配置。有效的方法是卸载开机重写<code>/etc/resolv.conf</code>的<code>resolvconf</code>，执行命令<br><code>sudo apt-get autoremove resolvconf</code><br>配置域名解析参见：<a href="https://blog.csdn.net/danielpei1222/article/details/65452451" target="_blank" rel="noopener">Ubuntu 无法解析域名</a></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="不能通过Xshell或ssh命令连接到服务器"><a href="#不能通过Xshell或ssh命令连接到服务器" class="headerlink" title="不能通过Xshell或ssh命令连接到服务器"></a>不能通过Xshell或ssh命令连接到服务器</h2><ol>
+<li>检查是否安装了<code>ssh-server</code>服务。<br><code>ps -e | grep ssh</code><ul>
+<li>若没有安装，使用以下命令安装：<br><code>sudo apt-get install openssh-server</code></li>
+</ul>
+</li>
+<li>若安装了<code>ssh-server</code>服务，检查ssh服务是否打开。需要sudo权限<ul>
+<li>检查ssh服务状态<br><code>service sshd status</code><br>或<br><code>/etc/init.d/ssh status</code></li>
+<li>开启ssh服务<br><code>service sshd start</code><br>或<br><code>/etc/init.d/ssh start</code></li>
+</ul>
+</li>
+</ol>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/" class="archive-article-date">
-  <time datetime="2019-04-16T09:04:44.000Z" itemprop="datePublished">Apr 16</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/">torch.cuda.is_available()返回False,但nvidia-smi正常</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/" class="archive-article-date">
-  <time datetime="2019-03-29T11:47:03.000Z" itemprop="datePublished">Mar 29</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/07/Ubuntu服务器遇到的一些问题/" data-id="cjxsm22ne0001eo1j82bdji9v" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/23/条件随机场CRF/" class="archive-article-date">
-  <time datetime="2019-03-23T05:50:20.000Z" itemprop="datePublished">Mar 23</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/23/条件随机场CRF/">条件随机场CRF</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器/">服务器</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/10/全文搜索引擎-Elasticsearch入门/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          全文搜索引擎-Elasticsearch入门
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/05/pytorch学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">pytorch学习笔记</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/" class="archive-article-date">
-  <time datetime="2019-03-20T14:41:10.000Z" itemprop="datePublished">Mar 20</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/">pytorch实现基于LSTM的循环神经网络</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/20/pytorch实现Word-embedding/" class="archive-article-date">
-  <time datetime="2019-03-20T12:16:21.000Z" itemprop="datePublished">Mar 20</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/20/pytorch实现Word-embedding/">pytorch实现Word embedding</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/去新藏线上骑车/" class="archive-article-date">
-  <time datetime="2019-03-14T09:49:34.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/去新藏线上骑车/">去新藏线上骑车</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/11/sublime插件/" class="archive-article-date">
-  <time datetime="2019-03-11T11:41:12.000Z" itemprop="datePublished">Mar 11</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/sublime插件/">sublime插件</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/11/熵、交叉熵与KL散度/" class="archive-article-date">
-  <time datetime="2019-03-11T06:31:33.000Z" itemprop="datePublished">Mar 11</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/熵、交叉熵与KL散度/">熵、交叉熵与KL散度</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

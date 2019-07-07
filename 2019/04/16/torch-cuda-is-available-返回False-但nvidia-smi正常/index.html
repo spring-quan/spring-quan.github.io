@@ -5,15 +5,23 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>torch.cuda.is_available()返回False,但nvidia-smi正常 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="torch.cuda.is_available()返回False,但nvidia-smi可以正常运行。">
+<meta name="keywords" content="nvidia-smi,GPU,cuda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="torch.cuda.is_available()返回False,但nvidia-smi正常">
+<meta property="og:url" content="http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="torch.cuda.is_available()返回False,但nvidia-smi可以正常运行。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/images/34.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/images/32.png">
+<meta property="og:updated_time" content="2019-04-20T10:56:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="torch.cuda.is_available()返回False,但nvidia-smi正常">
+<meta name="twitter:description" content="torch.cuda.is_available()返回False,但nvidia-smi可以正常运行。">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/images/34.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,216 +68,100 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/24/自然语言处理-会议列表/" class="archive-article-date">
-  <time datetime="2019-04-24T06:55:43.000Z" itemprop="datePublished">Apr 24</time>
+        <section id="main"><article id="post-torch-cuda-is-available-返回False-但nvidia-smi正常" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/" class="article-date">
+  <time datetime="2019-04-16T09:04:44.000Z" itemprop="datePublished">2019-04-16</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/pytorch/">pytorch</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/24/自然语言处理-会议列表/">自然语言处理---会议列表</a>
+    <h1 class="article-title" itemprop="name">
+      torch.cuda.is_available()返回False,但nvidia-smi正常
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/19/python读写csv文件/" class="archive-article-date">
-  <time datetime="2019-04-19T10:32:22.000Z" itemprop="datePublished">Apr 19</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/19/python读写csv文件/">python读写csv文件</a>
-    </h1>
-  
+        <p><code>torch.cuda.is_available()</code>返回False,但nvidia-smi可以正常运行。</p>
+<a id="more"></a>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在pytorch用GPU来加速计算时发现。<code>torch.cuda.is_available()</code>返回False,但nvidia-smi可以正常运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import torch</span><br><span class="line">&gt;&gt;&gt; torch.cuda.is_available()</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/" class="archive-article-date">
-  <time datetime="2019-04-16T09:04:44.000Z" itemprop="datePublished">Apr 16</time>
-</a>
+<p>此时，<code>nvidia-smi</code>可以正常运行。<img src="./images/34.png" alt></p>
+<h2 id="可能原因"><a href="#可能原因" class="headerlink" title="可能原因"></a>可能原因</h2><p>在<code>nvidia-smi</code>的运行结果中可以看到，driver version是<code>390.xx</code>。可能是driver version版本太低，造成了这个问题，实际上也是如此。<br>driver version的常见版本是<code>384.xx</code>,<code>390.xx</code>,<code>396.xx</code>。接下来，把driver version升级到<code>396.xx</code>看能不能解决问题。</p>
+<h2 id="升级nvidia-driver-version"><a href="#升级nvidia-driver-version" class="headerlink" title="升级nvidia driver version"></a>升级nvidia driver version</h2><ol>
+<li><p>卸载旧版本的NVIDIA driver </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove --purge nvidia-\*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加NVIDIA的ppa源.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:graphics-drivers/ppa</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装新版本的NVIDIA driver </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install nvidia-driver-396</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>此时，运行<code>nvidia-smi</code>，会报以下错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to initialize NVML: Driver/library version mismatch</span><br></pre></td></tr></table></figure>
+
+<p>这是更新NVIDIA driver版本后的常见问题。这个问题出现的原因是kernel mod的NVIDIA driver版本没有更新。<br>执行以下命令可以查看nvidia kernel mod的version。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/driver/nvidia/version</span><br></pre></td></tr></table></figure>
+
+<p><img src="./images/32.png" alt><br>可以看到已经加载的nvidia kernel mod的版本是还是旧版本<code>390.xx</code>。一般情况下，重启服务器就能解决问题。<br>如果由于某些原因不能重启，可以重新加载kernel mod。思路是先unload kernel mod，再reload kernel mod. 详见<a href="https://comzyh.com/blog/archives/967/" target="_blank" rel="noopener">解决Driver/library version mismatch</a><br><code>nvidia-smi</code>可以正常运行后，问题就解决了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import torch</span><br><span class="line">&gt;&gt;&gt; torch.cuda.is_available()</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://discuss.pytorch.org/t/torch-cuda-is-available-returns-false-nvidia-smi-is-working/20614" target="_blank" rel="noopener">Torch.cuda.is_available() returns False, nvidia-smi is working
+</a></li>
+<li><a href="https://askubuntu.com/questions/1063871/how-can-i-update-the-nvidia-drivers-to-version-390-77" target="_blank" rel="noopener">How can I update the NVIDIA drivers to version 390.77?
+</a></li>
+</ul>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/">torch.cuda.is_available()返回False,但nvidia-smi正常</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/" class="archive-article-date">
-  <time datetime="2019-03-29T11:47:03.000Z" itemprop="datePublished">Mar 29</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/" data-id="cjxsm22oc000leo1j6w7yubhf" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/23/条件随机场CRF/" class="archive-article-date">
-  <time datetime="2019-03-23T05:50:20.000Z" itemprop="datePublished">Mar 23</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/23/条件随机场CRF/">条件随机场CRF</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GPU/">GPU</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cuda/">cuda</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nvidia-smi/">nvidia-smi</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/19/python读写csv文件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          python读写csv文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/" class="archive-article-date">
-  <time datetime="2019-03-20T14:41:10.000Z" itemprop="datePublished">Mar 20</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/">pytorch实现基于LSTM的循环神经网络</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/20/pytorch实现Word-embedding/" class="archive-article-date">
-  <time datetime="2019-03-20T12:16:21.000Z" itemprop="datePublished">Mar 20</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/20/pytorch实现Word-embedding/">pytorch实现Word embedding</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/去新藏线上骑车/" class="archive-article-date">
-  <time datetime="2019-03-14T09:49:34.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/去新藏线上骑车/">去新藏线上骑车</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/11/sublime插件/" class="archive-article-date">
-  <time datetime="2019-03-11T11:41:12.000Z" itemprop="datePublished">Mar 11</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/sublime插件/">sublime插件</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/11/熵、交叉熵与KL散度/" class="archive-article-date">
-  <time datetime="2019-03-11T06:31:33.000Z" itemprop="datePublished">Mar 11</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/熵、交叉熵与KL散度/">熵、交叉熵与KL散度</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

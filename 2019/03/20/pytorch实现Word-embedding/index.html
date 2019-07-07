@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>pytorch实现Word embedding | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="word embedding是稠密的实数向量。Word embedding是一个词的语义表示，有效地编码了词的语义信息。">
+<meta name="keywords" content="pytorch,word embedding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch实现Word embedding">
+<meta property="og:url" content="http://yoursite.com/2019/03/20/pytorch实现Word-embedding/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="word embedding是稠密的实数向量。Word embedding是一个词的语义表示，有效地编码了词的语义信息。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-07T07:11:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pytorch实现Word embedding">
+<meta name="twitter:description" content="word embedding是稠密的实数向量。Word embedding是一个词的语义表示，有效地编码了词的语义信息。">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-pytorch实现Word-embedding" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/20/pytorch实现Word-embedding/" class="article-date">
+  <time datetime="2019-03-20T12:16:21.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/pytorch/">pytorch</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      pytorch实现Word embedding
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>word embedding是稠密的实数向量。Word embedding是一个词的语义表示，有效地编码了词的语义信息。</p>
+<a id="more"></a> 
+<h2 id="one-hot编码"><a href="#one-hot编码" class="headerlink" title="one-hot编码"></a>one-hot编码</h2><p>在自然语言处理任务中，我们常常要与词打交道。那么在计算机上，我们怎么表示一个单词呢？一种思路是one-hot编码。假设词汇表为$V$,词汇表大小(vocab_size)为$N_V$。我们可以用向量$N_V$维向量$[1,0,0…,0,0]$来表示第一个词。以此类推，来表示所有的词。<br>这种方法有致命的弱点。首先是向量维度太大，太稀疏，效率太低。更要命的是，one-hot编码把词与词间看做完全独立的，没有表达出词与词之间的联系和相似性。而这正是我们想要的。<br>举个例子，我们想要构建一个语言模型。有以下三个句子</p>
+<ul>
+<li>数学家待在实验室里。</li>
+<li>物理学家待在实验室里。</li>
+<li>数学家解决了一个难题。</li>
+</ul>
+<p>我们又看到一个新的句子：</p>
+<ul>
+<li>物理学家解决了一个难题。</li>
+</ul>
+<p>我们希望语言模型可以学习到以下特点：</p>
+<ul>
+<li><code>数学家</code>和<code>物理学家</code>在一个句子中同样的位置出现。这两个词之间有某种语义上的联系</li>
+<li><code>数学家</code>曾经出现在我们看到的这个新句子中<code>物理学家</code>出现的位置。</li>
+</ul>
+<p>这就是<strong>语义相似性</strong>想表达的。语义相似性可以将没见过的数据与已经见过的数据联系起来，来解决语言数据的稀疏性问题。这个例子基于一个基本的语义学假设：出现在相似文本中的词汇在语义上是相互联系的。这称为<strong>distributional hypothesis</strong><br>值得一提的是，在分类问题中，one-hot编码很适合用在类别的编码上。</p>
+<h2 id="word-embedding"><a href="#word-embedding" class="headerlink" title="word embedding"></a>word embedding</h2><p>我们怎样编码来表达词汇的语义相似性呢？我们考虑词汇的semantic attributes。例如，物理学家和数学家学可能[头发不多，爱喝咖啡，会看论文，会说英语]。我们可以用这四个属性来编码<code>物理学家</code>和<code>数学家</code>。$$q_物 = [0.9,0.8,0.98,0.8]$$$$q_数 = [0.91,0.89,0.9,0.85]$$<br>我们可以衡量这两个词之间的语义相似度：$$similarity(q_物,q_数) = \frac{q_物\cdot q_数}{|q_物| \cdot |q_数|}=cos(\phi)    其中\phi是两个向量之间的夹角。$$<br>但我们如何选择属性特征，并决定每个属性的值呢？深度学习的核心思想是神经网络学习特征表示，而不用人为指定特征。我们干脆将Word embedding作为神经网络的参数，让神经网络在训练的过程中学习Word embedding。<br>神经网络学到的Word embedding是潜在语义属性。也就是说，如果两个词在某个维度上都有大的值，我们并不知道这个维度代表了什么属性，这不能人为解释。这就是潜在语义属性的含义。<br>总的来说，Word embedding是一个词的语义表示，有效地编码了词的语义信息。</p>
+<h2 id="PyTorch实现word-embedding"><a href="#PyTorch实现word-embedding" class="headerlink" title="PyTorch实现word embedding"></a>PyTorch实现word embedding</h2><p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import torch </span><br><span class="line">import torch.nn as nn</span><br><span class="line">from torch.autograd import Variable</span><br><span class="line"># 词汇表字典</span><br><span class="line">word_to_ix = &#123;&apos;The&apos;: 0, &apos;dog&apos;: 1, &apos;ate&apos;: 2, &apos;the&apos;: 3, &apos;apple&apos;: 4, &apos;Everybody&apos;: 5, &apos;read&apos;: 6, &apos;that&apos;: 7, &apos;book&apos;: 8&#125;</span><br><span class="line">vocab_size = len(word_to_ix) </span><br><span class="line">embedding_dim = 15</span><br><span class="line">word_embeddings = nn.Embedding(vocab_size,embedding_dim)</span><br></pre></td></tr></table></figure>
+
+<p><code>nn.Embedding()</code>随机初始化了一个形状为[vocab_size,embedding_dim]的词向量矩阵，是神经网络的参数。<br>接下来我们查询”dog”这个词的向量表示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dog_idx = torch.LongTensor([word_to_ix[&apos;dog&apos;]]) #注意输入应该是一维数组。</span><br><span class="line">dog_idx = Variable(dog_idx)</span><br><span class="line">dog_embed = word_embeddings(dog_idx) #注意不是索引</span><br><span class="line">print(dog_embed)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中，要访问<code>dog</code>的词向量，要得到一个Variable。word_embeddings的输入应该是一个一维tensor。<br>接下来，我们查询一句话的向量表示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sent = &apos;The dog ate the apple&apos;.split()</span><br><span class="line">sent_idxs = [word_to_ix[w] for w in sent]</span><br><span class="line">sent_idxs = torch.LongTensor(sent_idxs)</span><br><span class="line">sent_idxs = Variable(sent_idxs)</span><br><span class="line">sent_embeds = embeds(sent_idxs) </span><br><span class="line">print(sent_embeds)</span><br></pre></td></tr></table></figure>
+
+<h2 id="pytorch加载预训练词向量"><a href="#pytorch加载预训练词向量" class="headerlink" title="pytorch加载预训练词向量"></a>pytorch加载预训练词向量</h2><p>之前的方法中，词向量是随机初始化的，作为模型参数在训练过程中不断优化。通常我们要用到预训练的词向量，这样可以节省训练时间，并可能取得更好的训练结果。下面介绍两种加载预训练词向量的方式。<br>方式一：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import torch </span><br><span class="line">word_embeddings = torch.nn.Embedding(vocab_size,embedding_dim) #创建一个词向量矩阵</span><br><span class="line">pretrain_embedding  = np.array(np.load(np_path),dtype = &apos;float32&apos;) #np_path是一个存储预训练词向量的文件路径</span><br><span class="line">word_embeddings.weight.data.copy_(troch.from_numpy(pretrain_embedding)) #思路是将np.ndarray形式的词向量转换为pytorch的tensor，再复制到原来创建的词向量矩阵中</span><br></pre></td></tr></table></figure>
+
+<p>方式二：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">word_embeddings = torch.nn.Embedding(vocab_size,embedding_dim) #创建一个词向量矩阵</span><br><span class="line">word_embeddings.weight = nn.Parameter(torch.FloatTensor(pretrain_embedding))</span><br></pre></td></tr></table></figure>
+
+<h3 id="涉及函数详解"><a href="#涉及函数详解" class="headerlink" title="涉及函数详解"></a>涉及函数详解</h3><h4 id="numpy-与from-numpy"><a href="#numpy-与from-numpy" class="headerlink" title="numpy()与from_numpy()"></a>numpy()与from_numpy()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.from_numpy(ndarray) $\to$ tensor</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>作用：numpy桥，将<code>numpy.ndarray</code>转换为pytorch的<code>tensor</code>.返回的张量与numpy.ndarray共享同一内存空间，修改一个另一个也会被修改。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor.numpy()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>作用：numpy桥，将pytorch的<code>tensor</code>转换为<code>numpy.ndarray</code>.二者共享同一内存空间，修改一个另一个也会被修改。</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.arange(5)</span><br><span class="line">b = torch.from_numpy(a)</span><br><span class="line">c = b.numpy()</span><br></pre></td></tr></table></figure>
+
+<h4 id="tensor-copy-src"><a href="#tensor-copy-src" class="headerlink" title="tensor.copy_(src)"></a>tensor.copy_(src)</h4><ul>
+<li>作用：将<code>src</code>中的元素复制到tensor并返回。两个tensor应该有相同数目的元素和形状，可以是不同数据类型或存储在不同设备上。</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(1,5)</span><br><span class="line">b = torch.randn(1,5)</span><br><span class="line">b.copy_(a)</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://pytorch.org/tutorials/beginner/nlp/word_embeddings_tutorial.html?highlight=embed" target="_blank" rel="noopener">Word Embeddings: Encoding Lexical Semantics</a></li>
+<li><a href="https://ptorch.com/news/11.html" target="_blank" rel="noopener">PyTorch快速入门教程七（RNN做自然语言处理）</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/20/pytorch实现Word-embedding/" data-id="cjxsm22o0000beo1j8hlwgyqp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word-embedding/">word embedding</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          pytorch实现基于LSTM的循环神经网络
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/14/去新藏线上骑车/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">去新藏线上骑车</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/pytorch/">pytorch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web搜索/">web搜索</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/年度总结/">年度总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术资料/">技术资料</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活记录/">生活记录</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/论文/">论文</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GPU/">GPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/">LSTM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csv/">csv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cuda/">cuda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvidia-smi/">nvidia-smi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/panda/">panda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime/">sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word-embedding/">word embedding</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉熵/">交叉熵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会议列表/">会议列表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前向后向算法/">前向后向算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/年度总结/">年度总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/循环神经网络/">循环神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搭建博客/">搭建博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/新藏线/">新藏线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器/">服务器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/条件随机场/">条件随机场</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活记录/">生活记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/相对熵/">相对熵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/维特比算法/">维特比算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/骑车/">骑车</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/GPU/" style="font-size: 10px;">GPU</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LSTM/" style="font-size: 10px;">LSTM</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/cuda/" style="font-size: 10px;">cuda</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/nvidia-smi/" style="font-size: 15px;">nvidia-smi</a> <a href="/tags/panda/" style="font-size: 10px;">panda</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/word-embedding/" style="font-size: 10px;">word embedding</a> <a href="/tags/交叉熵/" style="font-size: 10px;">交叉熵</a> <a href="/tags/会议列表/" style="font-size: 10px;">会议列表</a> <a href="/tags/前向后向算法/" style="font-size: 10px;">前向后向算法</a> <a href="/tags/年度总结/" style="font-size: 10px;">年度总结</a> <a href="/tags/循环神经网络/" style="font-size: 10px;">循环神经网络</a> <a href="/tags/搭建博客/" style="font-size: 10px;">搭建博客</a> <a href="/tags/新藏线/" style="font-size: 10px;">新藏线</a> <a href="/tags/服务器/" style="font-size: 10px;">服务器</a> <a href="/tags/条件随机场/" style="font-size: 10px;">条件随机场</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/相对熵/" style="font-size: 10px;">相对熵</a> <a href="/tags/维特比算法/" style="font-size: 10px;">维特比算法</a> <a href="/tags/骑车/" style="font-size: 10px;">骑车</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/24/自然语言处理-会议列表/">自然语言处理---会议列表</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/19/python读写csv文件/">python读写csv文件</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/">torch.cuda.is_available()返回False,但nvidia-smi正常</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/23/条件随机场CRF/">条件随机场CRF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

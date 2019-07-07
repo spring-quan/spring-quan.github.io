@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>pytorch学习笔记 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这里是pytorch学习笔记。">
+<meta name="keywords" content="pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/03/05/pytorch学习笔记/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这里是pytorch学习笔记。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-07T07:09:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pytorch学习笔记">
+<meta name="twitter:description" content="这里是pytorch学习笔记。">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-pytorch学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/05/pytorch学习笔记/" class="article-date">
+  <time datetime="2019-03-05T01:27:14.000Z" itemprop="datePublished">2019-03-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      pytorch学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里是pytorch学习笔记。</p>
+<a id="more"></a> 
+<h2 id="创建操作"><a href="#创建操作" class="headerlink" title="创建操作"></a>创建操作</h2><h3 id="torch-randn"><a href="#torch-randn" class="headerlink" title="torch.randn()"></a>torch.randn()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.randn(*size,out = None)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入：<ul>
+<li>size(int)：指定了输出张量的形状</li>
+</ul>
+</li>
+<li>输出：输出结果为张量</li>
+<li>作用：返回一个张量，从标准正态分布中抽取一组随机数。形状由*size决定</li>
+</ul>
+<h2 id="张量维度操作"><a href="#张量维度操作" class="headerlink" title="张量维度操作"></a>张量维度操作</h2><h3 id="转置：transpose"><a href="#转置：transpose" class="headerlink" title="转置：transpose"></a>转置：transpose</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.transpose(input,dim0,dim1)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数：<ul>
+<li>input: 输入张量，可以是二维及二维以上的张量</li>
+<li>dim0,dim1: 要转置的两个维度。</li>
+</ul>
+</li>
+<li>作用： 返回输入矩阵的转置。一次只能转置张量的两个维度。输出张量与输入张量共享内存，同步改变。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.t(tensor)</span><br></pre></td></tr></table></figure>
+
+<p>输入一个二维张量（矩阵），并转置0,1维。可以看做函数<code>torch.transpose(input,0,1)</code>的简写函数。<br>比较下<code>transpose</code>与<code>view</code>这两个函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = torch.randn(2,3,5)</span><br><span class="line">&gt;&gt; b = torch.transpose(a,1,2)</span><br><span class="line">&gt;&gt; c = a.view(2,5,3)</span><br><span class="line">&gt;&gt; print(a)</span><br><span class="line">tensor([[[ 0.9926, -0.1669, -1.6571, -0.2730, -0.1313],</span><br><span class="line">         [ 0.9811, -1.9854,  1.5519,  0.1383,  1.4571],</span><br><span class="line">         [ 0.8221, -1.1283, -0.7675, -2.0497,  0.4748]],</span><br><span class="line"></span><br><span class="line">        [[ 0.1594,  0.7166, -0.2603,  1.1027,  1.5283],</span><br><span class="line">         [-0.7652, -1.4711,  0.5077,  0.6639,  0.0374],</span><br><span class="line">         [ 1.8121, -1.4864, -2.9863, -0.5769, -0.2915]]]) </span><br><span class="line">&gt;&gt; print(b)</span><br><span class="line">tensor([[[ 0.9926,  0.9811,  0.8221],</span><br><span class="line">         [-0.1669, -1.9854, -1.1283],</span><br><span class="line">         [-1.6571,  1.5519, -0.7675],</span><br><span class="line">         [-0.2730,  0.1383, -2.0497],</span><br><span class="line">         [-0.1313,  1.4571,  0.4748]],</span><br><span class="line"></span><br><span class="line">        [[ 0.1594, -0.7652,  1.8121],</span><br><span class="line">         [ 0.7166, -1.4711, -1.4864],</span><br><span class="line">         [-0.2603,  0.5077, -2.9863],</span><br><span class="line">         [ 1.1027,  0.6639, -0.5769],</span><br><span class="line">         [ 1.5283,  0.0374, -0.2915]]]) </span><br><span class="line">&gt;&gt; print(c)</span><br><span class="line">tensor([[[ 0.9926, -0.1669, -1.6571],</span><br><span class="line">         [-0.2730, -0.1313,  0.9811],</span><br><span class="line">         [-1.9854,  1.5519,  0.1383],</span><br><span class="line">         [ 1.4571,  0.8221, -1.1283],</span><br><span class="line">         [-0.7675, -2.0497,  0.4748]],</span><br><span class="line"></span><br><span class="line">        [[ 0.1594,  0.7166, -0.2603],</span><br><span class="line">         [ 1.1027,  1.5283, -0.7652],</span><br><span class="line">         [-1.4711,  0.5077,  0.6639],</span><br><span class="line">         [ 0.0374,  1.8121, -1.4864],</span><br><span class="line">         [-2.9863, -0.5769, -0.2915]]])</span><br></pre></td></tr></table></figure>
+
+<p>可以看到:二者得到的结果并不相同。<code>transpose</code>是进行转置操作。<code>view</code>对张量整形时，张量中元素的顺序保持不变。相当于将这个三维张量按顺序</p>
+<h2 id="torch-Tensor"><a href="#torch-Tensor" class="headerlink" title="torch.Tensor"></a>torch.Tensor</h2><h3 id="torch-manual-seed"><a href="#torch-manual-seed" class="headerlink" title="torch.manual_seed()"></a>torch.manual_seed()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(seed)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入：<ul>
+<li>seed(int or long)：设定种子，为int类型或long类型</li>
+</ul>
+</li>
+<li>作用：设定生成随机数的种子。种子相同，生成的随机数就是相同的，实验结果就可以复现。</li>
+</ul>
+<p>参见：<a href="https://cloud.tencent.com/developer/article/1149041" target="_blank" rel="noopener">利用随机数种子来使pytorch中的结果可以复现</a></p>
+<h3 id="view-整形"><a href="#view-整形" class="headerlink" title=".view() 整形"></a>.view() 整形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor.view(*size)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入：<ul>
+<li>*size(int)：指定了输出张量的形状</li>
+</ul>
+</li>
+<li>输出：输出结果为张量</li>
+<li>作用：整形，只改变原张量的形状，形状由*size指定。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; x = torch.randn(5,4)</span><br><span class="line">&gt;&gt; x.size()</span><br><span class="line">torch.Size([5,4]</span><br><span class="line">&gt;&gt; x.view(30)</span><br><span class="line">&gt;&gt; x.size()</span><br><span class="line">torch.Size([20])</span><br><span class="line">&gt;&gt; x.view(1,1,-1) # -1表示该维度由其他的维度推断。</span><br><span class="line">&gt;&gt; x.size()</span><br><span class="line">torch.Size([1, 1, 20])</span><br></pre></td></tr></table></figure>
+
+<h3 id="torch-cat-连接"><a href="#torch-cat-连接" class="headerlink" title="torch.cat() 连接"></a>torch.cat() 连接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.cat(inputs,dimension = 0)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入：<ul>
+<li>inputs(sequence of Tensors)： 多个Tensor的python序列。 如[tensor1,tensor2…]或(Tensor1，tensor2)</li>
+<li>dimension(int,optional): 沿着该维连接张量序列。默认为0。</li>
+</ul>
+</li>
+<li>作用：在指定维度上，对输入张量序列进行连接操作。</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; impotr torch </span><br><span class="line">&gt;&gt; x = torch.randn(4,3)</span><br><span class="line">&gt;&gt; x.size()</span><br><span class="line">torch.Size([4, 3])</span><br><span class="line">&gt;&gt; y = torch.cat((x,x,x),0)</span><br><span class="line">&gt;&gt; y.size()</span><br><span class="line">torch.Size([12, 3])</span><br><span class="line">&gt;&gt; z = torch.cat((x,x,x),1)</span><br><span class="line">&gt;&gt; z.size() </span><br><span class="line">torch.Size([4, 9])</span><br></pre></td></tr></table></figure>
+
+<h2 id="torch-optim"><a href="#torch-optim" class="headerlink" title="torch.optim"></a>torch.optim</h2><h3 id="class-torch-optim-SGD-params-lr-momentum-0-weight-decay-0"><a href="#class-torch-optim-SGD-params-lr-momentum-0-weight-decay-0" class="headerlink" title="class torch.optim.SGD(params,lr=,momentum=0,weight_decay=0)"></a>class torch.optim.SGD(params,lr=,momentum=0,weight_decay=0)</h3><ul>
+<li>参数：<ul>
+<li>params： 待优化参数的iterable</li>
+<li>lr(float): 学习率</li>
+<li>momentum(float,可选)： 动量因子，默认为0</li>
+<li>weight_decay(float,可选): 权重衰减，默认为0</li>
+</ul>
+</li>
+<li>作用：实现随机梯度下降算法。</li>
+</ul>
+<p>如何使用optimizer?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import torch.optim as optim </span><br><span class="line"></span><br><span class="line">optimizer = optim.SGD(model.parameters(),lr = 0.01) #构建一个optimizer,model.parameters()给出了所有要优化的参数</span><br><span class="line">for input,target in dataset:</span><br><span class="line">    optimizer.zero_grad() #清空所有被优化过的Variable的梯度</span><br><span class="line">    output = model(input)</span><br><span class="line">    loss = loss_fn(output,target)</span><br><span class="line">    loss.backward()  #反向传播算法，计算好所有要优化Variable的梯度。</span><br><span class="line">    optimizer.step() #单步优化，基于计算得到的梯度进行参数更新。</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/05/pytorch学习笔记/" data-id="cjxsm22nv000aeo1j1gpmizok" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/07/Ubuntu服务器遇到的一些问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Ubuntu服务器遇到的一些问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/27/Numpy学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Numpy学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/pytorch/">pytorch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web搜索/">web搜索</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/年度总结/">年度总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术资料/">技术资料</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活记录/">生活记录</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/论文/">论文</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GPU/">GPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/">LSTM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csv/">csv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cuda/">cuda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvidia-smi/">nvidia-smi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/panda/">panda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime/">sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word-embedding/">word embedding</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉熵/">交叉熵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会议列表/">会议列表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前向后向算法/">前向后向算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/年度总结/">年度总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/循环神经网络/">循环神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搭建博客/">搭建博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/新藏线/">新藏线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器/">服务器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/条件随机场/">条件随机场</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活记录/">生活记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/相对熵/">相对熵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/维特比算法/">维特比算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/骑车/">骑车</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/GPU/" style="font-size: 10px;">GPU</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LSTM/" style="font-size: 10px;">LSTM</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/csv/" style="font-size: 10px;">csv</a> <a href="/tags/cuda/" style="font-size: 10px;">cuda</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/nvidia-smi/" style="font-size: 15px;">nvidia-smi</a> <a href="/tags/panda/" style="font-size: 10px;">panda</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/word-embedding/" style="font-size: 10px;">word embedding</a> <a href="/tags/交叉熵/" style="font-size: 10px;">交叉熵</a> <a href="/tags/会议列表/" style="font-size: 10px;">会议列表</a> <a href="/tags/前向后向算法/" style="font-size: 10px;">前向后向算法</a> <a href="/tags/年度总结/" style="font-size: 10px;">年度总结</a> <a href="/tags/循环神经网络/" style="font-size: 10px;">循环神经网络</a> <a href="/tags/搭建博客/" style="font-size: 10px;">搭建博客</a> <a href="/tags/新藏线/" style="font-size: 10px;">新藏线</a> <a href="/tags/服务器/" style="font-size: 10px;">服务器</a> <a href="/tags/条件随机场/" style="font-size: 10px;">条件随机场</a> <a href="/tags/生活记录/" style="font-size: 10px;">生活记录</a> <a href="/tags/相对熵/" style="font-size: 10px;">相对熵</a> <a href="/tags/维特比算法/" style="font-size: 10px;">维特比算法</a> <a href="/tags/骑车/" style="font-size: 10px;">骑车</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/24/自然语言处理-会议列表/">自然语言处理---会议列表</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/19/python读写csv文件/">python读写csv文件</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/">torch.cuda.is_available()返回False,但nvidia-smi正常</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/23/条件随机场CRF/">条件随机场CRF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
