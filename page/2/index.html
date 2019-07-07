@@ -2,11 +2,23 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
+
+  <!-- PACE Progress Bar START -->
   
+    <script src="https://raw.githubusercontent.com/HubSpot/pace/v1.0.2/pace.min.js"></script>
+    <link rel="stylesheet" href="https://github.com/HubSpot/pace/raw/master/themes/orange/pace-theme-flash.css">
+  
+  
+
+  <!-- PACE Progress Bar START -->
 
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  
   <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
@@ -17,396 +29,845 @@
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
-  
-    <link rel="icon" href="/favicon.png">
-  
+  <link rel="icon" href="/css/images/favicon.ico">
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
   <link rel="stylesheet" href="/css/style.css">
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/hiero.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/my.css">
+  <!-- Google Adsense -->
+  
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-0123456789ABCDEF",
+          enable_page_level_ads: true
+      });
+  </script>
+  
 </head>
 </html>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+<script>
+var themeMenus = {};
+
+  themeMenus["/"] = "Home"; 
+
+  themeMenus["/archives"] = "Archives"; 
+
+  themeMenus["/categories"] = "Categories"; 
+
+  themeMenus["/tags"] = "Tags"; 
+
+  themeMenus["/about"] = "About"; 
+
+</script>
+
+
+  <body>
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="Hexo" rel="home"> Hexo </a>
+            
+          </h1>
+
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
       </div>
-    </div>
   </div>
 </header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-python的一些函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/10/python的一些函数/" class="article-date">
-  <time datetime="2019-03-10T08:12:51.000Z" itemprop="datePublished">2019-03-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-  </div>
+
+
+  <div id="originBgDiv" style="background: #fff; width: 100%;">
+
+      <div style="max-height:600px; overflow: hidden;  display: flex; display: -webkit-flex; align-items: center;">
+        <img id="originBg" width="100%" alt="" src="">
+      </div>
 
   </div>
-  <div class="article-inner">
+
+  <script>
+  function setAboutIMG(){
+      var imgUrls = "css/images/pose.jpg,https://source.unsplash.com/collection/954550/1920x1080".split(",");
+      var random = Math.floor((Math.random() * imgUrls.length ));
+      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+        document.getElementById("originBg").src=imgUrls[random];
+      } else {
+        document.getElementById("originBg").src='/' + imgUrls[random];
+      }
+  }
+  bgDiv=document.getElementById("originBgDiv");
+  if(location.pathname.match('about')){
+    setAboutIMG();
+    bgDiv.style.display='block';
+  }else{
+    bgDiv.style.display='none';
+  }
+  </script>
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main">
+  
+    <article id="post-python的一些函数"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
+    <h1 class="thumb" itemprop="name">
       <a class="article-title" href="/2019/03/10/python的一些函数/">python的一些函数</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-meta">
       
-        <p>记录python的一些函数，实现某些功能。</p>
-        
-          <p class="article-more-link">
-            <a href="/2019/03/10/python的一些函数/#more">Read More</a>
-          </p>
-        
+	Posted on <a href="/2019/03/10/python的一些函数/" class="article-date">
+	  <time datetime="2019-03-10T08:12:51.000Z" itemprop="datePublished">March 10, 2019</time>
+	</a>
+
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/10/python的一些函数/" data-id="cjxsmqz6t0005us1jowng6eqz" class="article-share-link">Share</a>
+    <div class="article-entry" itemprop="articleBody">
       
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            记录python的一些函数，实现某些功能。
+ 
+求最大/小值的索引对于list12345import numpy as npa = range(100)np.random.shuffle(a)index_max = a.index(max(a)) #求最大值的索引index_min = a.index(min(a)) #求最小值的索引
+
+对于numpy的数组ndarray1234567a = np.array(a)index_max = np.argmax(a) #求最大值的索引index_min = np.argmin(a) #求最小值的索引# 对于二维的数组b = np.arange(100).reshape(10,-1)row_max_list = np.argmax(b,axi...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2019/03/10/python的一些函数/#more">Continue Reading →</a>
+          </p>
+        </div>
       
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+
+      
+  <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
 
+      
+            
+      
     </footer>
   </div>
   
 </article>
 
+<!-- Table of Contents -->
+
+    
 
   
-    <article id="post-全文搜索引擎-Elasticsearch入门" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/10/全文搜索引擎-Elasticsearch入门/" class="article-date">
-  <time datetime="2019-03-10T07:11:17.000Z" itemprop="datePublished">2019-03-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/web搜索/">web搜索</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
+    <article id="post-全文搜索引擎-Elasticsearch入门"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
+    <h1 class="thumb" itemprop="name">
       <a class="article-title" href="/2019/03/10/全文搜索引擎-Elasticsearch入门/">全文搜索引擎-Elasticsearch入门</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-meta">
       
-        <p>Elasticsearch是一个开源的搜索引擎框架。</p>
-        
-          <p class="article-more-link">
-            <a href="/2019/03/10/全文搜索引擎-Elasticsearch入门/#more">Read More</a>
-          </p>
-        
+	Posted on <a href="/2019/03/10/全文搜索引擎-Elasticsearch入门/" class="article-date">
+	  <time datetime="2019-03-10T07:11:17.000Z" itemprop="datePublished">March 10, 2019</time>
+	</a>
+
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/10/全文搜索引擎-Elasticsearch入门/" data-id="cjxsmqz7f000ous1jj9lbchec" class="article-share-link">Share</a>
+    <div class="article-entry" itemprop="articleBody">
       
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            Elasticsearch是一个开源的搜索引擎框架。
+
+
+Elasticsearch安装和启动安装前提：Elasticsearch需要Java7或以上的版本。
+
+下载压缩包并解压：
+123wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.zipunzip elasticsearch-6.6.1.zipcd elasticsearch-6.6.1
+
+进入解压后的文件目录，启动elasticsearch：
+1./bin/elasticsearch
+
+如果一切正常，elasticsearch默认在本机9200端口运行。打开另一个命令行窗口，执行以下命令，检查elasticsearch是否...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2019/03/10/全文搜索引擎-Elasticsearch入门/#more">Continue Reading →</a>
+          </p>
+        </div>
       
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/web搜索/">web搜索</a>
+
+      
+  <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
 
+      
+            
+      
     </footer>
   </div>
   
 </article>
 
+<!-- Table of Contents -->
+
+    
 
   
-    <article id="post-Ubuntu服务器遇到的一些问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/07/Ubuntu服务器遇到的一些问题/" class="article-date">
-  <time datetime="2019-03-07T11:53:00.000Z" itemprop="datePublished">2019-03-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术资料/">技术资料</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
+    <article id="post-Ubuntu服务器遇到的一些问题"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
+    <h1 class="thumb" itemprop="name">
       <a class="article-title" href="/2019/03/07/Ubuntu服务器遇到的一些问题/">Ubuntu服务器遇到的一些问题</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-meta">
       
-        <p>记录Ubuntu服务器遇到的一些问题。</p>
-        
-          <p class="article-more-link">
-            <a href="/2019/03/07/Ubuntu服务器遇到的一些问题/#more">Read More</a>
-          </p>
-        
+	Posted on <a href="/2019/03/07/Ubuntu服务器遇到的一些问题/" class="article-date">
+	  <time datetime="2019-03-07T11:53:00.000Z" itemprop="datePublished">March 7, 2019</time>
+	</a>
+
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/07/Ubuntu服务器遇到的一些问题/" data-id="cjxsmqz6f0000us1jav74z09e" class="article-share-link">Share</a>
+    <div class="article-entry" itemprop="articleBody">
       
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            记录Ubuntu服务器遇到的一些问题。
+ 
+linux服务器连不上网
+先检查网线是否插好了，若网线口发亮才是插好。检查电脑是否能ping通局域网的其他电脑。
+
+查看其他电脑的ip地址ifconfig | grep inet
+ping其他电脑的IP地址ping 10.112.0.1如果可以ping通其他电脑，再检查下一步。
+
+
+可以ping通其他电脑，但ping 10.3.8.211校园网网关失败。这时可能是路由出错，查看服务器的路由是否正确。
+
+查看比较服务器与可以正常联网的电脑的路由。route -n
+添加正确的默认路由。route add default gw 10.112.0.1
+检查能否连接到校园网。ping 10.3.8.211Ubuntu配置路由参见: ubuntu配置静态...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2019/03/07/Ubuntu服务器遇到的一些问题/#more">Continue Reading →</a>
+          </p>
+        </div>
       
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/技术资料/">技术资料</a>
+
+      
+  <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器/">服务器</a></li></ul>
 
+      
+            
+      
     </footer>
   </div>
   
 </article>
 
+<!-- Table of Contents -->
+
+    
 
   
-    <article id="post-pytorch学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/05/pytorch学习笔记/" class="article-date">
-  <time datetime="2019-03-05T01:27:14.000Z" itemprop="datePublished">2019-03-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
+    <article id="post-pytorch学习笔记"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
+    <h1 class="thumb" itemprop="name">
       <a class="article-title" href="/2019/03/05/pytorch学习笔记/">pytorch学习笔记</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-meta">
       
-        <p>这里是pytorch学习笔记。</p>
-        
-          <p class="article-more-link">
-            <a href="/2019/03/05/pytorch学习笔记/#more">Read More</a>
-          </p>
-        
+	Posted on <a href="/2019/03/05/pytorch学习笔记/" class="article-date">
+	  <time datetime="2019-03-05T01:27:14.000Z" itemprop="datePublished">March 5, 2019</time>
+	</a>
+
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/05/pytorch学习笔记/" data-id="cjxsmqz6y0009us1jiiw84xd1" class="article-share-link">Share</a>
+    <div class="article-entry" itemprop="articleBody">
       
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            这里是pytorch学习笔记。
+ 
+创建操作torch.randn()1torch.randn(*size,out = None)
+
+
+输入：
+size(int)：指定了输出张量的形状
+
+
+输出：输出结果为张量
+作用：返回一个张量，从标准正态分布中抽取一组随机数。形状由*size决定
+
+张量维度操作转置：transpose1torch.transpose(input,dim0,dim1)
+
+
+参数：
+input: 输入张量，可以是二维及二维以上的张量
+dim0,dim1: 要转置的两个维度。
+
+
+作用： 返回输入矩阵的转置。一次只能转置张量的两个维度。输出张量与输入张量共享内存，同步改变。
+
+1torch.t(tensor)
+
+输入一个二维张量（矩阵），并转置0,1维。可以看做函数to...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2019/03/05/pytorch学习笔记/#more">Continue Reading →</a>
+          </p>
+        </div>
       
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+
+      
+  <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li></ul>
 
+      
+            
+      
     </footer>
   </div>
   
 </article>
 
+<!-- Table of Contents -->
+
+    
 
   
-    <article id="post-Numpy学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/27/Numpy学习笔记/" class="article-date">
-  <time datetime="2019-02-27T12:33:15.000Z" itemprop="datePublished">2019-02-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
+    <article id="post-Numpy学习笔记"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
+    <h1 class="thumb" itemprop="name">
       <a class="article-title" href="/2019/02/27/Numpy学习笔记/">Numpy学习笔记</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-meta">
       
-        <p>这里是numpy学习笔记。</p>
-        
-          <p class="article-more-link">
-            <a href="/2019/02/27/Numpy学习笔记/#more">Read More</a>
-          </p>
-        
+	Posted on <a href="/2019/02/27/Numpy学习笔记/" class="article-date">
+	  <time datetime="2019-02-27T12:33:15.000Z" itemprop="datePublished">February 27, 2019</time>
+	</a>
+
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/27/Numpy学习笔记/" data-id="cjxsmqz6m0001us1j3a76ly89" class="article-share-link">Share</a>
+    <div class="article-entry" itemprop="articleBody">
       
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            这里是numpy学习笔记。
+ 
+np.copy1np.copy(a)
+
+a为ndarray数组。np.copy复制一个与a完全相同的dnarray数组。来看看=与np.copy的区别。
+12345678&gt;&gt; x = np.array([1,2,3])&gt;&gt; y = x&gt;&gt; z = x.copy(x)&gt;&gt; x[0] = 10&gt;&gt; x[0] == y[0]True&gt;&gt; x[0] == z[0]False
+
+对于=，x与y共享同一内存，数据同步改变。一个改变另一个跟着改变。对于np.copy,x与z在不同的内存，数据改变互不影响。
+np.load与np.savenumpy可以读写磁盘上的二进制数据。为将ndarray数组对...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2019/02/27/Numpy学习笔记/#more">Continue Reading →</a>
+          </p>
+        </div>
       
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+
+      
+  <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Numpy/">Numpy</a></li></ul>
 
+      
+            
+      
     </footer>
   </div>
   
 </article>
 
+<!-- Table of Contents -->
+
+    
 
   
-    <article id="post-2018-群星陨落" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/16/2018-群星陨落/" class="article-date">
-  <time datetime="2019-01-16T12:56:00.000Z" itemprop="datePublished">2019-01-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/年度总结/">年度总结</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
+    <article id="post-2018-群星陨落"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
+    <h1 class="thumb" itemprop="name">
       <a class="article-title" href="/2019/01/16/2018-群星陨落/">2018-群星陨落</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-meta">
       
-        <p>游龙当归海，还不迎我自来也！</p>
-        
-          <p class="article-more-link">
-            <a href="/2019/01/16/2018-群星陨落/#more">Read More</a>
-          </p>
-        
+	Posted on <a href="/2019/01/16/2018-群星陨落/" class="article-date">
+	  <time datetime="2019-01-16T12:56:00.000Z" itemprop="datePublished">January 16, 2019</time>
+	</a>
+
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/16/2018-群星陨落/" data-id="cjxsmqz8k0026us1jqtbmn0qu" class="article-share-link">Share</a>
+    <div class="article-entry" itemprop="articleBody">
       
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            游龙当归海，还不迎我自来也！
+ 
+今天是农历12月十一，明天就是爸爸的生日。阳历的2018年已经过去了，但春节还没来呢！研究生一年级的学期期末，我想着回顾一下这一年，看看自己这一年是怎么度过的。2018年，许多了不起的人去世了，因此选了这个小标题。2018年，我大学毕业，顺利通过了研究生复试。考研，是与高考同等级别的考试，不同的是考研没有老师和家长的督促，只得一个人奋战。备战考研初试已经是2017年的往事了，但还是值得一提的。准备初试的小半年里基本上每天泡在图书馆里，坐在某个固定的座位。虽然有时候也会懈怠懒惰，但大部分时间都是在认真地学习。晚上九点半从图书馆出来，我常要绕着学校跑上五公里；回宿舍经过一楼的镜子，我看着自己嘴里念叨着学校的名字。如愿以偿，2018年年初，我查自己的考研初试...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2019/01/16/2018-群星陨落/#more">Continue Reading →</a>
+          </p>
+        </div>
       
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/年度总结/">年度总结</a>
+
+      
+  <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/年度总结/">年度总结</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活记录/">生活记录</a></li></ul>
 
+      
+            
+      
     </footer>
   </div>
   
 </article>
 
+<!-- Table of Contents -->
+
+    
 
   
-    <article id="post-用hexo搭建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/13/用hexo搭建个人博客/" class="article-date">
-  <time datetime="2019-01-13T02:08:31.000Z" itemprop="datePublished">2019-01-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术资料/">技术资料</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
+    <article id="post-用hexo搭建个人博客"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
+    <h1 class="thumb" itemprop="name">
       <a class="article-title" href="/2019/01/13/用hexo搭建个人博客/">用Hexo+Next+github page搭建个人博客</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-meta">
       
-        <p>Hexo是一个简洁漂亮的博客框架，用来生成静态网页。本文介绍使用hexo搭建博客。</p>
-        
-          <p class="article-more-link">
-            <a href="/2019/01/13/用hexo搭建个人博客/#more">Read More</a>
-          </p>
-        
+	Posted on <a href="/2019/01/13/用hexo搭建个人博客/" class="article-date">
+	  <time datetime="2019-01-13T02:08:31.000Z" itemprop="datePublished">January 13, 2019</time>
+	</a>
+
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/13/用hexo搭建个人博客/" data-id="cjxsmqz9t0030us1javsgbfg3" class="article-share-link">Share</a>
+    <div class="article-entry" itemprop="articleBody">
       
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            Hexo是一个简洁漂亮的博客框架，用来生成静态网页。本文介绍使用hexo搭建博客。
+
+
+准备：安装Hexo安装前提在安装Hexo之前，应先安装以下应用程序：
+
+Node.js
+Git
+
+安装Git对Linux(ubuntu,debian)
+1sudo apt-get install git-core
+
+安装Node.js1wget -qO- https://raw.github.com/creationix/nvm/v0.33.11/install.sh | sh
+
+安装完成后，需要重启终端再执行以下命令：
+1nvm install stable
+
+安装Hexo安装好Git和Node.js后，使用npm安装Hexo:
+1npm install -g hexo-cli
+
+hexo常用命令...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2019/01/13/用hexo搭建个人博客/#more">Continue Reading →</a>
+          </p>
+        </div>
       
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/技术资料/">技术资料</a>
+
+      
+  <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/搭建博客/">搭建博客</a></li></ul>
 
+      
+            
+      
     </footer>
   </div>
   
 </article>
 
+<!-- Table of Contents -->
+
+    
 
   
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 </section>
-        
           <aside id="sidebar">
+  
+    <div class="widget-wrap" style="margin: 20px 0;">
+	<div id="search-form-wrap">
+
+    <form class="search-form">
+        <label style="width: 75%;">
+            <span class="screen-reader-text">Search for:</span>
+            <input type="search" class="search-field" style="height: 42px;" placeholder=" Search…" value="" name="s" title="Search for:">
+        </label>
+        <input type="submit" class="search-form-submit" value="Search">
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Connect With Us</h3>
+    <div class="widget widget_athemes_social_icons">
+
+    	<ul class="clearfix widget-social-icons">   
+    	
+          
+     			  <li><a href="https://github.com/iTimeTraveler" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="http://www.yoursite.com" title="Weibo"><i class="fa fa-weibo" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="Google-plus"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="Flickr"><i class="fa fa-flickr" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+            <li><a href="mailto:?subject=请联系我&body=我能帮你什么" title="email"><i class="fa fa-envelope" aria-hidden="true"></i></a></li> 
+          
+   		
+   		</ul>
+
+
+   		<!--
+   		<ul class="clearfix widget-social-icons">   		
+   		<li class="widget-si-twitter"><a href="http://twitter.com" title="Twitter"><i class="ico-twitter"></i></a></li> 
+		<li class="widget-si-facebook"><a href="http://facebook.com" title="Facebook"><i class="ico-facebook"></i></a></li>
+			<li class="widget-si-gplus"><a href="http://plus.google.com" title="Google+"><i class="ico-gplus"></i></a></li>
+			<li class="widget-si-pinterest"><a href="http://pinterest.com" title="Pinterest"><i class="ico-pinterest"></i></a></li>
+			<li class="widget-si-flickr"><a href="http://flickr.com" title="Flickr"><i class="ico-flickr"></i></a></li>
+			<li class="widget-si-instagram"><a href="http://instagram.com" title="Instagram"><i class="ico-instagram"></i></a></li>
+		</ul> -->
+
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget_athemes_tabs">
+    <ul id="widget-tab" class="clearfix widget-tab-nav">
+      <li class="active"><a>Recent Posts</a></li>
+    </ul>
+    <div class="widget">
+      <ul>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2019/04/24/自然语言处理-会议列表/">自然语言处理---会议列表</a></h6>
+              <span>April 24, 2019</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2019/04/19/python读写csv文件/">python读写csv文件</a></h6>
+              <span>April 19, 2019</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/">torch.cuda.is_available()返回False,但nvidia-smi正常</a></h6>
+              <span>April 16, 2019</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</a></h6>
+              <span>March 29, 2019</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2019/03/23/条件随机场CRF/">条件随机场CRF</a></h6>
+              <span>March 23, 2019</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2019/03/20/pytorch实现基于LSTM的循环神经网络/">pytorch实现基于LSTM的循环神经网络</a></h6>
+              <span>March 20, 2019</span>
+            </div>
+
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/pytorch/">pytorch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web搜索/">web搜索</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/年度总结/">年度总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术资料/">技术资料</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活记录/">生活记录</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/论文/">论文</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pytorch/">pytorch</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web搜索/">web搜索</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记/">学习笔记</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/年度总结/">年度总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术资料/">技术资料</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活记录/">生活记录</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/论文/">论文</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -416,7 +877,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GPU/">GPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/">LSTM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csv/">csv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cuda/">cuda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvidia-smi/">nvidia-smi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/panda/">panda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime/">sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word-embedding/">word embedding</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉熵/">交叉熵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会议列表/">会议列表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前向后向算法/">前向后向算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/年度总结/">年度总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/循环神经网络/">循环神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搭建博客/">搭建博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/新藏线/">新藏线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器/">服务器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/条件随机场/">条件随机场</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活记录/">生活记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/相对熵/">相对熵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/维特比算法/">维特比算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/骑车/">骑车</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GPU/">GPU</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/">LSTM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csv/">csv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cuda/">cuda</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvidia-smi/">nvidia-smi</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/panda/">panda</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime/">sublime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word-embedding/">word embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉熵/">交叉熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/会议列表/">会议列表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前向后向算法/">前向后向算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/年度总结/">年度总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/循环神经网络/">循环神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搭建博客/">搭建博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/新藏线/">新藏线</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器/">服务器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/条件随机场/">条件随机场</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活记录/">生活记录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/相对熵/">相对熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/维特比算法/">维特比算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/骑车/">骑车</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -434,77 +895,127 @@
     
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
+
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2019/04/24/自然语言处理-会议列表/">自然语言处理---会议列表</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/19/python读写csv文件/">python读写csv文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/">torch.cuda.is_available()返回False,但nvidia-smi正常</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/">nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/23/条件随机场CRF/">条件随机场CRF</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
   
 </aside>
         
       </div>
-      <footer id="footer">
+      <footer id="footer" class="site-footer">
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2019 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 Hexo All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
   </div>
 </footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+
+<!-- Custome JS -->
+<script src="/js/my.js"></script>
     </div>
-    <nav id="mobile-nav">
+    <!-- <nav id="mobile-nav">
   
     <a href="/" class="mobile-nav-link">Home</a>
   
     <a href="/archives" class="mobile-nav-link">Archives</a>
   
-</nav>
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 
 
-<script src="/js/script.js"></script>
+<script src="/js/scripts.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="https://dnqof95d40fo6.cloudfront.net/atw7f8.js">
+	</script>
+
+
+
 
 
 
   </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
 </body>
 </html>
