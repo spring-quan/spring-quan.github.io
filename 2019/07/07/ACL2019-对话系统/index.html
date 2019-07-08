@@ -13,26 +13,26 @@
   <!-- PACE Progress Bar START -->
 
   
-  <title>ubuntu服务器遇到的一些问题 | spring&#39;s Blog</title>
+  <title>acl2019-对话系统 | spring&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="linux服务器">
+  <meta name="keywords" content="ACL2019dialog system">
   
   
   
   
-  <meta name="description" content="记录Ubuntu服务器遇到的一些问题。">
-<meta name="keywords" content="linux,服务器">
+  <meta name="description" content="记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。">
+<meta name="keywords" content="ACL2019,dialog system">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu服务器遇到的一些问题">
-<meta property="og:url" content="http://yoursite.com/2019/03/07/Ubuntu服务器遇到的一些问题/index.html">
+<meta property="og:title" content="ACL2019-对话系统">
+<meta property="og:url" content="http://yoursite.com/2019/07/07/ACL2019-对话系统/index.html">
 <meta property="og:site_name" content="spring&#39;s Blog">
-<meta property="og:description" content="记录Ubuntu服务器遇到的一些问题。">
+<meta property="og:description" content="记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-12T06:13:31.000Z">
+<meta property="og:updated_time" content="2019-07-08T00:31:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu服务器遇到的一些问题">
-<meta name="twitter:description" content="记录Ubuntu服务器遇到的一些问题。">
+<meta name="twitter:title" content="ACL2019-对话系统">
+<meta name="twitter:description" content="记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。">
   
     <link rel="alternate" href="/atom.xml" title="spring&#39;s Blog" type="application/atom+xml">
   
@@ -172,7 +172,7 @@ var themeMenus = {};
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Ubuntu服务器遇到的一些问题" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-ACL2019-对话系统" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -180,7 +180,7 @@ var themeMenus = {};
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Ubuntu服务器遇到的一些问题
+      ACL2019-对话系统
     </h1>
   
 
@@ -188,8 +188,8 @@ var themeMenus = {};
     
     <div class="article-meta">
       
-	Posted on <a href="/2019/03/07/Ubuntu服务器遇到的一些问题/" class="article-date">
-	  <time datetime="2019-03-07T11:53:00.000Z" itemprop="datePublished">三月 7, 2019</time>
+	Posted on <a href="/2019/07/07/ACL2019-对话系统/" class="article-date">
+	  <time datetime="2019-07-07T11:19:27.000Z" itemprop="datePublished">七月 7, 2019</time>
 	</a>
 
       
@@ -200,58 +200,21 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>记录Ubuntu服务器遇到的一些问题。</p>
-<a id="more"></a> 
-<h2 id="linux服务器连不上网"><a href="#linux服务器连不上网" class="headerlink" title="linux服务器连不上网"></a>linux服务器连不上网</h2><ol>
-<li><p>先检查网线是否插好了，若网线口发亮才是插好。检查电脑是否能<code>ping</code>通局域网的其他电脑。</p>
-<ul>
-<li>查看其他电脑的ip地址<br><code>ifconfig | grep inet</code></li>
-<li>ping其他电脑的IP地址<br><code>ping 10.112.0.1</code><br>如果可以ping通其他电脑，再检查下一步。</li>
-</ul>
-</li>
-<li><p>可以ping通其他电脑，但<code>ping 10.3.8.211</code>校园网网关失败。这时可能是路由出错，查看服务器的路由是否正确。</p>
-<ul>
-<li>查看比较服务器与可以正常联网的电脑的路由。<br><code>route -n</code></li>
-<li>添加正确的默认路由。<br><code>route add default gw 10.112.0.1</code></li>
-<li>检查能否连接到校园网。<br><code>ping 10.3.8.211</code><br>Ubuntu配置路由参见: <a href="https://blog.51cto.com/solin/1900865" target="_blank" rel="noopener">ubuntu配置静态路由及重启生效</a></li>
-</ul>
-</li>
-<li><p>连接到校园网，但是<code>ping www.baidu.com</code>失败。服务器ping不通域名，但可以ping通百度的ip地址<code>112.34.112.40</code>。这是服务器的DNS配置出错了，无法解析域名。</p>
-<ul>
-<li><p>修改文件<code>/etc/resolv.conf</code>，必须有sudo权限。<br><code>sudo vim /etc/resolv.conf</code></p>
-</li>
-<li><p>添加以下内容<br><code>nameserver 8.8.8.8</code></p>
-</li>
-<li><p>重启网络使修改立即生效。<br><code>sudo /etc/init.d/networking restart</code></p>
-</li>
-<li><p>这时应该能ping通百度了。</p>
-<p>重启电源后，以上方法会被清除而失效，导致开机后需要重新配置。有效的方法是卸载开机重写<code>/etc/resolv.conf</code>的<code>resolvconf</code>，执行命令<br><code>sudo apt-get autoremove resolvconf</code><br>配置域名解析参见：<a href="https://blog.csdn.net/danielpei1222/article/details/65452451" target="_blank" rel="noopener">Ubuntu 无法解析域名</a></p>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="不能通过Xshell或ssh命令连接到服务器"><a href="#不能通过Xshell或ssh命令连接到服务器" class="headerlink" title="不能通过Xshell或ssh命令连接到服务器"></a>不能通过Xshell或ssh命令连接到服务器</h2><ol>
-<li>检查是否安装了<code>ssh-server</code>服务。<br><code>ps -e | grep ssh</code><ul>
-<li>若没有安装，使用以下命令安装：<br><code>sudo apt-get install openssh-server</code></li>
-</ul>
-</li>
-<li>若安装了<code>ssh-server</code>服务，检查ssh服务是否打开。需要sudo权限<ul>
-<li>检查ssh服务状态<br><code>service sshd status</code><br>或<br><code>/etc/init.d/ssh status</code></li>
-<li>开启ssh服务<br><code>service sshd start</code><br>或<br><code>/etc/init.d/ssh start</code></li>
-</ul>
-</li>
-</ol>
+        <p>记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。</p>
+<a id="more"></a>
+<h3 id="《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》"><a href="#《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》" class="headerlink" title="《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》"></a>《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》</h3><p>【链接】：<a href="https://arxiv.org/abs/1906.01788" target="_blank" rel="noopener">https://arxiv.org/abs/1906.01788</a><br>【源码】：无<br>中科院自动化所发表的短论文。在多轮对话中，对话历史（context information）对回复（response）的生成有重要作用。任务型对话中的管道模型分为4个模块：NLU、对话状态追踪、对话策略学习 及NLG。对话状态追踪又包含任务：domain classification、intent detection和slot filling。domain classification和intent detection任务当做分类任务来处理，常采用SVM或深度神经网络的方法；slot filling任务被当做序列标注任务来处理，常采用BiLSTM+CRF模型。<br>NLU能否充分利用context information，对这三个下游任务有很大影响。<br>为了更好的利用context information，本文提出了对话逻辑推断任务（DLI,dialog logic inference），任务定义为：将打乱顺序的多轮对话重新排序；输入之前的对话，从剩余的utterance candidates中选中下一句对话。NLU任务采用了所谓的memory network，其实就是采用多个encoder对context information进行编码，再用attention机制或别的方法得到context information总的向量化表示。本文联合训练DLI任务和NLU任务，通过两个任务共享encoder和memory retrieve模块，来让NLU任务更好地利用context information。其实是得到context information更合理的向量化表示，来作为下游domain classification、intent detection和slot filling任务的输入。</p>
+<p>论文提出的将打乱顺序的对话重新排序的DLI任务，可以进一步深入，将句子切分为几段打乱顺序再重新排序；可以应用到闲聊式对话系统中。</p>
 
       
     </div>
     <footer class="entry-meta entry-footer">
       
 	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/技术资料/">技术资料</a>
+    <a class="article-category-link" href="/categories/论文/">论文</a>
 
       
   <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器/">服务器</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACL2019/">ACL2019</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dialog-system/">dialog system</a></li></ul>
 
       
         <div id="donation_div"></div>
@@ -299,19 +262,10 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/2019/03/10/全文搜索引擎-Elasticsearch入门/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          全文搜索引擎-Elasticsearch入门
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/03/05/pytorch学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/04/24/自然语言处理-会议列表/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">pytorch学习笔记</div>
+      <div class="article-nav-title">自然语言处理---会议列表</div>
     </a>
   
 </nav>
@@ -325,7 +279,7 @@ var a = new Donate({
     <div id="toc" class="toc-article" style="overflow-y: scroll; max-width: 28%;">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux服务器连不上网"><span class="nav-number">1.</span> <span class="nav-text">linux服务器连不上网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不能通过Xshell或ssh命令连接到服务器"><span class="nav-number">2.</span> <span class="nav-text">不能通过Xshell或ssh命令连接到服务器</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》"><span class="nav-number">1.</span> <span class="nav-text">《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》</span></a></li></ol>
     
     </div>
   </aside>
