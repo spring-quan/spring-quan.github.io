@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-08T00:31:59.000Z">
+<meta property="og:updated_time" content="2019-07-08T00:34:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ACL2019-对话系统">
 <meta name="twitter:description" content="记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。">
@@ -202,7 +202,8 @@ var themeMenus = {};
       
         <p>记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。</p>
 <a id="more"></a>
-<h3 id="《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》"><a href="#《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》" class="headerlink" title="《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》"></a>《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》</h3><p>【链接】：<a href="https://arxiv.org/abs/1906.01788" target="_blank" rel="noopener">https://arxiv.org/abs/1906.01788</a><br>【源码】：无<br>中科院自动化所发表的短论文。在多轮对话中，对话历史（context information）对回复（response）的生成有重要作用。任务型对话中的管道模型分为4个模块：NLU、对话状态追踪、对话策略学习 及NLG。对话状态追踪又包含任务：domain classification、intent detection和slot filling。domain classification和intent detection任务当做分类任务来处理，常采用SVM或深度神经网络的方法；slot filling任务被当做序列标注任务来处理，常采用BiLSTM+CRF模型。<br>NLU能否充分利用context information，对这三个下游任务有很大影响。<br>为了更好的利用context information，本文提出了对话逻辑推断任务（DLI,dialog logic inference），任务定义为：将打乱顺序的多轮对话重新排序；输入之前的对话，从剩余的utterance candidates中选中下一句对话。NLU任务采用了所谓的memory network，其实就是采用多个encoder对context information进行编码，再用attention机制或别的方法得到context information总的向量化表示。本文联合训练DLI任务和NLU任务，通过两个任务共享encoder和memory retrieve模块，来让NLU任务更好地利用context information。其实是得到context information更合理的向量化表示，来作为下游domain classification、intent detection和slot filling任务的输入。</p>
+<h3 id="《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》"><a href="#《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》" class="headerlink" title="《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》"></a>《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》</h3><p>【链接】：<a href="https://arxiv.org/abs/1906.01788" target="_blank" rel="noopener">https://arxiv.org/abs/1906.01788</a><br>【源码】：无</p>
+<p>中科院自动化所发表的短论文。在多轮对话中，对话历史（context information）对回复（response）的生成有重要作用。任务型对话中的管道模型分为4个模块：NLU、对话状态追踪、对话策略学习 及NLG。对话状态追踪又包含任务：domain classification、intent detection和slot filling。domain classification和intent detection任务当做分类任务来处理，常采用SVM或深度神经网络的方法；slot filling任务被当做序列标注任务来处理，常采用BiLSTM+CRF模型。NLU能否充分利用context information，对这三个下游任务有很大影响。<br>为了更好的利用context information，本文提出了对话逻辑推断任务（DLI,dialog logic inference），任务定义为：将打乱顺序的多轮对话重新排序；输入之前的对话，从剩余的utterance candidates中选中下一句对话。NLU任务采用了所谓的memory network，其实就是采用多个encoder对context information进行编码，再用attention机制或别的方法得到context information总的向量化表示。本文联合训练DLI任务和NLU任务，通过两个任务共享encoder和memory retrieve模块，来让NLU任务更好地利用context information。其实是得到context information更合理的向量化表示，来作为下游domain classification、intent detection和slot filling任务的输入。</p>
 <p>论文提出的将打乱顺序的对话重新排序的DLI任务，可以进一步深入，将句子切分为几段打乱顺序再重新排序；可以应用到闲聊式对话系统中。</p>
 
       
