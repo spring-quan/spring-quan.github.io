@@ -29,10 +29,12 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。ACL2019的会议列表链接：http://www.acl2019.org/EN/program.xhtml">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-08T09:01:01.000Z">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/ACL2019-对话系统/images/42.png">
+<meta property="og:updated_time" content="2019-07-20T07:59:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ACL2019-对话系统">
 <meta name="twitter:description" content="记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。ACL2019的会议列表链接：http://www.acl2019.org/EN/program.xhtml">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/07/ACL2019-对话系统/images/42.png">
   
     <link rel="alternate" href="/atom.xml" title="spring&#39;s Blog" type="application/atom+xml">
   
@@ -225,6 +227,22 @@ var themeMenus = {};
 </li>
 </ul>
 <p>论文的最终目的是通过NLI任务训练的模型来提高persona dialog system的一致性。这是如何来实现的呢？对于一个dialog system，给定对话历史$（u_1,u_2,…,u_t）$ 及说话人的persona文本描述$（p_1,p_2,…,p_n）$,从response candidates$（y_1,y_2,…,y_m）$中选择一个$u_{t+1}$（如何生成多个responses不是这篇论文要解决的）。<br>用NLI任务的模型来预测$(y_i,u_j),(y_i,p_k)其中：i\in [1,m],j\in [1,t],k \in [1,n]$对应的label，如果句子之间是矛盾的，则添加惩罚项。从而得到一致性最好的utterance作为response。</p>
+<h3 id="《ReCoSa-Detecting-the-Relevant-Contexts-with-Self-Attention-for-Multi-turn-Dialogue-Generation》"><a href="#《ReCoSa-Detecting-the-Relevant-Contexts-with-Self-Attention-for-Multi-turn-Dialogue-Generation》" class="headerlink" title="《ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation》"></a>《ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation》</h3><p>【链接】：<a href="https://arxiv.org/abs/1907.05339" target="_blank" rel="noopener">https://arxiv.org/abs/1907.05339</a><br>【数据集】：<a href="https://github.com/rkadlec/ubuntu-ranking-dataset-creator" target="_blank" rel="noopener">English Ubuntu dialogue corpus</a><br>【代码】：<a href="https://github.com/zhanghainan/ReCoSa" target="_blank" rel="noopener">https://github.com/zhanghainan/ReCoSa</a></p>
+<p>中科院发表的论文。<br>在多轮对话中，生成response时，对话历史中最相关的部分起着重要的作用。论文要解决的问题：如何更准确地找到并利用relevant context来生成response。<br>多轮对话中广泛使用的HRED模型,[<a href="https://arxiv.org/abs/1507.04808" target="_blank" rel="noopener">(Serban et al.,2016;</a>,<a href="https://arxiv.org/abs/1507.02221" target="_blank" rel="noopener">Sordoni et al., 2015</a>]无差别地利用context information，忽略了relevant context。虽然有利用relevant context的相关工作，但这些工作都有各自的问题。[<a href="https://www.aclweb.org/anthology/P17-2036" target="_blank" rel="noopener">Tian et al., 2017</a>]提出计算context 与post之间的cosine similarity来衡量context relevance，其假设是context与response之间的relevance等价于post与response之间的relevance，这个假设是站不住脚的。[<a href>Xing et al., 2018</a>]向HRED模型引入了attention机制，但attention机制定位relevant context时会产生偏差，因为基于RNN的attention机制倾向于最靠近的context（close context）。论文提出了自己的解决办法，用self-attention机制来衡量context于response之间的relevance。self-attention机制的优点是可以有效捕捉到长距离的依赖关系。</p>
+<p>模型分为三个部分：<br>context包含N轮对话： ${s_1,s_2,…,s_N}$其中，$s_i = {x_1,x_2,…,x_M}$，M为句子长度。<br>response为$Y = {y_1,y_2,…,y_M}$</p>
+<ol>
+<li><strong>context representation encoder</strong>：<br> 将context encode为vector。<ol>
+<li>word-level encoder：<br> 用LSTM对sentence编码，将LSTM最后一个时间步的hidden state作为sentence representation: $h^{s_i}$；<br> 由于self-attention机制不能区分word位置信息，还需要添加position embedding: $p^{s_i}$,<br> 把两个向量做concatenate操作，得到总得sentence representation:$(h^{s_i},p^{s_i})$。<br> 对于context中的N个句子有${(h^{s_1},p^{s_1}),…,(h^{s_N},p^{s_N})}$</li>
+<li>context self-attention:<br> 采用multi-head self-attention机制，将${(h^{s_1},p^{s_1}),…,(h^{s_N},p^{s_N})}$经过不同的线性变换作为query、keys、values matrix,由N个sentence representation得到总的context representation $O_s$。</li>
+</ol>
+</li>
+<li><strong>response representation encoder</strong><br> 同样用multi-head self-attention机制,将response的word embedding及position embedding ${(w_1,p_1),…,(w_{t-1},p_{t-1})}$经过不同的线性变换作为query、keys、values matrix，得到response representation $O_r$。<ol>
+<li>在train阶段<br> 采用mask操作，在时间步t对于word $y_t$，mask掉${y_t,y_{t+1},…,y_M}$，只保留${y_1,y_2,…,y_{t-1}}$来计算response representation。</li>
+<li>在infer阶段<br> 在生成response的时间步t，将生成的response ${g_1,…,g_{t-1}}$，来作为response representation。</li>
+</ol>
+</li>
+<li><strong>context-response attention decoder</strong><br> 采用multi-head self-attention机制，将context attention representation $O_s$作为keys、values matrix，将response hidden representation $O_r$作为query matrix。得到输出$O_d$. <img src="./images/42.png" alt="模型框架图"></li>
+</ol>
 
       
     </div>
@@ -309,7 +327,7 @@ var a = new Donate({
     <div id="toc" class="toc-article" style="overflow-y: scroll; max-width: 28%;">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》"><span class="nav-number">1.</span> <span class="nav-text">《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#《Dialogue-Natural-Language-Inference》"><span class="nav-number">2.</span> <span class="nav-text">《Dialogue Natural Language Inference》</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》"><span class="nav-number">1.</span> <span class="nav-text">《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#《Dialogue-Natural-Language-Inference》"><span class="nav-number">2.</span> <span class="nav-text">《Dialogue Natural Language Inference》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#《ReCoSa-Detecting-the-Relevant-Contexts-with-Self-Attention-for-Multi-turn-Dialogue-Generation》"><span class="nav-number">3.</span> <span class="nav-text">《ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation》</span></a></li></ol>
     
     </div>
   </aside>
