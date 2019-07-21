@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/03/23/%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BACRF/</loc>
+    
+    <lastmod>2019-07-21T15:24:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/03/29/nvidia-smi%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E2%80%98Failed-to-initialize-NVML-Driver-library-version-mismatch%E2%80%99/</loc>
+    
+    <lastmod>2019-07-21T15:23:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/04/19/python%E8%AF%BB%E5%86%99csv%E6%96%87%E4%BB%B6/</loc>
+    
+    <lastmod>2019-07-21T15:22:55.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/03/14/%E5%8E%BB%E6%96%B0%E8%97%8F%E7%BA%BF%E4%B8%8A%E9%AA%91%E8%BD%A6/</loc>
     
     <lastmod>2019-07-21T15:19:07.000Z</lastmod>
@@ -65,13 +86,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/03/23/%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BACRF/</loc>
-    
-    <lastmod>2019-07-07T07:14:19.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/01/16/2018-%E7%BE%A4%E6%98%9F%E9%99%A8%E8%90%BD/</loc>
     
     <lastmod>2019-07-07T07:12:28.000Z</lastmod>
@@ -107,23 +121,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/04/19/python%E8%AF%BB%E5%86%99csv%E6%96%87%E4%BB%B6/</loc>
-    
-    <lastmod>2019-04-20T10:56:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/04/16/torch-cuda-is-available-%E8%BF%94%E5%9B%9EFalse-%E4%BD%86nvidia-smi%E6%AD%A3%E5%B8%B8/</loc>
     
     <lastmod>2019-04-20T10:56:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/03/29/nvidia-smi%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E2%80%98Failed-to-initialize-NVML-Driver-library-version-mismatch%E2%80%99/</loc>
-    
-    <lastmod>2019-03-30T06:35:09.000Z</lastmod>
     
   </url>
   

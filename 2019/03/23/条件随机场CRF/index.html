@@ -29,17 +29,17 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="最近学习了条件随机场CRF，做下总结。主要参考BiLSTM+CRF模型中的CRF层为主线，结合李航老师的《统计机器学习》，记录自己对CRF的理解。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/03/23/条件随机场CRF/images/21.png)线性链条件随机场">
-<meta property="og:image" content="http://yoursite.com/2019/03/23/条件随机场CRF/images/22.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/23/条件随机场CRF/images/23.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/23/条件随机场CRF/images/26.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/23/条件随机场CRF/images/27.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/23/条件随机场CRF/images/30.png">
-<meta property="og:updated_time" content="2019-07-07T07:14:19.000Z">
+<meta property="og:image" content="http://yoursite.com/images/21.png)线性链条件随机场">
+<meta property="og:image" content="http://yoursite.com/images/22.png">
+<meta property="og:image" content="http://yoursite.com/images/23.png">
+<meta property="og:image" content="http://yoursite.com/images/26.png">
+<meta property="og:image" content="http://yoursite.com/images/27.png">
+<meta property="og:image" content="http://yoursite.com/images/30.png">
+<meta property="og:updated_time" content="2019-07-21T15:24:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="条件随机场CRF">
 <meta name="twitter:description" content="最近学习了条件随机场CRF，做下总结。主要参考BiLSTM+CRF模型中的CRF层为主线，结合李航老师的《统计机器学习》，记录自己对CRF的理解。">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/23/条件随机场CRF/images/21.png)线性链条件随机场">
+<meta name="twitter:image" content="http://yoursite.com/images/21.png)线性链条件随机场">
     
         <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
     
@@ -214,7 +214,7 @@
 <li><p><strong>线性链条件随机场</strong><br> 设$X =(X_1,X_2,…,X_n), Y =(Y_1,Y_2,…,Y_n)$是线性链表示的随机变量序列。若在给定随机变量序列X的条件下，随机变量序列Y的条件概率分布P(Y|X)构成条件随机场，即满足马尔可夫性：$$P(Y_i|X,Y_1,Y_2,…,Y_{i-1},Y_{i+1},…,Y_n) = P(Y_i|X,Y_{i-1},Y_{i+1})$$ 。则称条件概率分布p(Y|X)为线性链条件随机场。<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/21.png)线性链条件随机场" alt="和" title>
+                    <img src="/images/21.png)线性链条件随机场" alt="和" title>
                 </div>
                 <div class="image-caption">和</div>
             </figure>中，X是输入变量序列，表示需要标注的观测序列；Y是输出变量，表示标记序列，或称状态序列。</p>
@@ -244,7 +244,7 @@
 <p>先简单介绍下BiLSTM+CRF模型的结构。LSTM层的输入一般为每个词的Word-embedding，输出为每个词word在类别空间tag_space上的非归一化概率，也就是在单词对应每个类别的得分score。这些score作为CRF层的输入。<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/22.png" alt title>
+                    <img src="/images/22.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -266,7 +266,7 @@
 <p>长度为5的序列，$X = (w_0,w_1,w_2,w_3,w_4)$,对应类别为$Y = [B-Person，I-Person,O,B-Organization,O]$，标注序列，也就是真实路径为为y = [0,1,4,3,4]。<br>真实路径的分数由两部分组成，状态分数和转移分数。状态矩阵就是LSTM层的输出。转移矩阵是模型参数，为$$[t_{ij}],i,j\in [0,6] and i\neq 6,j\neq 5$$其中$t_ij$表示从上一状态转换到当前状态的概率。转移时，不能转移到start，不能从end转移。<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/23.png" alt title>
+                    <img src="/images/23.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>则真实路径的分数 = 转移分数 + 状态分数 = $1.5+0.4+0.1+0.2+0.5+t_{51}+t_{01}+t_{14}+t_{42}+t_{24}+t_{46}$</p>
@@ -275,14 +275,14 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/26.png" alt="](./images/24.png)用同样的方法更新$w_1$所有状态的状态分数，这就是所有局部路径的分数。要计算M个状态，计算量是$O(M^2)$![](./images/25.png)依次递推到全局。序列长度为N,总的计算量是$O(N cdot M^2)$![" title>
+                    <img src="/images/26.png" alt="](/images/24.png)用同样的方法更新$w_1$所有状态的状态分数，这就是所有局部路径的分数。要计算M个状态，计算量是$O(M^2)$![](/images/25.png)依次递推到全局。序列长度为N,总的计算量是$O(N cdot M^2)$![" title>
                 </div>
-                <div class="image-caption">](./images/24.png)用同样的方法更新$w_1$所有状态的状态分数，这就是所有局部路径的分数。要计算M个状态，计算量是$O(M^2)$![](./images/25.png)依次递推到全局。序列长度为N,总的计算量是$O(N cdot M^2)$![</div>
+                <div class="image-caption">](/images/24.png)用同样的方法更新$w_1$所有状态的状态分数，这就是所有局部路径的分数。要计算M个状态，计算量是$O(M^2)$![](/images/25.png)依次递推到全局。序列长度为N,总的计算量是$O(N cdot M^2)$![</div>
             </figure>
 <p>从图的角度解释了前向算法，我们再从数学计算的角度来看前向算法。简化一下问题，假设句子长度为3，$X = [w_0,w_1,w_2]$,只有2个类别[1,2]<br>我们引入两个变量<code>previous</code>和<code>obs</code>。<code>previous</code>存储前一时刻的计算结果，<code>obs</code>存储当前状态分数。<br>对于$w_0$:$$obs = [x_{01},x_{02}];previous = none$$<br>对于$w_0 \to w_1:$,$$previous = [x_{01},x_{02}],obs = [x_{11},x_{12}]$$<br>先扩展<code>previous</code>和<code>obs</code>：$$previous = \begin{pmatrix} x_{01}&amp;x_{01}\x_{02}&amp;x_{02} \end{pmatrix} \quad$$$$obs = \begin{pmatrix} x_{11}&amp;x_{12}\x_{11}&amp;x_{12} \end{pmatrix} \quad$$将<code>previous</code>和<code>obs</code>和转移矩阵相加：$$score =\begin{pmatrix} x_{01}&amp;x_{01}\x_{02}&amp;x_{02} \end{pmatrix} +\begin{pmatrix} x_{11}&amp;x_{12}\x_{11}&amp;x_{12} \end{pmatrix}+\begin{pmatrix} t_{11}&amp;t_{12}\t_{21}&amp;t_{22} \end{pmatrix}$$$$  = \begin{pmatrix} x_{01}+x_{11}+t_{11}&amp;x_{01}+x_{12}+t_{12}\x_{02}+x_{11}+t_{21}&amp;x_{02}+x_{12}+t_{22} \end{pmatrix}$$<br>score同列相加，更新<code>previous</code>:$$previous = [x_{01}+x_{11}+t_{11}+x_{02}+x_{11}+t_{21},x_{01}+x_{12}+t_{12}+x_{02}+x_{12}+t_{22}]$$<br>这样第二次迭代就完成了。用图来表示到目前为止的计算：<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/27.png" alt title>
+                    <img src="/images/27.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>用同样的方法迭代递推，就可以得到所有路径的分数。</p>
@@ -290,9 +290,9 @@
 <h2 id="维特比算法解码"><a href="#维特比算法解码" class="headerlink" title="维特比算法解码"></a>维特比算法解码</h2><p>条件随机场的第三个基本问题是预测问题，给出条件随机场的模型 和 输入序列x，求条件概率最大输出序列$y^*$。 也就是找出所有路径中得分最高的那条路径作为标注路径。与计算所有路径总分一样，我们面对的难题是要不要求出所有路径的分数。当然是不用的，我们用维特比算法来解码。<br>通信专业的同学一定知道大名鼎鼎的维特比算法，卷积码的译码就是用的维特比算法。<br>对于 $w_0 \to w_1$:<br>先计算$w_0$到$w_1$的状态1五条路径的分数，找出分数最大的一条保留下来，其他全都丢弃掉。计算量为$O(M)$<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/30.png" alt="](./images/28.png)同样的找出$w_1$每个状态分数最大的一条路径，要计算$w_1$的5个状态，计算量为$O(M^2)$![](./images/29.png)依次递推到全局。序列长度为N,计算量为$O(N cdot M^2)$![" title>
+                    <img src="/images/30.png" alt="](/images/28.png)同样的找出$w_1$每个状态分数最大的一条路径，要计算$w_1$的5个状态，计算量为$O(M^2)$![](/images/29.png)依次递推到全局。序列长度为N,计算量为$O(N cdot M^2)$![" title>
                 </div>
-                <div class="image-caption">](./images/28.png)同样的找出$w_1$每个状态分数最大的一条路径，要计算$w_1$的5个状态，计算量为$O(M^2)$![](./images/29.png)依次递推到全局。序列长度为N,计算量为$O(N cdot M^2)$![</div>
+                <div class="image-caption">](/images/28.png)同样的找出$w_1$每个状态分数最大的一条路径，要计算$w_1$的5个状态，计算量为$O(M^2)$![](/images/29.png)依次递推到全局。序列长度为N,计算量为$O(N cdot M^2)$![</div>
             </figure></p>
 <p>比较下前向算法与维特比算法的异同：<br>相同的地方在他们都面临要不要计算所有路径分数的问题，都是基于路径结构，用局部递推到全局。<br>不同的地方在于前向算法在更新previous的单个状态时是做求和sum运算，而维特比算法是做max运算，只保留分数最大的，丢弃掉其他路径。此外，维特比算法找到分数最大的路径后，还要反向递推</p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
@@ -310,7 +310,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-07-07T07:14:19.000Z" itemprop="dateUpdated">2019-07-07 15:14:19</time>
+    最后更新时间：<time datetime="2019-07-21T15:24:00.000Z" itemprop="dateUpdated">2019-07-21 23:24:00</time>
 </span><br>
 
 

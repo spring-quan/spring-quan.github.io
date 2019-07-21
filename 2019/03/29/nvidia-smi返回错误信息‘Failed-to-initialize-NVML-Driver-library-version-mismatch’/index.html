@@ -29,15 +29,15 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="Ubuntu运行命令nvidia-smi出错。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/images/31.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/images/32.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/images/33.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/images/34.png">
-<meta property="og:updated_time" content="2019-03-30T06:35:09.000Z">
+<meta property="og:image" content="http://yoursite.com/images/31.png">
+<meta property="og:image" content="http://yoursite.com/images/32.png">
+<meta property="og:image" content="http://yoursite.com/images/33.png">
+<meta property="og:image" content="http://yoursite.com/images/34.png">
+<meta property="og:updated_time" content="2019-07-21T15:23:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nvidia-smi返回错误信息‘Failed to initialize NVML: Driver&#x2F;library version mismatch’">
 <meta name="twitter:description" content="Ubuntu运行命令nvidia-smi出错。">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/images/31.png">
+<meta name="twitter:image" content="http://yoursite.com/images/31.png">
     
         <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
     
@@ -213,14 +213,14 @@
 <li><code>dpkg -l | grep nvidia</code> <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/31.png" alt title>
+                    <img src="/images/31.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>可以看到驱动版本是<code>390.116</code></li>
 <li><code>cat /proc/driver/nvidia/version</code> <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/32.png" alt title>
+                    <img src="/images/32.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>这里NVRM的版本是<code>390.87</code>。错误信息就是这两个版本不匹配造成的。接下来先卸载NVIDIA driver，再重新安装。</li>
@@ -241,13 +241,13 @@
 <p>这时再用<code>cat /proc/driver/nvidia/version</code>查看NVIDIA driver的驱动。<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/33.png" alt title>
+                    <img src="/images/33.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure> 可以看到NVRM的版本是<code>390.116</code>，这时版本就匹配了。<br>再次执行<code>nvidia-smi</code>,终于看到<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/34.png" alt title>
+                    <img src="/images/34.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -283,7 +283,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-03-30T06:35:09.000Z" itemprop="dateUpdated">2019-03-30 14:35:09</time>
+    最后更新时间：<time datetime="2019-07-21T15:23:36.000Z" itemprop="dateUpdated">2019-07-21 23:23:36</time>
 </span><br>
 
 
