@@ -29,12 +29,12 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="Elasticsearch是一个开源的搜索引擎框架。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/03/10/全文搜索引擎-Elasticsearch入门/images/12.png">
-<meta property="og:updated_time" content="2019-03-15T10:31:33.000Z">
+<meta property="og:image" content="http://yoursite.com/images/12.png">
+<meta property="og:updated_time" content="2019-07-22T00:38:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="全文搜索引擎-Elasticsearch入门">
 <meta name="twitter:description" content="Elasticsearch是一个开源的搜索引擎框架。">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/10/全文搜索引擎-Elasticsearch入门/images/12.png">
+<meta name="twitter:image" content="http://yoursite.com/images/12.png">
     
         <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
     
@@ -212,7 +212,7 @@
 <p> 如果输出以下信息，则运行正常。<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/12.png" alt title>
+                    <img src="/images/12.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -265,7 +265,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-03-15T10:31:33.000Z" itemprop="dateUpdated">2019-03-15 18:31:33</time>
+    最后更新时间：<time datetime="2019-07-22T00:38:38.000Z" itemprop="dateUpdated">2019-07-22 08:38:38</time>
 </span><br>
 
 
@@ -530,6 +530,27 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 <script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 

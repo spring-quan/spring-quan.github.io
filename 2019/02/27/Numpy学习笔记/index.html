@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="这里是numpy学习笔记。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-25T13:28:23.000Z">
+<meta property="og:updated_time" content="2019-07-22T00:37:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Numpy学习笔记">
 <meta name="twitter:description" content="这里是numpy学习笔记。">
@@ -167,7 +167,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-copy"><span class="post-toc-number">1.</span> <span class="post-toc-text">np.copy</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-load与np-save"><span class="post-toc-number">2.</span> <span class="post-toc-text">np.load与np.save</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-full"><span class="post-toc-number">3.</span> <span class="post-toc-text">np.full</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-foat32"><span class="post-toc-number">4.</span> <span class="post-toc-text">np.foat32</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#pad"><span class="post-toc-number">5.</span> <span class="post-toc-text">pad()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-random"><span class="post-toc-number">6.</span> <span class="post-toc-text">np.random</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#np-random-uniform"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">np.random.uniform</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">7.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-copy"><span class="post-toc-number">1.</span> <span class="post-toc-text">np.copy</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-load与np-save"><span class="post-toc-number">2.</span> <span class="post-toc-text">np.load与np.save</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-full"><span class="post-toc-number">3.</span> <span class="post-toc-text">np.full</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-foat32"><span class="post-toc-number">4.</span> <span class="post-toc-text">np.foat32</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-pad"><span class="post-toc-number">5.</span> <span class="post-toc-text">np.pad</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#np-random"><span class="post-toc-number">6.</span> <span class="post-toc-text">np.random</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#np-random-uniform"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">np.random.uniform</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">7.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
         </nav>
     </aside>
 
@@ -218,7 +218,7 @@
 
 <p>作用： 返回一个 给定形状为<code>shape</code>，数据类型为<code>dtype</code>，全都由<code>fill_value</code>填充后的ndarray。</p>
 <h3 id="np-foat32"><a href="#np-foat32" class="headerlink" title="np.foat32"></a>np.foat32</h3><p><code>np.float32(x)</code><br>作用：变换数据类型为float32</p>
-<h3 id="pad"><a href="#pad" class="headerlink" title="pad()"></a>pad()</h3><p><strong>参数解释</strong></p>
+<h3 id="np-pad"><a href="#np-pad" class="headerlink" title="np.pad"></a>np.pad</h3><p><strong>参数解释</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.pad(array, pad_width, mode, **kwargs)</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -248,7 +248,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-03-25T13:28:23.000Z" itemprop="dateUpdated">2019-03-25 21:28:23</time>
+    最后更新时间：<time datetime="2019-07-22T00:37:14.000Z" itemprop="dateUpdated">2019-07-22 08:37:14</time>
 </span><br>
 
 
@@ -513,6 +513,27 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 <script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 

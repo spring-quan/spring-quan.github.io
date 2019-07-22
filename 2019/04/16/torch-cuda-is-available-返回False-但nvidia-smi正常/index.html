@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="torch.cuda.is_available()返回False,但nvidia-smi可以正常运行。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/images/34.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/images/32.png">
-<meta property="og:updated_time" content="2019-04-20T10:56:50.000Z">
+<meta property="og:image" content="http://yoursite.com/images/34.png">
+<meta property="og:image" content="http://yoursite.com/images/32.png">
+<meta property="og:updated_time" content="2019-07-22T01:27:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="torch.cuda.is_available()返回False,但nvidia-smi正常">
 <meta name="twitter:description" content="torch.cuda.is_available()返回False,但nvidia-smi可以正常运行。">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/images/34.png">
+<meta name="twitter:image" content="http://yoursite.com/images/34.png">
     
         <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
     
@@ -204,7 +204,7 @@
 <p>此时，<code>nvidia-smi</code>可以正常运行。<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/34.png" alt title>
+                    <img src="/images/34.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -230,7 +230,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="./images/32.png" alt title>
+                    <img src="/images/32.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -251,7 +251,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-04-20T10:56:50.000Z" itemprop="dateUpdated">2019-04-20 18:56:50</time>
+    最后更新时间：<time datetime="2019-07-22T01:27:54.000Z" itemprop="dateUpdated">2019-07-22 09:27:54</time>
 </span><br>
 
 
@@ -516,6 +516,27 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 <script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 
