@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>attention? attention! | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="rnn,attention">
+    <meta name="description" content="读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
+<meta name="keywords" content="rnn,attention">
+<meta property="og:type" content="article">
+<meta property="og:title" content="attention? attention!">
+<meta property="og:url" content="http://yoursite.com/2019/07/23/attention-attention/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/43.png">
+<meta property="og:image" content="http://yoursite.com/images/44.png">
+<meta property="og:image" content="http://yoursite.com/images/45.png">
+<meta property="og:updated_time" content="2019-07-24T06:19:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="attention? attention!">
+<meta name="twitter:description" content="读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
+<meta name="twitter:image" content="http://yoursite.com/images/43.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">attention? attention!</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">attention? attention!</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-23T08:20:18.000Z" itemprop="datePublished" class="page-time">
+  2019-07-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#why-we-need-attention-从seq2seq模型谈起"><span class="post-toc-number">1.</span> <span class="post-toc-text">why we need attention?从seq2seq模型谈起</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#attention机制-born-for-Translation"><span class="post-toc-number">2.</span> <span class="post-toc-text">attention机制:born for Translation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#attention的数学定义"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">attention的数学定义</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#各种attention机制"><span class="post-toc-number">3.</span> <span class="post-toc-text">各种attention机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#汇总"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">汇总</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-attention-attention"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">attention? attention!</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-23 16:20:18" datetime="2019-07-23T08:20:18.000Z"  itemprop="datePublished">2019-07-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>读了博主lilian的文章<a href="https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html#neural-turing-machines" target="_blank" rel="noopener">attention? attention!</a>，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。<br>attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。</p>
+<a id="more"></a>
+<h3 id="why-we-need-attention-从seq2seq模型谈起"><a href="#why-we-need-attention-从seq2seq模型谈起" class="headerlink" title="why we need attention?从seq2seq模型谈起"></a>why we need attention?从seq2seq模型谈起</h3><p><strong>seq2seq模型</strong>与14年提出(<a href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf" target="_blank" rel="noopener">Sutskever, et al. 2014</a>)，实现输入序列(source sequence)到输出序列(target sequence)的映射，这两个序列的长度都是可变的。序列到序列映射的任务包括机器翻译、问答系统、对话系统、摘要生成等。</p>
+<p>用数学语言来定义序列到序列的任务，给定输入序列(source sequence) $X = \lbrace{ x_1,x_2,…,x_n \rbrace}$，需要生成输出序列(target sequence) $Y = \lbrace{ y_1,y_2,…,y_m \rbrace}$，其中source sequence长度为$n$,target sequence长度为$m$。</p>
+<p><strong>seq2seq模型</strong>基于encoder-decoder框架，包括2个部分：</p>
+<ol>
+<li><p><strong>encoder</strong>将source sequence编码（映射）为一个固定维度的向量表示(context vector,或称为sentence embedding)，我们希望这个向量表示可以很好的表示source sequence的意思。<br> encoder可以采用卷积神经网络CNN，也可以采用循环神经网络RNN，但用的更多的效果也更好的还是RNN。通常使用<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">LSTM 或 GRU</a>。<br> encoder RNN的隐藏状态更新公式为：$$\begin{gather}h_t = f(h_{t-1},x_t)\end{gather}$$其中$h_t$为RNN在时间步t的隐藏状态，f为LSTM 或GRU.<br> 对于长度为n的source sequence，一个词接一个词地输入RNN后，可以得到n个隐藏状态$(h_1,h_2,…,h_n)$，通常将最后一个时间步最后一个词对应的隐藏状态$h_t$作为source sequence的向量表示，也就是context vector，记为$c$。</p>
+</li>
+<li><p><strong>decoder</strong>根据source sequence的向量表示context vector，来一个词一个词的生成target sequence。<br> decoder采用单向RNN，decoder RNN隐藏状态的更新公式为:$$\begin{gather}s_t = f(s_{t-1},y_{t-1},c)\end{gather}$$其中$s_t$为decoder在时间步t的隐藏状态，$y_{t-1}$为target sequence中的上一个词，在train阶段，$y_{n-1}$为真实target sequence中的上一个词，在infer阶段，$y_{t-1}$为预测输出的上一个词；c为context vector。<br> 时间步t，隐藏状态$s_t$再经过线性层和softmax得到在词表上的概率分布，将概率最大的词作为prediction word $y_t$。迭代循环直到输出整个target sequence。</p>
+</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/43.png" alt="Fig.1. seq2seq模型的框架图" title>
+                </div>
+                <div class="image-caption">Fig.1. seq2seq模型的框架图</div>
+            </figure>
+<p>我们可以看到当生成不同的$y_t$时，所依据的context vector都是固定不变的。固定的context vector有一个缺点是：当encoder编码完整个source sequence时，会偏向于最近的词，而遗忘了距离更远的最开始的一些词。<a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="noopener">(Bahdanau et al., 2015)</a>提出了attention机制来解决这个问题。</p>
+<h3 id="attention机制-born-for-Translation"><a href="#attention机制-born-for-Translation" class="headerlink" title="attention机制:born for Translation"></a>attention机制:born for Translation</h3><p>attention机制最先在机器翻译(neural machine translation,NMT)任务上提出。从解决长期依赖问题的角度，attention可以实现长距离的记忆；从注意力的角度，attention机制可以实现对齐(alignment)，用更多的注意力关注到相关的部分，而忽略或低注意力关注到不相关的部分。</p>
+<p>上文中提到，在生成不同的$y_t$时，直接将encoder最后一个时间步的隐藏状态$h_n$作为固定context vector。不同于这种方法，attention机制将所有encoder隐藏状态$\lbrace{ h_1,h_2,…,h_n }\rbrace$的加权和作为context vector，这样在每个时间步t生成$y_t$时，所依据的context vector都是专门针对于$y_t$的。<br>一方面，context vector可以获取到所有隐藏状态，也就是整个source sequence的信息，这样就可以实现长距离的记忆。另一方面，source sequence 与target sequence之间的语义对齐(aligenment)是也是通过context vector实现的。在计算时间步t生成$y_t$对应的context vector $c_t$的计算需要三个部分的信息：</p>
+<ul>
+<li>所有的encoder隐藏状态： $\lbrace{ h_1,h_2,…,h_n }\rbrace$</li>
+<li>上个时间步t-1的decoder 隐藏状态： $s_{t-1}$</li>
+<li>source与target之间的alignment.<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/44.png" alt="Fig.2.有attention机制的encoder-decoder模型，来源:[Bahdanau et al., 2015.](https://arxiv.org/pdf/1409.0473.pdf)" title>
+                </div>
+                <div class="image-caption">Fig.2.有attention机制的encoder-decoder模型，来源:[Bahdanau et al., 2015.](https://arxiv.org/pdf/1409.0473.pdf)</div>
+            </figure>
+
+</li>
+</ul>
+<h4 id="attention的数学定义"><a href="#attention的数学定义" class="headerlink" title="attention的数学定义"></a>attention的数学定义</h4><p>在计算时间步t生成$y_t$对应的context vector $c_t$时，encoder的所有隐藏状态为 $\lbrace{ h_1,h_2,…,h_n }\rbrace$，时间步t-1的decoder隐藏状态为 $s_{t-1}$，decoder RNN的隐藏状态更新公式变为：$$\begin{gather}s_t = f(s_{t-1},y_{t-1},c_t)\end{gather}$$ context vector $c_t$为encoder hidden state的加权和：<br>$$c_t = \sum_{i=1}^{n}\alpha_{t,i}h_i$$ $$\alpha_{t,i} = softmax(\beta_{t,i}) = \frac{exp(\beta_{t,i})}{\sum_{j = 1}^{n}exp(\beta_{t,j})}$$ $$\beta_{t,i} = score(s_{t-1},h_i)$$<br>其中权重$\alpha_{t,i}$是时间步t生成$y_t$与隐藏状态$h_i$之间的score，从某种意义上说，$h_i$可以看作是$x_i$的表示，也可以看作是$\lbrace{x_1,x_2,…,x_{i}}\rbrace$的表示。因此，$\alpha_{t,i}$可以看作是$y_t$与$x_i$之间联系（相关性）的score。所有权重$\lbrace{\alpha_{t,1},\alpha_{t,2},…,\alpha_{t,n}}\rbrace$衡量了生成$y_t$时应该如何关注到所有的encoder hidden state。</p>
+<p>score()为打分函数，有多种计算方法，下文会详细介绍。在<a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="noopener">Bahdanau et al., 2015.</a>中，score()采用前馈神经网络，采用非线性激活函数$tanh()$,score()的数学形式为：$$score(s_{t},h_i) = v_a^\top tanh(W_a[s_t;h_i])$$<br>其中$v_a,W_a$是可训练参数。<br>attention权重可视化矩阵很直观地表明了source words与target words之间的关联关系:</p>
+<div align="center"><img src="/images/45.png" width="60%" height="60%"></div>
+<div align="center"><font color="grey" size="2">Fig.3.来源:[Bahdanau et al., 2015.](https://arxiv.org/pdf/1409.0473.pdf)</font></div>
+
+<h3 id="各种attention机制"><a href="#各种attention机制" class="headerlink" title="各种attention机制"></a>各种attention机制</h3><h4 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h4><p>下表总结了使用比较广泛的attention机制，及其对应的alignment score function。</p>
+<table class="table table-bordered table-striped table-condensed">
+   <tr>
+      <th width="25">名字</th>
+      <th>alignment score funtion</th>
+      <th width="25">来源</th>
+   </tr>
+   <tr>
+      <td>content-based attention</td>
+      <td>$score(s_t,h_i) = cosine(s_t,h_i)$</td>
+      <td><a href="https://arxiv.org/abs/1410.5401" target="_blank" rel="noopener">Graves2014</a></td>
+   </tr>
+   <tr>
+      <td>concat/additive</td>
+      <td>$score(s_{t},h_i) = v_a^\top tanh(W_a[s_t;h_i])$</td>
+      <td><a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="noopener">Bahdanau2015</a></td>
+   </tr>
+   <tr>
+      <td>location-based</td>
+      <td>$\alpha_{t,i} = softmax(W_as_t)$<br><font color="grey" size="2">将alignment简化为只依赖于target position</font></td>
+      <td><a href="https://arxiv.org/pdf/1508.04025.pdf" target="_blank" rel="noopener">Luong2015</a></td>
+   </tr>
+   <tr>
+      <td>general</td>
+      <td>$score(s_{t},h_i) = s_t^\top W_ah_i$</td>
+      <td><a href="https://arxiv.org/pdf/1508.04025.pdf" target="_blank" rel="noopener">Luong2015</a></td>
+   </tr>
+   <tr>
+      <td>dot-product</td>
+      <td>$score(s_{t},h_i) = s_t^\top h_i$<br><font color="grey" size="2">note:当general attention的$W_a$为单位矩阵时，就退出为dot-product attention</font></td>
+      <td><a href="https://arxiv.org/pdf/1508.04025.pdf" target="_blank" rel="noopener">Luong2015</a></td>
+   </tr>
+   <tr>
+      <td>scaled <br>dot-product(*)</td>
+      <td>$score(s_{t},h_i) = \frac{s_t^\top h_i}{\sqrt{n}}$<br><font color="grey" size="2">note:跟dot-product attention很像，n是encoder hidden state $h_i$的维度</font></td>
+      <td><a href="http://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf" target="_blank" rel="noopener">Vaswani2017</a></td>
+   </tr>
+</table>
+(*)scaled dot-product attention机制添加了比例因子$/frac{1}{/sqrt{n}}$，动机是：对于softmax()函数，当输入很大时，对应的梯度很小（梯度逐渐消失），难以进行高效的优化和学习。因此，添加比例因子可以减小$score(s_t,h_i)$。
+
+<p>下表列出了更广范畴上的attention机制。</p>
+<table class="table table-bordered table-striped table-condensed">
+   <tr>
+      <th width="25">名字</th>
+      <th>定义</th>
+      <th width="25">来源</th>
+   </tr>
+   <tr>
+      <td>self attention(&)</td>
+      <td><font color="grey" size="2">将input sequence的不同部分联系起来，只用到input sequence本身，而不用target sequence。<br>可以使用上表中的所有score function，只要将target sequence替换为input sequence即可。</font></td>
+      <td><a href="https://arxiv.org/pdf/1601.06733.pdf" target="_blank" rel="noopener">Cheng2016</a></td>
+   </tr>
+   <tr>
+      <td>global/soft attention</td>
+      <td><font color="grey" size="2">context vector是整个input sequence的加权和，注意到整个input sequence</font></td>
+      <td><a href="http://proceedings.mlr.press/v37/xuc15.pdf" target="_blank" rel="noopener">Xu2015</a></td>
+   </tr>
+   <tr>
+      <td>local/hard attention</td>
+      <td><font color="grey" size="2">context vector是局部input sequence的加权和，注意到局部input sequence</font></td>
+      <td><a href="http://proceedings.mlr.press/v37/xuc15.pdf" target="_blank" rel="noopener">Xu2015</a>，<br><a href="https://arxiv.org/pdf/1508.04025.pdf" target="_blank" rel="noopener">Luong2015</a></td>
+   </tr>
+</table>
+(&)self-attention在一些论文中也被称为intra-attention.
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-07-24T06:19:10.000Z" itemprop="dateUpdated">2019-07-24 14:19:10</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/attention/">attention</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rnn/">rnn</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/23/attention-attention/&title=《attention? attention!》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/23/attention-attention/&title=《attention? attention!》 — spring's Blog&source=读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attenti..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/07/23/attention-attention/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《attention? attention!》 — spring's Blog&url=http://yoursite.com/2019/07/23/attention-attention/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/07/23/attention-attention/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/07/12/pip安装python模块报错/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">pip安装python模块报错</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/23/attention-attention/&title=《attention? attention!》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/23/attention-attention/&title=《attention? attention!》 — spring's Blog&source=读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attenti..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/07/23/attention-attention/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《attention? attention!》 — spring's Blog&url=http://yoursite.com/2019/07/23/attention-attention/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/07/23/attention-attention/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/07/23/attention-attention/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

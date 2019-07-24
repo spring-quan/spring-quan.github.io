@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/07/23/attention-attention/</loc>
+    
+    <lastmod>2019-07-24T06:19:10.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/04/16/torch-cuda-is-available-%E8%BF%94%E5%9B%9EFalse-%E4%BD%86nvidia-smi%E6%AD%A3%E5%B8%B8/</loc>
     
     <lastmod>2019-07-22T01:27:54.000Z</lastmod>
