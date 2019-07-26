@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Neural Turing Machines与Memory Network | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Neural Turing Machines,Memory Network">
+    <meta name="description" content="介绍Memory Networks。">
+<meta name="keywords" content="Neural Turing Machines,Memory Network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural Turing Machines与Memory Network">
+<meta property="og:url" content="http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="介绍Memory Networks。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/turing-machine.jpg">
+<meta property="og:image" content="http://yoursite.com/images/NTM.png">
+<meta property="og:image" content="http://yoursite.com/images/50.jpg">
+<meta property="og:image" content="http://yoursite.com/images/NTM-flow-addressing.png">
+<meta property="og:updated_time" content="2019-07-26T09:21:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neural Turing Machines与Memory Network">
+<meta name="twitter:description" content="介绍Memory Networks。">
+<meta name="twitter:image" content="http://yoursite.com/images/turing-machine.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Neural Turing Machines与Memory Network</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Neural Turing Machines与Memory Network</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-26T03:03:15.000Z" itemprop="datePublished" class="page-time">
+  2019-07-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Neural-Turing-Machines-神经图灵机"><span class="post-toc-number">1.</span> <span class="post-toc-text">Neural Turing Machines-神经图灵机</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Turing-Machines-图灵机"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Turing Machines-图灵机</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Neural-Turing-Machines"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Neural Turing Machines</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#读操作"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">读操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#写操作"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">写操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#寻址机制"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">寻址机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">参考链接</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Neural-Turing-Machines与Memory-Network"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Neural Turing Machines与Memory Network</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-26 11:03:15" datetime="2019-07-26T03:03:15.000Z"  itemprop="datePublished">2019-07-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>介绍Memory Networks。</p>
+<a id="more"></a>
+<h3 id="Neural-Turing-Machines-神经图灵机"><a href="#Neural-Turing-Machines-神经图灵机" class="headerlink" title="Neural Turing Machines-神经图灵机"></a>Neural Turing Machines-神经图灵机</h3><p>Google DeepMind团队在<a href="https://arxiv.org/abs/1410.5401" target="_blank" rel="noopener">Alex Graves2014</a>提出Neural Turing Machines，第一次提出用external memory来提高神经网络的记忆能力。这之后又出现了多篇关于Memory Networks的论文。我们先看看Turing Machines的概念。</p>
+<h4 id="Turing-Machines-图灵机"><a href="#Turing-Machines-图灵机" class="headerlink" title="Turing Machines-图灵机"></a>Turing Machines-图灵机</h4><p>计算机先驱<a href="https://baike.baidu.com/item/%E8%89%BE%E4%BC%A6%C2%B7%E9%BA%A6%E5%B8%AD%E6%A3%AE%C2%B7%E5%9B%BE%E7%81%B5/3940576?fromtitle=%E5%9B%BE%E7%81%B5&fromid=121208" target="_blank" rel="noopener">turing</a>在1936年提出了Turing Machines这样一个计算模型。它由三个基本的组件：</p>
+<ul>
+<li>tape: 一个无限长的纸带作为memory，包含无数个symbols，每个symbol的值为0、1或”$\space$”。</li>
+<li>head: 读写头，对tape上的symbols进行读操作和写操作。</li>
+<li>controller： 根据当前状态来控制head的操作。</li>
+</ul>
+<p>理论上Turing Machines可以模拟任何一个计算算法，不管这个算法多么复杂。但现实中，计算机不可能有无限大的memory space，因此Turing Machines只是数学意义上的计算模型。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/turing-machine.jpg" alt="Fig. 1. How a Turing machine looks like.(来源: http://aturingmachine.com/)" title>
+                </div>
+                <div class="image-caption">Fig. 1. How a Turing machine looks like.(来源: http://aturingmachine.com/)</div>
+            </figure>
+
+<h4 id="Neural-Turing-Machines"><a href="#Neural-Turing-Machines" class="headerlink" title="Neural Turing Machines"></a>Neural Turing Machines</h4><p>Neural Turing Machines(NTM,<a href="https://arxiv.org/abs/1410.5401" target="_blank" rel="noopener">Alex Graves2014</a>)用external memory来提高神经网络的记忆能力。<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">LSTM(Long and short memory)</a>通过门机制有效缓解了RNN的’梯度消失和梯度爆炸问题’，可以通过internal memory实现长期记忆。当LSTM的internal memory的记忆能力有限，需要用external memory来提高神经网络的记忆能力。</p>
+<p>Neural Turing Machines包含两个基本组件：<em>a neural network controller</em>和<em>memory bank</em>。<em>memory</em>是一个 $N\cdot M$阶的矩阵，包含N个向量，每个向量的维度是M。我们把每个memory vector称为memory location。<em>controller</em>控制<em>heads</em>对<em>memory</em>进行读写操作。</p>
+<p>如何对<em>memory matrix</em>进行读写操作呢？关键问题是如何让读写操作是可微的，这样才能用梯度下降法来更新模型参数。具体来说，问题是让模型关于memory location是可微的，但memory locations是离散的。Neural Turing Machines用了一个很聪明的方法来解决这个问题：不是对单独某个memory location进行读写操作，而是对所有的memory locations进行不同程度的读写操作，这个程度是通过attention的权重分布来控制的。</p>
+<div align="center"><img src="/images/NTM.png" width="60%" height="60%"></div>
+<div align="center"><font color="grey" size="2">Fig. 2. Neural Turing Machine Architecture</font></div>
+
+<h5 id="读操作"><a href="#读操作" class="headerlink" title="读操作"></a>读操作</h5><p>记时间步t <em>memory matrix</em>为$N\cdot M$阶矩阵$M_t$，$w_t$是在N个memory向量上的权重分布，是一个N维向量。则时间步t的read vector $r_t$为$$r_t = \sum_{i=1}^{N}w_t(i)\cdot M_t(i)$$ $$where: \sum_{i=1}^{N}w_t(i) = 1; 0 \le w_t(i) \le 1,\forall i $$其中，$w_t(i)$是$w_t$的第i个元素，$M_t(i)$是$M_t$的第i个行向量。</p>
+<h5 id="写操作"><a href="#写操作" class="headerlink" title="写操作"></a>写操作</h5><p>受LSTM门机制的启发，将写操作分成两步：先<em>erase</em>，再<em>add</em>。先根据<em>erase vector $e_t$</em>擦去旧的内容，再根据<em>add vector $a_t$</em>添加新的内容。</p>
+<ol>
+<li>先erase：<br> 在时间步t，attention权重分布为$w_t$，<em>erase vector $e_t$</em>是一个M维向量，每个元素取值[0,1]，上一个时间步的<em>memory vector</em>为$M_{t-1}$。则erase操作为$$\tilde{M_{t}}(i) = M_{t-1}(i)[\vec{1}-w_t(i)e_t]$$ $\vec{1}$是一个M维的全1向量。对memory vector的erase操作是逐点进行的。当$e_t$的元素和memory location对应权重$w_t(i)$的元素值都是1时，memory vector $M_t(i)$的元素值才会置为0。如果$e_t$或$w_t(i)$的元素值为0时，memory vector $M_t(i)$的元素值保持不变。</li>
+<li>再add:<br> 每个<em>write head</em>会产生一个M维的<em>add vector a_t</em>，则：$$M_t(i) = \tilde{M_{t}}(i) + w_t(i)a_t$$至此，就完成了写操作。</li>
+</ol>
+<h5 id="寻址机制"><a href="#寻址机制" class="headerlink" title="寻址机制"></a>寻址机制</h5><p>进行读写操作前，要搞清楚对哪个memory location进行读写呢？这就是寻址。为了让模型关于memory locatios可微，Neural Turing Machines不是对某个单独的memory location进行读写操作，而是对所有memory locations进行不同程度的读写操作，这个程度就是由权重分布$w_t$来控制的。模型结合并同时使用了content-based和location-based两种寻址方式来计算这个权重分布$w_t$。具体地，权重计算分为以下几步：</p>
+<ol>
+<li>content-based addressing<br> 时间步t，每个head产出一个M维的<em>key vector $k_t$</em>，通过$k_t$与memory vectors $M_t(i)$之间的相似性来计算content-based attention权重分布$w_{t}^{c}$。相似性是通过余弦相似度来衡量的。$$w_{t}^{c} = softmax(\beta_tK(k_t,M_t(i))) = \frac{\beta_tK(k_t,M_t(i))}{\sum_{j}K(k_t,M_t(j))}$$ $$K(u,v) = \frac{u\cdot v}{|u|\cdot |v|}$$<br> $\beta_t$可以放大或缩小权重的精度。</li>
+<li>内插法<br> 每个head产生一个<em>interpolation gate $g_t$</em>，取值[0,1]。content-based attention权重分布为$w_t^{c}$，上一个时间步的attention权重分布为$w_{t-1}$。则门控制的权重分布$w_t^g$为：$$w_t^g = g_tw_t^c + (1-g_t)w_{t-1}$$当$g_t$为0时，采用上一个时间步的权重分布$w_{t-1}$，当$g_t$为1时，采用content-based attention权重分布$w_t^c$。</li>
+<li>循环卷积<br> 对经过插值后的权重分布$w_t^g$进行循环卷积，主要功能是对权重进行旋转位移。比如当权重分布关注某个memory location时，经过循环卷积就会扩展到附近的memory locations，也会对附近的memory locations进行少量的读写操作。每个head产生的转移权重为$s_t$,循环卷积的操作为:$$\tilde{w_t(i)} = \sum_{j=0}^{N-1}w_t^g(i)s_t(i-j)$$<br> 关于$s_t$的详细介绍可以见<a href="https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html#neural-turing-machines" target="_blank" rel="noopener">attention?attenion!</a>;<br> 循环卷积的详细介绍可以见<a href="https://blog.csdn.net/rtygbwwwerr/article/details/50548311" target="_blank" rel="noopener">Neural Turing Machines-NTM系列（一）简述</a></li>
+<li>锐化<br> 循环卷积往往会造成权重泄漏和分散，为了解决这个问题，需要最后进行锐化操作。$$w_t(i) = \frac{\tilde{w_t(i)^{\gamma_t}}}{\sum_j\tilde{w_t(j)^{\gamma_t}}}$$其中$\gamma_t &gt;1$。至此，就得到了时间步t的权重分布$w_t$。可以根据这个权重分布$w_t$对memory matrix进行读写操作。</li>
+</ol>
+<p>总结以下这4步操作。第一步content-based addressing根据输入得到关于memory locations的相似度；后三步实现了location-based addressing。第二步插值操作引入了上一个时间步的权重分布，对content-based 权重进行修正；第三步循环卷积将每个位置的权重向两边分散；第四步锐化操作将权重突出化，大的更大，小的更小。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/50.jpg" alt="Fig.3. 寻址机制的4步操作" title>
+                </div>
+                <div class="image-caption">Fig.3. 寻址机制的4步操作</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/NTM-flow-addressing.png" alt="Fig.4. 寻址机制的4步操作<br>来源：[Alex Graves2014](https://arxiv.org/abs/1410.5401)" title>
+                </div>
+                <div class="image-caption">Fig.4. 寻址机制的4步操作<br>来源：[Alex Graves2014](https://arxiv.org/abs/1410.5401)</div>
+            </figure>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
+<li><a href="https://distill.pub/2016/augmented-rnns/" target="_blank" rel="noopener">Attention and Augmented Recurrent Neural Networks</a><br>  用动图直观地表现Neural Turing Machines的计算过程。推荐！👍</li>
+<li><a href="https://zhuanlan.zhihu.com/p/30383994" target="_blank" rel="noopener">记忆网络之Neural Turing Machines</a>，中文</li>
+<li><a href="https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html#neural-turing-machines" target="_blank" rel="noopener">attention?attenion!</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-07-26T09:21:31.000Z" itemprop="dateUpdated">2019-07-26 17:21:31</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Memory-Network/">Memory Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neural-Turing-Machines/">Neural Turing Machines</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/&title=《Neural Turing Machines与Memory Network》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/&title=《Neural Turing Machines与Memory Network》 — spring's Blog&source=介绍Memory Networks。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Neural Turing Machines与Memory Network》 — spring's Blog&url=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/07/23/attention-attention/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">attention? attention!</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/&title=《Neural Turing Machines与Memory Network》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/&title=《Neural Turing Machines与Memory Network》 — spring's Blog&source=介绍Memory Networks。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Neural Turing Machines与Memory Network》 — spring's Blog&url=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/07/26/Neural-Turing-Machines与Memory-Network/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
