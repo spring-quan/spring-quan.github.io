@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="欢迎互换友链~~">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-28T03:39:56.000Z">
+<meta property="og:updated_time" content="2019-07-29T09:38:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="友情链接">
 <meta name="twitter:description" content="欢迎互换友链~~">
@@ -178,30 +178,61 @@
 <h1 id="大牛的博客"><a href="#大牛的博客" class="headerlink" title="大牛的博客"></a>大牛的博客</h1><div class="card">
 <table class="table table-bordered table-striped table-condensed">
    <tr>
-      <th>名称</th>
-      <th width="40">博主</th>
-      <th>备注</th>
+      <th width="20">名称</th>
+      <th width="15">博主</th>
+      <th width="5">语言</th>
+      <th width="65">备注</th>
    </tr>
    <tr>
       <td><a href="https://colah.github.io/" target="_blank" rel="noopener">colah's blog</a></td>
       <td>Christopher Olah</td>
+      <td>英文</td>
       <td>Google Brain研究员，OpenAI成员</td>
+   </tr>
+   <tr>
+      <td><a href="http://www.thespermwhale.com/jaseweston/" target="_blank" rel="noopener">Jason Weston</a></td>
+      <td>Jason Weston</td>
+      <td>英文</td>
+      <td>Facebook研究科学家，纽约大学教授。<br>研究领域是：memory network，dialog system，QA system</td>
+   </tr>
+   <tr>
+      <td><a href="https://www.socher.org/" target="_blank" rel="noopener">Richard Socher</a></td>
+      <td>Richard Socher</td>
+      <td>英文</td>
+      <td>教授斯坦福cs224d课程</td>
+   </tr>
+   <tr>
+      <td><a href="https://lilianweng.github.io/lil-log/" target="_blank" rel="noopener">Lil'Log</a></td>
+      <td>Lilian</td>
+      <td>英文</td>
+      <td><a href="https://openai.com/blog/" target="_blank" rel="noopener">OpenAI</a>成员</td>
+   </tr>
+   <tr>
+      <td><a href="https://bair.berkeley.edu/blog/" target="_blank" rel="noopener">The BAIR Blog</a></td>
+      <td>伯克利学院</td>
+      <td>英文</td>
+      <td>伯克利人工智能研究院</td>
    </tr>
    <tr>
       <td><a href="http://freemind.pluskid.org/" target="_blank" rel="noopener">Free Mind</a><br><a href="http://blog.pluskid.org/" target="_blank" rel="noopener">Free Mind's old blog</a></td>
       <td>张驰原</td>
+      <td>中文</td>
       <td>本硕浙大计算机，现Google研究科学家</td>
    </tr>
+
    <tr>
       <td><a href="https://nlp.stanford.edu/~bdlijiwei/index.html" target="_blank" rel="noopener">李纪为的主页</a></td>
       <td>李纪为</td>
+      <td>中文</td>
       <td>北大本科，斯坦福博士，香农科技创始人</td>
    </tr>
    <tr>
       <td><a href="http://coai.cs.tsinghua.edu.cn/hml/" target="_blank" rel="noopener">黄民烈教授的主页</a></td>
       <td>黄民烈教授</td>
+      <td>中文</td>
       <td>清华大学计算机学院教授</td>
    </tr>
+
 </table>
 
 </div>
@@ -286,6 +317,30 @@
 
 
 
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 

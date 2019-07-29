@@ -33,7 +33,9 @@
 <meta property="og:image" content="http://yoursite.com/images/NTM.png">
 <meta property="og:image" content="http://yoursite.com/images/50.jpg">
 <meta property="og:image" content="http://yoursite.com/images/NTM-flow-addressing.png">
-<meta property="og:updated_time" content="2019-07-26T09:55:30.000Z">
+<meta property="og:image" content="http://yoursite.com/images/memn.jpg">
+<meta property="og:image" content="http://yoursite.com/images/mem.png">
+<meta property="og:updated_time" content="2019-07-29T09:00:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Neural Turing Machines与Memory Network">
 <meta name="twitter:description" content="介绍Memory Networks。">
@@ -186,7 +188,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Neural-Turing-Machines-神经图灵机"><span class="post-toc-number">1.</span> <span class="post-toc-text">Neural Turing Machines-神经图灵机</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Turing-Machines-图灵机"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Turing Machines-图灵机</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Neural-Turing-Machines"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Neural Turing Machines</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#读操作"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">读操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#写操作"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">写操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#寻址机制"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">寻址机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">参考链接</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Neural-Turing-Machines-神经图灵机"><span class="post-toc-number">1.</span> <span class="post-toc-text">Neural Turing Machines-神经图灵机</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Turing-Machines-图灵机"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Turing Machines-图灵机</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Neural-Turing-Machines"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Neural Turing Machines</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#读操作"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">读操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#写操作"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">写操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#寻址机制"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">寻址机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">参考链接</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Memory-Network"><span class="post-toc-number">2.</span> <span class="post-toc-text">Memory Network</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Memory-Network的一般框架"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Memory Network的一般框架</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#memory-network框架的实现–MemNNs"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">memory network框架的实现–MemNNs</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#End-to-End-Memory-Network"><span class="post-toc-number">3.</span> <span class="post-toc-text">End-to-End Memory Network</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#single-layer"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">single layer</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#multi-layers"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">multi layers</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接-1"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
         </nav>
     </aside>
 
@@ -269,6 +271,51 @@
 <li><a href="https://zhuanlan.zhihu.com/p/30383994" target="_blank" rel="noopener">记忆网络之Neural Turing Machines</a>，中文</li>
 <li><a href="https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html#neural-turing-machines" target="_blank" rel="noopener">attention?attenion!</a></li>
 </ul>
+<h3 id="Memory-Network"><a href="#Memory-Network" class="headerlink" title="Memory Network"></a>Memory Network</h3><p>在Neural Turing Machines提出仅仅五天后，Facebook研究员<a href="http://www.thespermwhale.com/jaseweston/" target="_blank" rel="noopener">Jason Weston</a>发表了<a href="http://arxiv.org/abs/1410.3916" target="_blank" rel="noopener">MEMORY NETWORKS</a>。在QA系统的领域，应用memory network。虽然RNN或LSTM可以通过hidden state和weights来进行短期记忆，但它们的记忆能力是有限的。要实现长期记忆，需要memory network。</p>
+<h4 id="Memory-Network的一般框架"><a href="#Memory-Network的一般框架" class="headerlink" title="Memory Network的一般框架"></a>Memory Network的一般框架</h4><p>memory network包括一个记忆单元memory，和四个基本组件：</p>
+<ul>
+<li>I(input feature map):<br>  将input <em>x</em>进行向量化表示，编码为feature representation <em>I(x)</em>。</li>
+<li>G(generalization):<br>  对memory进行写操作。根据input 来更新memory <em>$m_i$</em>。$m_i = G(m_i,I(x),m)$</li>
+<li>O(output feature map):<br>  对memory进行读操作。根据input和memory生成output feature。$o = O(I(x),m)$</li>
+<li>R(response):<br>  根据output feature o来生成response。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/memn.jpg" alt="Fig.5. memory network的框架图" title>
+                </div>
+                <div class="image-caption">Fig.5. memory network的框架图</div>
+            </figure>
+<h4 id="memory-network框架的实现–MemNNs"><a href="#memory-network框架的实现–MemNNs" class="headerlink" title="memory network框架的实现–MemNNs"></a>memory network框架的实现–MemNNs</h4><p>在I模块将input $x_i$编码为$I(x_i)$后，G模块之间将$I(x_i)$保存到下一个空的memory slot中，而不更新旧的memory slots。真正实现inference的核心模块是O和R。</p>
+<p>O模块在给定x的条件下，依次找到与x最相关的k个memory slots。论文中采用k = 2。先找到第一个最相关的memory slot：$$m_{o1} = \mathop{argmax}\limits_{i = 1,…,N} s_{o1}(x,m_i)$$其中$s_o()$是一个匹配函数，计算x与$m_i$之间的相关程度。接着，根据x和第一个memory找到下一个memory：$$m_{o2} = \mathop{argmax}\limits_{i = 1,…,N} s_{o2}([x,m_{o1}],m_i)$$将output feature o = $[x,m_{o1},m_{o2}]$作为R模块的输入。</p>
+<p>R模块将词汇表中所有词与output feature进行匹配，选择匹配度最高的词作为response。这样生成的response只有一个词。$$r = \mathop{argmax}\limits_{w \in W}s_R([x,m_{o1},m_{o2}],w)$$其中$s_R()$是一个匹配函数。</p>
+<p>匹配函数$s_O$和$s_R$都采用以下函数：$$s(x,y) = \Phi_x(x)^\top U^\top U \Phi_y(y)$$其中$\Phi_x(x),\Phi_y(y)$分别将x/y编码为向量。<br><strong>目标函数</strong><br>在训练阶段采用最大边缘目标函数，设对于question x，真实的label为r，对应的memory为$m_{o1},m_{o2}$。则最大边缘目标函数为：$$\sum_{m_i\ne m_{o1}}max(0,\gamma - s_{O1}(x,m_{o1}) + s_{O1}(x,m_i)) + $$ $$\sum_{m_j\ne m_{o2}}max(0,\gamma - s_{O2}([x,m_{o1}],m_{o2}) + s_{O2}([x,m_{o1}],m_j)) + $$ $$\sum_{r’ \ne r}max(0,\gamma - s_{R}([x,m_{o1},m_{o2}],r) + s_{R}([x,m_{o1},m_{o2}],r’))$$</p>
+<p>由于argmax()函数的存在，这个模型是不可微的。而且中间过程找到相关memory需要监督，这个模型不是端到端的。<br>总的来说，这个memory network是一种普适性的架构，是很初级很简单的，很多部分还不完善，不足以应用具体的任务上。不过，通过多跳方式找到相关memory的思路是很值得学习的。</p>
+<h3 id="End-to-End-Memory-Network"><a href="#End-to-End-Memory-Network" class="headerlink" title="End-to-End Memory Network"></a>End-to-End Memory Network</h3><p>Jason Weston作为三作的<a href="http://arxiv.org/abs/1503.08895" target="_blank" rel="noopener">Sainbayar Sukhbaatar2015</a>对Memory network工作的改进。End-to-End Memory Network采用soft attention而不是hard attention来read memory，因此是端到端的。另外不需要对相关memory进行监督。提高memory network的可用性。<br>假设多个句子input $x_1,…,x_n$作为memory，对于query q，输出对应的answer a。给定query q，经过多跳找到相关的memory，并生成对应的answer a。</p>
+<h4 id="single-layer"><a href="#single-layer" class="headerlink" title="single layer"></a>single layer</h4><p>给定input $x_1,x_2,…,x_n$，采用两个不同的embedding matrix A和C分别编码为向量$\lbrace{m_1,…,m_n}\rbrace$，$\lbrace{c_1,…,c_n}\rbrace$,分别对应attention机制的keys和values。将query q经过embedding matrix B编码为向量表示u。</p>
+<p>采用dot-product attention计算权重：$$p_i = softmax(u^\top m_i) = \frac{exp(u^\top m_i)}{\sum_{j}exp(u^\top m_j)}$$<br>则memory representation为：$$o = \sum_{i}p_i m_i$$<br>根据u和o来进行预测：$$\hat{a} = softmax(W (o + u))$$<br>通过最小化a与$\hat{a}$之间的交叉熵来训练模型参数A,B,C,W。这个single layer end-to-end Memory network是简单而直观的。核心是用soft attention来read memory，找到相关的memory，并进行inference。<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/mem.png" alt="Fig.6.左:single layer;右:multi layers<br>来源：[Sainbayar Sukhbaatar2015](http://arxiv.org/abs/1503.08895)" title>
+                </div>
+                <div class="image-caption">Fig.6.左:single layer;右:multi layers<br>来源：[Sainbayar Sukhbaatar2015](http://arxiv.org/abs/1503.08895)</div>
+            </figure></p>
+<h4 id="multi-layers"><a href="#multi-layers" class="headerlink" title="multi layers"></a>multi layers</h4><p>将K层single layer进行stack得到K层memory network，进行K跳memory查询操作。具体地stack方式为：</p>
+<ul>
+<li>将第k层的输入$u^k$和memory representation $o^k$相加作为第k+1层的输入:$$u^{k+1} = u^k + o^k$$</li>
+<li>每一层都有单独的embedding matrix $A^k$和$C^k$</li>
+<li>最后一层的预测输出为：$$\hat{a} = softmax(W u^{K+1}) = softmax(W(u^K + o^K))$$</li>
+</ul>
+<p>为了减少参数量，有两种方法：</p>
+<ul>
+<li>adjacent:<br>  让相邻层的embedding matrix A=C，共享参数。即：$C^k = A^{k+1}$，对第一层有$A^1 = B$，最后一层有：$C^K = W$。这样就减少了一半的参数量。</li>
+<li>RNN-like:<br>  跟RNN一样，采用完全参数共享的方法，$A^1 = A^2 = … = A^K$;$C^1 = C^2 = … = C^K$。参数数量大大减少导致模型效果变差，在层与层之间添加一个线性映射：$u^{k+1} = Hu^k + o^k$</li>
+</ul>
+<h3 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://zhuanlan.zhihu.com/c_129532277" target="_blank" rel="noopener">记忆网络-Memory Network</a></li>
+<li><a href="https://jhui.github.io/2017/03/15/Memory-network/" target="_blank" rel="noopener">Memory network (MemNN) &amp; End to end memory network (MemN2N), Dynamic memory network</a></li>
+<li><a href="http://thespermwhale.com/jaseweston/icml2016/" target="_blank" rel="noopener">Memory Networks for Language Understanding, ICML Tutorial 2016</a></li>
+</ul>
 
         </div>
 
@@ -277,7 +324,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-07-26T09:55:30.000Z" itemprop="dateUpdated">2019-07-26 17:55:30</time>
+    最后更新时间：<time datetime="2019-07-29T09:00:55.000Z" itemprop="dateUpdated">2019-07-29 17:00:55</time>
 </span><br>
 
 
@@ -382,6 +429,30 @@
 
 
 
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 
