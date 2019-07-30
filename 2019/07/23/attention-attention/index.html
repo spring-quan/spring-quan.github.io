@@ -21,13 +21,13 @@
     
     
     <meta name="keywords" content="rnn,attention">
-    <meta name="description" content="读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
+    <meta name="description" content="读了博主Weng, Lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
 <meta name="keywords" content="rnn,attention">
 <meta property="og:type" content="article">
 <meta property="og:title" content="attention? attention!">
 <meta property="og:url" content="http://yoursite.com/2019/07/23/attention-attention/index.html">
 <meta property="og:site_name" content="spring&#39;s Blog">
-<meta property="og:description" content="读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
+<meta property="og:description" content="读了博主Weng, Lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/43.png">
 <meta property="og:image" content="http://yoursite.com/images/44.png">
@@ -36,10 +36,14 @@
 <meta property="og:image" content="http://yoursite.com/images/47.png">
 <meta property="og:image" content="http://yoursite.com/images/49.png">
 <meta property="og:image" content="http://yoursite.com/images/48.png">
-<meta property="og:updated_time" content="2019-07-26T01:04:11.000Z">
+<meta property="og:image" content="http://yoursite.com/images/multi-head-attention.png">
+<meta property="og:image" content="http://yoursite.com/images/transformer-encoder.png">
+<meta property="og:image" content="http://yoursite.com/images/transformer-encoder.png">
+<meta property="og:image" content="http://yoursite.com/images/transformer.png">
+<meta property="og:updated_time" content="2019-07-30T03:34:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="attention? attention!">
-<meta name="twitter:description" content="读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
+<meta name="twitter:description" content="读了博主Weng, Lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。">
 <meta name="twitter:image" content="http://yoursite.com/images/43.png">
     
         <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
@@ -189,7 +193,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#why-we-need-attention-从seq2seq模型谈起"><span class="post-toc-number">1.</span> <span class="post-toc-text">why we need attention?从seq2seq模型谈起</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#attention机制-born-for-Translation"><span class="post-toc-number">2.</span> <span class="post-toc-text">attention机制:born for Translation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#attention的数学定义"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">attention的数学定义</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#各种attention机制"><span class="post-toc-number">3.</span> <span class="post-toc-text">各种attention机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#汇总"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">汇总</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#self-attention"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">self-attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#soft-vs-hard-attention"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">soft vs hard attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#global-vs-local-attention"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">global vs local attention</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#pointer-network"><span class="post-toc-number">4.</span> <span class="post-toc-text">pointer network</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#pointer-network解决OOV问题"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">pointer network解决OOV问题</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#why-we-need-attention-从seq2seq模型谈起"><span class="post-toc-number">1.</span> <span class="post-toc-text">why we need attention?从seq2seq模型谈起</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#attention机制-born-for-Translation"><span class="post-toc-number">2.</span> <span class="post-toc-text">attention机制:born for Translation</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#attention的数学定义"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">attention的数学定义</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#各种attention机制"><span class="post-toc-number">3.</span> <span class="post-toc-text">各种attention机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#汇总"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">汇总</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#self-attention"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">self-attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#soft-vs-hard-attention"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">soft vs hard attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#global-vs-local-attention"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">global vs local attention</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#pointer-network"><span class="post-toc-number">4.</span> <span class="post-toc-text">pointer network</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#pointer-network解决OOV问题"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">pointer network解决OOV问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#transformer"><span class="post-toc-number">5.</span> <span class="post-toc-text">transformer</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#scaled-dot-product-attention与key-value-query"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">scaled dot-product attention与key,value,query</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#multi-head-attention"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">multi-head attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encoder"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">encoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#decoder"><span class="post-toc-number">5.4.</span> <span class="post-toc-text">decoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#transformer的总体结构"><span class="post-toc-number">5.5.</span> <span class="post-toc-text">transformer的总体结构</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -215,7 +219,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>读了博主lilian的文章<a href="https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html#neural-turing-machines" target="_blank" rel="noopener">attention? attention!</a>，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。<br>attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。</p>
+            <p>读了博主<a href="https://lilianweng.github.io/lil-log/contact.html" target="_blank" rel="noopener">Weng, Lilian</a>的文章<a href="https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html#neural-turing-machines" target="_blank" rel="noopener">attention? attention!</a>，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。<br>attention机制在深度学习中被广为使用，本文介绍attention机制的提出，不同的attention机制，及attention机制的进一步探索和应用。</p>
 <a id="more"></a>
 <h3 id="why-we-need-attention-从seq2seq模型谈起"><a href="#why-we-need-attention-从seq2seq模型谈起" class="headerlink" title="why we need attention?从seq2seq模型谈起"></a>why we need attention?从seq2seq模型谈起</h3><p><strong>seq2seq模型</strong>与14年提出(<a href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf" target="_blank" rel="noopener">Sutskever, et al. 2014</a>)，实现输入序列(source sequence)到输出序列(target sequence)的映射，这两个序列的长度都是可变的。序列到序列映射的任务包括机器翻译、问答系统、对话系统、摘要生成等。</p>
 <p>用数学语言来定义序列到序列的任务，给定输入序列(source sequence) $X = \lbrace{ x_1,x_2,…,x_n \rbrace}$，需要生成输出序列(target sequence) $Y = \lbrace{ y_1,y_2,…,y_m \rbrace}$，其中source sequence长度为$n$,target sequence长度为$m$。</p>
@@ -390,7 +394,46 @@
                 <div class="image-caption">Fig.7.Pointer-generator model.<br>来源：[Abigail See2017](https://arxiv.org/abs/1704.04368)</div>
             </figure> 
 <p>类似的论文还有：<a href="https://arxiv.org/pdf/1603.06393v3.pdf" target="_blank" rel="noopener">CopyNet,Jiatao Gu2016</a></p>
+<h3 id="transformer"><a href="#transformer" class="headerlink" title="transformer"></a>transformer</h3><p><a href="http://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf" target="_blank" rel="noopener">attention is all you need!</a>(Vaswani, et al., 2017)提出了transformer。transformer也是基于encoder-decoder框架的，也可以看作是一个seq2seq模型。但不同于encoder和decoder都采用RNN的seq2seq模型，transformer完全依赖self-attention机制来计算input和output的向量表示，而不使用RNN或CNN。一般来说，attention机制是与RNN联合使用的，transformer把attention和RNN解耦开了，只使用attention机制。</p>
+<p>为什么transformer用self-attention来编码input和output，而不使用RNN呢？<br>一方面，由RNN的更新公式$s_t = f(s_{t-1},x_t)$可以看到，RNN处理序列时是串行计算的，尤其是处理长序列时更费时间。不利于并行化，计算效率低。而transformer采用attention来编码计算向量，可以进行并行化计算，提高计算效率。<br>另一方面，RNN在编码长序列时，随着距离的增大，往往会偏向于最近的部分，而学习不到长期依赖。但self-attention机制不受距离的限制，可以有效地学习到长期依赖。</p>
+<h4 id="scaled-dot-product-attention与key-value-query"><a href="#scaled-dot-product-attention与key-value-query" class="headerlink" title="scaled dot-product attention与key,value,query"></a>scaled dot-product attention与key,value,query</h4><p>transformer的主要组件是<em>multi-heads self-attenion mechanism</em>，这个组件用到了scaled dot-product attention机制。一般地，attention机制将query和(key,value)映射为output，其中query,key,value,output都是vector。output是所有values的加权和，权重是通过计算query与对应key之间的关联度得到。</p>
+<p>具体来说，将什么作为key,value,query？分两种情况，从框图可以直观的看到：</p>
+<ul>
+<li>在encoder-decoder框架中，联系encoder与decoder的attention机制通常将encoder的所有hidden states乘以两个不同的矩阵$W^Q,W^K$分别作为<em>keys</em>和<em>values</em>。将decoder上一个时间步的hidden state作为query。</li>
+<li>在encoder模块，self-attention机制将input词级别的向量表示乘以三个不同的矩阵$W^Q,W^K,W^V$分别作为query,key,value。进而计算input总的句子级别的向量表示。同样地，在decoder模块中self-attention机制将output词级别的向量表示分别乘以三个不同矩阵$W^Q,W^K,W^V$分别作为query,key,value。进而计算output总的句子级别的向量表示。</li>
+</ul>
+<p>有了具体的key,value,query后，scaled dot-product attention机制怎么来计算output呢？<br>记query,key,value的矩阵形式分别为Q,K,V。query和key维度为$d_k$,value维度为$d_v$。则output的计算方式为：$$Attention(Q,K,V) = softmax(\frac{QK^\top}{\sqrt{d_k}})V$$</p>
+<p>多种attention机制中，transformer为什么选择采用scale dot-product attention机制呢？<br>最常用的两种attention机制是dot-product和additive attention机制。dot-product attention用点乘来做打分函数，additive attenion将有一层隐藏层的前馈网络作为打分函数。理论上来说，这两种attention的计算复杂度是一样的；但实际上，dot-product attention计算更快，占用内存更小。因为dot-product attention机制可以采用高度优化的矩阵乘法代码。<br>当维度$d_k$较小时，这两种attention机制的效果是差不多的。当维度$d_k$更大时，additive attention的效果要好于dot-product attention。这可能是因为当维度$d_k$变大时，点乘的值变得过大，而softmax()函数在值过大的范围梯度是很小的，类似于梯度消失问题。因此，添加比例因子$\frac{1}{\sqrt{d_k}}$来减小点乘的值。</p>
+<h4 id="multi-head-attention"><a href="#multi-head-attention" class="headerlink" title="multi-head attention"></a>multi-head attention</h4><p>并不是只用一次attention机制，将维度为$d_{model}$的key,value,query映射为output。而是将query,key,value映射到维度为$d_k,d_k,d_v$不同的子向量空间，并行的计算$h$次，分别得到output做concat操作，得到总的output。$h$为head的个数，也就是并行attention layer的层数。有关系$d_{model} = d_v \cdot h$，论文中采用$d_{model} =512,h=8,d_k = d_v = \frac{d_{model}}{h} = 64$ $$MultiHead(Q,K,V) = concat(head_1,head_2,…,head_h)W^O$$ $$where \quad head_i = Attention(QW_i^Q,KW_i^K,VW_i^V)$$ 其中$W_i^Q \in R^{d_{model} \cdot d_k},W_i^K \in R^{d_{model} \cdot d_k},W_i^V \in R^{d_{model} \cdot d_v},W^O \in R^{hd_{v} \cdot d_{model}}$</p>
+<div align="center"><img src="/images/multi-head-attention.png" width="40%" height="40%"></div>
+<div align="center"><font color="grey" size="2">Fig.7.multi-head scaled dot-product attention</font><br><a href="http://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf" target="_blank" rel="noopener"><font color="grey" size="2">来源:Vaswani, et al., 2017</font></a></div>
 
+<h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h4><p>encoder将input text编码为基于attention的包含位置信息的向量表示。</p>
+<ul>
+<li>由6个完全相同的层堆叠起来。</li>
+<li>每一层包含两个子层。第一子层是multi-head attention层，第二层是一个简单的全连接层。</li>
+<li>两个子层之间采用<a href="https://arxiv.org/pdf/1512.03385.pdf" target="_blank" rel="noopener">残差连接</a>，并进行归一化。这样所有子层的输出都有相同的维度$d_{model} = 512$</li>
+</ul>
+<div align="center"><img src="/images/transformer-encoder.png" width="70%" height="70%"></div>
+<div align="center"><font color="grey" size="2">Fig.9. transformer encoder</font><br><a href="http://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf" target="_blank" rel="noopener"><font color="grey" size="2">来源:Vaswani, et al., 2017</font></a></div>
+
+<h4 id="decoder"><a href="#decoder" class="headerlink" title="decoder"></a>decoder</h4><p>从encoder output得到总的context vector，并据此生成response。</p>
+<ul>
+<li>与encoder相同，由6个完全相同的层堆叠起来。</li>
+<li>每一层除了encoder中的两个子层外，还插入了一个multi-head layer来在所有encoder output上进行attention操作。</li>
+<li>两个子层之间采用<a href="https://arxiv.org/pdf/1512.03385.pdf" target="_blank" rel="noopener">残差连接</a>，并进行归一化。</li>
+<li>第一个multi-head attention sub-layer进行mask操作，mask掉output当前时间步后所有的tokens。防止attention机制看到未来的信息。</li>
+</ul>
+<div align="center"><img src="/images/transformer-encoder.png" width="70%" height="70%"></div>
+<div align="center"><font color="grey" size="2">Fig.10. transformer decoder</font><br><a href="http://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf" target="_blank" rel="noopener"><font color="grey" size="2">来源:Vaswani, et al., 2017</font></a></div>
+
+<h4 id="transformer的总体结构"><a href="#transformer的总体结构" class="headerlink" title="transformer的总体结构"></a>transformer的总体结构</h4><ul>
+<li>input和output都先经过一个embedding layer得到各自的向量表示，维度为$d_{model} = 512$</li>
+<li>由于self-attention不能像RNN一样自动地编码位置信息，因此需要额外地将位置信息添加到输入。</li>
+<li>在最后decoder的输出外接一个线性层和softmax层。</li>
+</ul>
+<div align="center"><img src="/images/transformer.png" width="150%" height="150%"></div>
+<div align="center"><font color="grey" size="2">Fig.11. transformer的整体框架</font><br><a href="http://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf" target="_blank" rel="noopener"><font color="grey" size="2">来源:Vaswani, et al., 2017</font></a></div>
         </div>
 
         <blockquote class="post-copyright">
@@ -398,7 +441,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-07-26T01:04:11.000Z" itemprop="dateUpdated">2019-07-26 09:04:11</time>
+    最后更新时间：<time datetime="2019-07-30T03:34:04.000Z" itemprop="dateUpdated">2019-07-30 11:34:04</time>
 </span><br>
 
 
@@ -442,7 +485,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/23/attention-attention/&title=《attention? attention!》 — spring's Blog&source=读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attenti..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/23/attention-attention/&title=《attention? attention!》 — spring's Blog&source=读了博主Weng, Lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。a..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -501,6 +544,15 @@
 
     
 
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
 
 
 
@@ -625,7 +677,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/23/attention-attention/&title=《attention? attention!》 — spring's Blog&source=读了博主lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。attenti..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/23/attention-attention/&title=《attention? attention!》 — spring's Blog&source=读了博主Weng, Lilian的文章attention? attention!，是一篇很好的文章。打算按照这篇文章的思路，进行翻译，并添加自己的理解。a..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
