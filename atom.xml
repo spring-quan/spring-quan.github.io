@@ -333,9 +333,9 @@
       <category term="pytorch" scheme="http://yoursite.com/categories/pytorch/"/>
     
     
-      <category term="pytorch" scheme="http://yoursite.com/tags/pytorch/"/>
-    
       <category term="word embedding" scheme="http://yoursite.com/tags/word-embedding/"/>
+    
+      <category term="pytorch" scheme="http://yoursite.com/tags/pytorch/"/>
     
   </entry>
   
