@@ -35,7 +35,8 @@
 <meta property="og:image" content="http://yoursite.com/images/NTM-flow-addressing.png">
 <meta property="og:image" content="http://yoursite.com/images/memn.jpg">
 <meta property="og:image" content="http://yoursite.com/images/mem.png">
-<meta property="og:updated_time" content="2019-07-29T09:00:55.000Z">
+<meta property="og:image" content="http://yoursite.com/images/key-value-memory.png">
+<meta property="og:updated_time" content="2019-08-01T02:30:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Neural Turing Machines与Memory Network">
 <meta name="twitter:description" content="介绍Memory Networks。">
@@ -188,7 +189,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Neural-Turing-Machines-神经图灵机"><span class="post-toc-number">1.</span> <span class="post-toc-text">Neural Turing Machines-神经图灵机</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Turing-Machines-图灵机"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Turing Machines-图灵机</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Neural-Turing-Machines"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Neural Turing Machines</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#读操作"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">读操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#写操作"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">写操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#寻址机制"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">寻址机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">参考链接</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Memory-Network"><span class="post-toc-number">2.</span> <span class="post-toc-text">Memory Network</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Memory-Network的一般框架"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Memory Network的一般框架</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#memory-network框架的实现–MemNNs"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">memory network框架的实现–MemNNs</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#End-to-End-Memory-Network"><span class="post-toc-number">3.</span> <span class="post-toc-text">End-to-End Memory Network</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#single-layer"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">single layer</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#multi-layers"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">multi layers</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接-1"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Neural-Turing-Machines-神经图灵机"><span class="post-toc-number">1.</span> <span class="post-toc-text">Neural Turing Machines-神经图灵机</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Turing-Machines-图灵机"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Turing Machines-图灵机</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Neural-Turing-Machines"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Neural Turing Machines</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#读操作"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">读操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#写操作"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">写操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#寻址机制"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">寻址机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">参考链接</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Memory-Network"><span class="post-toc-number">2.</span> <span class="post-toc-text">Memory Network</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Memory-Network的一般框架"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Memory Network的一般框架</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#memory-network框架的实现–MemNNs"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">memory network框架的实现–MemNNs</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#End-to-End-Memory-Network"><span class="post-toc-number">3.</span> <span class="post-toc-text">End-to-End Memory Network</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#single-layer"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">single layer</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#multi-layers"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">multi layers</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#key-value-Memory-Networks"><span class="post-toc-number">4.</span> <span class="post-toc-text">key-value Memory Networks</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#模型结构"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">模型结构</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#key-value的选择与编码方式"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">key-value的选择与编码方式</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接-1"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
         </nav>
     </aside>
 
@@ -291,7 +292,7 @@
 <p>R模块将词汇表中所有词与output feature进行匹配，选择匹配度最高的词作为response。这样生成的response只有一个词。$$r = \mathop{argmax}\limits_{w \in W}s_R([x,m_{o1},m_{o2}],w)$$其中$s_R()$是一个匹配函数。</p>
 <p>匹配函数$s_O$和$s_R$都采用以下函数：$$s(x,y) = \Phi_x(x)^\top U^\top U \Phi_y(y)$$其中$\Phi_x(x),\Phi_y(y)$分别将x/y编码为向量。<br><strong>目标函数</strong><br>在训练阶段采用最大边缘目标函数，设对于question x，真实的label为r，对应的memory为$m_{o1},m_{o2}$。则最大边缘目标函数为：$$\sum_{m_i\ne m_{o1}}max(0,\gamma - s_{O1}(x,m_{o1}) + s_{O1}(x,m_i)) + $$ $$\sum_{m_j\ne m_{o2}}max(0,\gamma - s_{O2}([x,m_{o1}],m_{o2}) + s_{O2}([x,m_{o1}],m_j)) + $$ $$\sum_{r’ \ne r}max(0,\gamma - s_{R}([x,m_{o1},m_{o2}],r) + s_{R}([x,m_{o1},m_{o2}],r’))$$</p>
 <p>由于argmax()函数的存在，这个模型是不可微的。而且中间过程找到相关memory需要监督，这个模型不是端到端的。<br>总的来说，这个memory network是一种普适性的架构，是很初级很简单的，很多部分还不完善，不足以应用具体的任务上。不过，通过多跳方式找到相关memory的思路是很值得学习的。</p>
-<h3 id="End-to-End-Memory-Network"><a href="#End-to-End-Memory-Network" class="headerlink" title="End-to-End Memory Network"></a>End-to-End Memory Network</h3><p>Jason Weston作为三作的<a href="http://arxiv.org/abs/1503.08895" target="_blank" rel="noopener">Sainbayar Sukhbaatar2015</a>对Memory network工作的改进。End-to-End Memory Network采用soft attention而不是hard attention来read memory，因此是端到端的。另外不需要对相关memory进行监督。提高memory network的可用性。<br>假设多个句子input $x_1,…,x_n$作为memory，对于query q，输出对应的answer a。给定query q，经过多跳找到相关的memory，并生成对应的answer a。</p>
+<h3 id="End-to-End-Memory-Network"><a href="#End-to-End-Memory-Network" class="headerlink" title="End-to-End Memory Network"></a>End-to-End Memory Network</h3><p>Jason Weston作为三作的<a href="http://arxiv.org/abs/1503.08895" target="_blank" rel="noopener">Sainbayar Sukhbaatar2015</a>对Memory network工作的改进，主要改进是实现了端到端，减少了监督。End-to-End Memory Network采用soft attention而不是hard attention来read memory，因此是端到端的。另外不需要对相关memory进行监督。提高memory network的可用性。<br>假设多个句子input $x_1,…,x_n$作为memory，对于query q，输出对应的answer a。给定query q，经过多跳找到相关的memory，并生成对应的answer a。</p>
 <h4 id="single-layer"><a href="#single-layer" class="headerlink" title="single layer"></a>single layer</h4><p>给定input $x_1,x_2,…,x_n$，采用两个不同的embedding matrix A和C分别编码为向量$\lbrace{m_1,…,m_n}\rbrace$，$\lbrace{c_1,…,c_n}\rbrace$,分别对应attention机制的keys和values。将query q经过embedding matrix B编码为向量表示u。</p>
 <p>采用dot-product attention计算权重：$$p_i = softmax(u^\top m_i) = \frac{exp(u^\top m_i)}{\sum_{j}exp(u^\top m_j)}$$<br>则memory representation为：$$o = \sum_{i}p_i m_i$$<br>根据u和o来进行预测：$$\hat{a} = softmax(W (o + u))$$<br>通过最小化a与$\hat{a}$之间的交叉熵来训练模型参数A,B,C,W。这个single layer end-to-end Memory network是简单而直观的。核心是用soft attention来read memory，找到相关的memory，并进行inference。<figure class="image-bubble">
                 <div class="img-lightbox">
@@ -311,6 +312,41 @@
 <li>adjacent:<br>  让相邻层的embedding matrix A=C，共享参数。即：$C^k = A^{k+1}$，对第一层有$A^1 = B$，最后一层有：$C^K = W$。这样就减少了一半的参数量。</li>
 <li>RNN-like:<br>  跟RNN一样，采用完全参数共享的方法，$A^1 = A^2 = … = A^K$;$C^1 = C^2 = … = C^K$。参数数量大大减少导致模型效果变差，在层与层之间添加一个线性映射：$u^{k+1} = Hu^k + o^k$</li>
 </ul>
+<h3 id="key-value-Memory-Networks"><a href="#key-value-Memory-Networks" class="headerlink" title="key-value Memory Networks"></a>key-value Memory Networks</h3><p>Jason Weston作为作者之一的<a href="https://arxiv.org/abs/1606.03126" target="_blank" rel="noopener">Alexander Miller2016</a>在End-to-End Memory networks的基础上继续推进，可以更好的通过memory来编码和利用先验知识，并且具体地应用到了QA系统中。</p>
+<p>作为memory的先验知识可以是结构化的三元组知识库，也可以是非结构化的文本。</p>
+<ul>
+<li>三元组知识库。三元组的形式是”实体-关系-实体”，或”主语-谓语-宾语”。三元组知识库的优点是结构化的，便于机器处理。但缺点是与一句完整的话比较，三元组缺少了一些信息。由于三元组知识库是人工构建的，难免会有覆盖不到的知识，对于某个问题可能知识库中根本就没有对应的知识。另外，三元组中的实体可以有多种不同的表达，比如知识库中有三元组”中国-首都-北京”。当问题是“中华人民共和国的首都是？”时，可能就不能很好地回答。</li>
+<li>像“维基百科”这样的非结构化文本。优点时覆盖面广，几乎包含所有问题的知识。缺点是非结构化的，有歧义，需要经过复杂的推理才能找到答案。</li>
+</ul>
+<p>作为先验知识的memory是(key,value)形式的。</p>
+<ul>
+<li>key memory用于寻址(addressing/lookup)阶段，通过计算query与key memory的相关程度来计算attention权重，因此在设计key memory时，key memory的特征应该更好地匹配query。</li>
+<li>value memory用于read阶段，将value memory的加权和作为memory总的向量表示，因此在涉及value memory时，value memory的特征应该更好地匹配response。</li>
+</ul>
+<p>比较一下end-to-end memory network与key-value memory network的区别：</p>
+<ul>
+<li>前者是将相同的输入经过两个不同的embedding matrix编码分为作为key memory和value memory。而后者可以将不同的知识(key,value)分别编码为key memory和value memory，可以更灵活地利用先验知识。</li>
+<li>后者的每个hop之间添加了用$R_j$来进行线性映射。</li>
+</ul>
+<h4 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h4><p>在问答系统中，记memory slots为$(k_1,v_1),…,(k_M,v_M)$，问题query为x，真实回复为a，预测回复为$\hat{a}$。$\Phi_{X},\Phi_{Y},\Phi_{K},\Phi_{V}$分别是x,a,key,value的embedding matrix，将文本编码为向量表示。</p>
+<p>则单次memory的寻址和读取可以分为三步：</p>
+<ul>
+<li>key hashing:<br>  当知识库很大时，这一步是非常必要的。根据query从知识库中检索筛选出相关的facts $ (k_{h_1},v_{h_1}),(k_{h_2},v_{h_2}),…,(k_{h_N},v_{h_N})$，筛选条件可以是key中至少包含query中一个相同的词（去除停用词）。这一步可以在数据预处理时进行，直接将query和相关的facts作为模型的输入。</li>
+<li>key addressing(寻址阶段)<br>  计算query与memory的相关程度来分配在memory上的概率分布：$$p_{h_i} = softmax(A\Phi_{X}(x) \cdot A\Phi_{K}(k_{h_i}))$$其中$\Phi$将文本编码为D维向量，A是一个$d\times D$的可训练矩阵。</li>
+<li>value reading：<br>  将value的加权求和作为memory总的向量表示。$$o = \sum_{i}p_{h_i}A\Phi_{V}(v_{h_i})$$</li>
+</ul>
+<p>memory的读取过程是由controller神经网络通过query $q = A\Phi_{X}(x)$来控制的。模型会利用query $q$与上一跳(hop)的$o$来更新query，进而迭代地寻址和读取memory，这个迭代的过程称为多跳(hops)。<br>用多跳方式来迭代地寻址和读取memory，可以这样来理解：浅层神经网络可以学习到低级的特征，随着神经网络层数增多就可以学习到更高级的特征。类比CNN处理人脸图片时，第一层可以学习到一些边缘特征，第二层可以学习到眼睛、鼻子、嘴巴这样的特征，最后一层得到整个人脸的特征。同样地，用多跳方式来寻址和读取memory，可以得到更相关更突出的memory，同时可以起到推理的作用。</p>
+<p>query的更新公式为:$$q_2 = R_1(q + o)$$其中R是一个$d\times d$的可训练矩阵。每一跳使用不同的矩阵$R_j$。<br>则第j跳更新query后，寻址阶段的计算公式为$$p_{h_i} = softmax(q_{j+1}^\top \cdot A\Phi_{K}(k_{h_i}))$$<br>在经过H跳之后，用controller神经网络的最终状态进行预测:$$\hat{a} = argmax_{i=1,…,C}softmax(q_{H+1}B\Phi_{y}(y_i))$$其中B是一个$d\times D$的可训练矩阵，形状跟A一样。$y_i$可以是知识库中的实体，或者候选句子。</p>
+<p>模型的目标函数为预测回复$\hat{a}$与真实回复$a$之间的交叉熵，用梯度下降的方法来更新模型参数：$A,B,R_1,…,R_H$</p>
+<div align="center"><img src="/images/key-value-memory.png" width="150%" height="150%"></div>
+<div align="center"><font color="grey" size="2">Fig.7. 问答系统key-value memory networks的模型框架</font><br><a href="https://arxiv.org/abs/1606.03126" target="_blank" rel="noopener"><font color="grey" size="2">来源:Alexander Miller2016</font></a></div>
+
+<h4 id="key-value的选择与编码方式"><a href="#key-value的选择与编码方式" class="headerlink" title="key-value的选择与编码方式"></a>key-value的选择与编码方式</h4><p>论文根据不同形式的先验知识，提出了key-value不同的编码方式：</p>
+<ul>
+<li>知识库三元组。三元组形式为”subject-relation-object”，将”subject-relation”作为寻址的key，将”object”作为记忆的value。</li>
+<li>sentence level。直接将句子的词袋向量表示作为key和value，key和value是一样的。每个memory slot存一个句子。</li>
+<li>window level。以大小为W的窗口对文档进行分割（只保留中心词为实体的窗口），将单个窗口内的词作为寻址的key，将窗口的中心词作为value。</li>
+</ul>
 <h3 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
 <li><a href="https://zhuanlan.zhihu.com/c_129532277" target="_blank" rel="noopener">记忆网络-Memory Network</a></li>
 <li><a href="https://jhui.github.io/2017/03/15/Memory-network/" target="_blank" rel="noopener">Memory network (MemNN) &amp; End to end memory network (MemN2N), Dynamic memory network</a></li>
@@ -324,7 +360,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-07-29T09:00:55.000Z" itemprop="dateUpdated">2019-07-29 17:00:55</time>
+    最后更新时间：<time datetime="2019-08-01T02:30:21.000Z" itemprop="dateUpdated">2019-08-01 10:30:21</time>
 </span><br>
 
 
@@ -403,7 +439,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">论文笔记《Multi-Level Memory for Task Oriented Dialogs》</h4>
+      </a>
+    </div>
   
 
   

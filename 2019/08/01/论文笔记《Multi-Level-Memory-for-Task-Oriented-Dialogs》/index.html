@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>论文笔记《Multi-Level Memory for Task Oriented Dialogs》 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="dialog system,NAACL2019,Memory Network">
+    <meta name="description" content="【来源】：NAACL2019【链接】：https://arxiv.org/pdf/1810.10647.pdf【代码、数据集】：https://github.com/DineshRaghu/multi-level-memory-network">
+<meta name="keywords" content="dialog system,NAACL2019,Memory Network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记《Multi-Level Memory for Task Oriented Dialogs》">
+<meta property="og:url" content="http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="【来源】：NAACL2019【链接】：https://arxiv.org/pdf/1810.10647.pdf【代码、数据集】：https://github.com/DineshRaghu/multi-level-memory-network">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/multi-memory-model.jpg">
+<meta property="og:image" content="http://yoursite.com/images/multi-memory.png">
+<meta property="og:updated_time" content="2019-08-01T08:32:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文笔记《Multi-Level Memory for Task Oriented Dialogs》">
+<meta name="twitter:description" content="【来源】：NAACL2019【链接】：https://arxiv.org/pdf/1810.10647.pdf【代码、数据集】：https://github.com/DineshRaghu/multi-level-memory-network">
+<meta name="twitter:image" content="http://yoursite.com/images/multi-memory-model.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">论文笔记《Multi-Level Memory for Task Oriented Dialogs》</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">论文笔记《Multi-Level Memory for Task Oriented Dialogs》</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-01T06:14:37.000Z" itemprop="datePublished" class="page-time">
+  2019-08-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型结构"><span class="post-toc-number">1.</span> <span class="post-toc-text">模型结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#分级encoder"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">分级encoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#multi-level-memory"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">multi-level memory</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#copy机制增强的decoder"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">copy机制增强的decoder</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">论文笔记《Multi-Level Memory for Task Oriented Dialogs》</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-01 14:14:37" datetime="2019-08-01T06:14:37.000Z"  itemprop="datePublished">2019-08-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>【来源】：NAACL2019<br>【链接】：<a href="https://arxiv.org/pdf/1810.10647.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1810.10647.pdf</a><br>【代码、数据集】：<a href="https://github.com/DineshRaghu/multi-level-memory-network" target="_blank" rel="noopener">https://github.com/DineshRaghu/multi-level-memory-network</a></p>
+</blockquote>
+<a id="more"></a>
+
+<p>已有工作中，端到端的任务型对话系统采用memory network来结合外部的知识库(knowledgt base) 和 对话历史(context)。为了使用从跑一趟 network，通常将二者放在同一个memory中。这样带来的问题是：memory变得太大，模型在读取memory时需要区分外部知识库和对话历史，并且在memory上的推理变得很难。为了解决这个问题，论文将外部知识库和对话历史区分开，另外，将外部知识库保存为分层的memory。</p>
+<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>模型主要包括三个部分。 </p>
+<ul>
+<li>分级encoder：<br>  分别编码对话历史中的句子。</li>
+<li>milti-level memory<br>  保存了目前为止所有的query以及对应的知识库查询结果，是以分级的方式保存在memory中的。</li>
+<li>copy机制增强的decoder：<br>  从词汇表中生成词，或者从知识库multi-level memory中复制词，或者从对话历史(context)中复制词。</li>
+</ul>
+<div align="center"><img src="/images/multi-memory-model.jpg" width="150%" height="150%"></div>
+<div align="center"><font color="grey" size="2">Fig.1. 模型的整体框架图</font><br><a href="https://arxiv.org/pdf/1810.10647.pdf" target="_blank" rel="noopener"><font color="grey" size="2">来源:Revanth Reddy2019</font></a></div>
+
+<h4 id="分级encoder"><a href="#分级encoder" class="headerlink" title="分级encoder"></a>分级encoder</h4><p>在第t轮，对话历史共有2t-1个句子$\lbrace{c_1,c_2,…,c_{2t-1}}\rbrace$，其中用户对话为t轮，回复对话为t-1轮。 每个句子$c_i$都是词序列$\lbrace{w_{i1},w_{i2},…,w_{im}}\rbrace$。<br>每个句子$c_i$先经过embedding layer得到词向量表示，再经过单层bi-GRU得到句子的向量表示$\varphi(c_i)$。$h_{ij}^e$表示词$w_{ij}$对应的隐藏状态。<br>再将$\varphi{c_i}$经过另一个单词GRU来得到context的向量表示$c$。</p>
+<h4 id="multi-level-memory"><a href="#multi-level-memory" class="headerlink" title="multi-level memory"></a>multi-level memory</h4><p>memory的关键是分级的分为三级：query $\to$ result $\to$ result key和result value。见Fig.2。<br>记本轮对话之前所有的知识库query为$q_1,…,q_k$。每个query $q_i$是一个(key,value)对，$q_i = \lbrace{k_a^{q_i}:v_a^{q_i},0&lt; a&lt; n_{q_i}}\rbrace $。其中key和value分别对应query的槽(slots)和槽值，$n_{q_i}$是query $q_i$的槽值个数。<br>第j轮对话，用query $q_i$查询知识库的返回结果为result $r_{ij}$。$r_{ij}$也是一个key-value对，$r_{ij} = \lbrace{k_a^{r_{ij}}:v_a^{r_{ij}},0&lt; a &lt; n_{r_{ij}}}\rbrace$。其中$n_{r_{ij}}$是key-value对的个数。</p>
+<div align="center"><img src="/images/multi-memory.png" width="150%" height="150%"></div>
+<div align="center"><font color="grey" size="2">Fig.2. multi memory</font><br><a href="https://arxiv.org/pdf/1810.10647.pdf" target="_blank" rel="noopener"><font color="grey" size="2">来源:Revanth Reddy2019</font></a></div>
+第一级memory是query的向量表示。 $q_i$的向量表示为$q_i^v$，$q_i^v$为所有values $v_a^{q_i}$的词袋(bag of words)向量表示。
+第二级memory是result的向量表示。同样地，$r_{ij}$的向量表示为$r_{ij}^v$，$r_{ij}^v$为所有values $v_a^{r_{ij}}$的词袋(BOW)向量表示。
+第三级memory是result的key-value对，$(k_a^{r_{ij}}:v_a^{r_{ij}})$，其中value $v_a^{r_{ij}}$可能会被复制到回复中。
+
+<h4 id="copy机制增强的decoder"><a href="#copy机制增强的decoder" class="headerlink" title="copy机制增强的decoder"></a>copy机制增强的decoder</h4><p>decoder一个词一个词地生成回复。在时间步t生成词$y_t$时，可能从词汇表中生成，也能从两个分开的memory上复制。用门$g_1$来选择是从词汇表上生成，还是从memory中复制。如果是后者，用另一个门$g_2$来选择是从context中复制，还是从知识库复制。</p>
+<ol>
+<li><strong>从词汇表生成词</strong><br> 时间步t，decoder的隐藏状态$h_t$为$$h_t = GRU(y_{t-1},s_{t-1})$$用$h_t$计算在encoder的所有隐藏状态上的attention权重，采用”concat attention”机制：$$a_{ij} = softmax(w_1^\top tanh(W_2tanh(W_3[h_t,h_{ij}^e]))) = \frac{w_1^\top tanh(W_2tanh(W_3[h_t,h_{ij}^e]))}{\sum_{ij}w_1^\top tanh(W_2tanh(W_3[h_t,h_{ij}^e]))}$$则context vector为$$d_t = \sum_{ij}a_{ij}h^e_{ij}$$ $h_t$和$d_t$连接后经过线性层和softmax层得到在词汇表上的概率分布：$$P_g(y_t) = softmax(W_1[h_t,d_t] + b_1)$$</li>
+<li><strong>从context memory中复制词</strong><br> 直接将计算context vector时的attention权重，作为在context所有词$w_{ij}$上的概率分布：$$P_{con}(y_t = w) = \sum_{ij:w_{ij}=w}a_{ij}$$</li>
+<li><strong>从KB memory中复制实体</strong><br> 时间步t的隐藏状态$h_t$和context vector $d_t$用来计算在所有query上的attention权重。第一级在所有query $q_1,q_2,…,q_k$的attention权重为$$\alpha_i = softmax(w_2^\top tanh(W_4[h_t,d_t,q_i^v])) = \frac{w_2^\top tanh(W_4[h_t,d_t,q_i^v])}{\sum_{i}w_2^\top tanh(W_4[h_t,d_t,q_i^v])}$$<br> 第二级$\beta_i$在$q_i$对应的$r_i$上的attention权重为$$\beta_{ij} = softmax(w_3^\top tanh(W_5[h_t,d_t,r_{ij}^v])) = \frac{w_3^\top tanh(W_5[h_t,d_t,r_{ij}^v])}{\sum_{j}w_3^\top tanh(W_5[h_t,d_t,r_{ij}^v])}$$<br> 第一级attention和第二级attention的乘积是在所有result上的attention权重分布。则memory总的向量表示为$$m_t = \sum_{i}\sum_j\alpha_i\beta_{ij}r_{ij}^v$$<br> 第三级memory为result的key-value对$(k_a^{r_{ij}}:v_a^{r_{ij}})$，类似于<a href="https://arxiv.org/abs/1705.05414" target="_blank" rel="noopener">(Eric and Manning, 2017)</a>，用key $k_a^{r_{ij}}$来计算attention权重，将对应的value $v_a^{r_{ij}}$复制到回复中。在$r_{ij}$所有keys上的attention权重为$$\gamma_{ijl} = softmax(w_4^\top tanh(W_6[h_t,d_t,m_t,k_l^{r_{ij}}]))$$则在所有values $v_a^{r_{ij}}$的概率分布为:$$P_{kb}(y_t = w) = \sum_{ijl:v_l^{r_{ij}}=w}\alpha_i\beta_{ij}\gamma_{ijl}$$</li>
+<li><strong>decoding</strong><br> 我们用门机制$g_2$来来结合$P_{con}(y_t)$和$P_{kb}(y_t)$，得到memory上的copy概率分布$P_c(y_t)$。$$g_2 = sigmoid(W_7[h_t,d_t,m_t]+b_2)$$ $$P_c(y_t) = g_2P_{kb}(y_t) + (1-g_2)P_{con}(y_t)$$ 用门机制$g_1$来结合$P_{c}(y_t)$和$P_{g}(y_t)$来得到总的概率分布$P(y_t)$：$$g_1 = sigmoid(W_8[h_t,d_t,m_t]+b_3)$$ $$P(y_t) = g_1P_g(y_t) + (1-g_1)P_c(y_t)$$</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-01T08:32:54.000Z" itemprop="dateUpdated">2019-08-01 16:32:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Memory-Network/">Memory Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NAACL2019/">NAACL2019</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dialog-system/">dialog system</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/&title=《论文笔记《Multi-Level Memory for Task Oriented Dialogs》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/&title=《论文笔记《Multi-Level Memory for Task Oriented Dialogs》》 — spring's Blog&source=
+【来源】：NAACL2019【链接】：https://arxiv.org/pdf/1810.10647.pdf【代码、数据集】：https://gith..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Multi-Level Memory for Task Oriented Dialogs》》 — spring's Blog&url=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/07/26/Neural-Turing-Machines与Memory-Network/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Neural Turing Machines与Memory Network</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/&title=《论文笔记《Multi-Level Memory for Task Oriented Dialogs》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/&title=《论文笔记《Multi-Level Memory for Task Oriented Dialogs》》 — spring's Blog&source=
+【来源】：NAACL2019【链接】：https://arxiv.org/pdf/1810.10647.pdf【代码、数据集】：https://gith..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Multi-Level Memory for Task Oriented Dialogs》》 — spring's Blog&url=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
