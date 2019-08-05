@@ -62,9 +62,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
-    
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
+    
+      <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
     
       <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
     
@@ -159,9 +159,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
-    
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
+    
+      <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
     
   </entry>
   
@@ -183,9 +183,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
-    
       <category term="ACL2019" scheme="http://yoursite.com/tags/ACL2019/"/>
+    
+      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
   </entry>
   
