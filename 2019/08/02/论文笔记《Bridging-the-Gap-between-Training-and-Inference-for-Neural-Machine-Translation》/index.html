@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="ACL2019,Neural Machine Translation">
+    <meta name="description" content="【来源】：ACL2019【链接】：https://arxiv.org/abs/1906.02448【代码、数据集】： 无">
+<meta name="keywords" content="ACL2019,Neural Machine Translation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》">
+<meta property="og:url" content="http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="【来源】：ACL2019【链接】：https://arxiv.org/abs/1906.02448【代码、数据集】： 无">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/oracle.png">
+<meta property="og:image" content="http://yoursite.com/images/word_level_oracle_without_gumbel_noise.png">
+<meta property="og:image" content="http://yoursite.com/images/word_level_oracle_with_gumbel_noise.png">
+<meta property="og:updated_time" content="2019-08-05T05:06:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》">
+<meta name="twitter:description" content="【来源】：ACL2019【链接】：https://arxiv.org/abs/1906.02448【代码、数据集】： 无">
+<meta name="twitter:image" content="http://yoursite.com/images/oracle.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-02T06:46:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#要解决的问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">要解决的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RNN-based-NMT-Model"><span class="post-toc-number">2.</span> <span class="post-toc-text">RNN-based NMT Model</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encoder"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">encoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#attention"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#decoder"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">decoder</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方法"><span class="post-toc-number">3.</span> <span class="post-toc-text">方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#oracle-word的选择"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">oracle word的选择</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#word-level-oracle"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">word-level oracle</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#sentence-level-oracle"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">sentence-level oracle</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#递减抽样"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">递减抽样</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#训练"><span class="post-toc-number">4.</span> <span class="post-toc-text">训练</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-02 14:46:00" datetime="2019-08-02T06:46:00.000Z"  itemprop="datePublished">2019-08-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>【来源】：ACL2019<br>【链接】：<a href="https://arxiv.org/abs/1906.02448" target="_blank" rel="noopener">https://arxiv.org/abs/1906.02448</a><br>【代码、数据集】： 无</p>
+</blockquote>
+<a id="more"></a>
+<p>这篇论文由中科院发表，获得了ACL2019的 “best long paper”。</p>
+<h3 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h3><p>在Neural Machine Translation(NMT)任务中，模型通常采用encoder-decoder框架，基于RNN 或 CNN 或attention。假设输入为$X = \lbrace{x_1,x_2,…,x_m}\rbrace$，真实输出为$Y = \lbrace{y_1^*,y_2^*,…,y_n^*}\rbrace$，预测输出为$Y’ = \lbrace {y_1’,y_2’,…,y_m’}\rbrace$。</p>
+<p>第一个问题是：decoder会一个词一个词地生成整个回复。在train阶段，在时间步t生成$y_t’$时，decoder会根据之前真实的词$\lbrace{y_1^*,y_2^*,…,y_{t-1}^*}\rbrace$来预测$y_t’$。在infer阶段，由于不可能知道真实输出，在时间步生成$y_t’$时，decoder会根据之前预测的词$\lbrace{y_1’,y_2’,…,y_{t-1}’}\rbrace$来预测$y_t’$。<br>可以看到train阶段与infer阶段所依据的词是不同的，train阶段和infer阶段预测的词$y_t’$来自两个不同的概率分布，分别是数据分布(data distribution)和模型的分布(model distribution)，这种差别称为“爆炸偏差(exposure bias)”。随着预测序列的长度增加，错误会逐渐累积。<br>为了解决第一个问题，消除train阶段和infer阶段的这种差别，一个可能的解决方法是：在train阶段，decoder同时根据真实的词$\lbrace{y_1^*,y_2^*,…,y_{t-1}^*}\rbrace$和预测的词$\lbrace{y_1’,y_2’,…,y_{t-1}’}\rbrace$来生成$y_t’$。</p>
+<p>第二个问题是: NMT模型通常最优化$Y与Y’$之间的交叉熵目标函数来更新模型参数，但交叉熵函数会严格匹配预测输出$Y’$与真实的输出$Y$。但在NMT任务中，一句话可以有多个不同但合理的翻译。一旦预测输出$Y’$的某个词与$Y$不同，尽管它是合理的，也会被交叉熵函数纠正。这种情况称为“过度纠正的现象”。</p>
+<p>为了消除train阶段与infer阶段的差别，论文提出了一种在train阶段做改进的解决方案。首先，从预测的词中选择oracle word $y_{j-1}^{oracle}$，设真实输出中上一个词为$y_{j-1}^{*}$。接着从$\lbrace{y_{j-1}^{oracle},y_{j-1}^{*}}\rbrace$中抽样一个词，抽中$y_{j-1}^{*}$的概率为$p$，抽中$y_{j-1}^{oracle}$的概率为$1-p$。最后，decoder根据抽样的这个词来预测$y_j$。</p>
+<p>在train阶段刚开始时，抽中真实的词$y_{j-1}^{*}$的概率比较大，随着模型逐渐收敛，抽中预测的词$y_{j-1}^{oracle}$的概率变大，让模型有能力处理”过度纠正的问题”。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/oracle.png" alt="Fig.1 论文提出的方法的结构图" title>
+                </div>
+                <div class="image-caption">Fig.1 论文提出的方法的结构图</div>
+            </figure>
+<h3 id="RNN-based-NMT-Model"><a href="#RNN-based-NMT-Model" class="headerlink" title="RNN-based NMT Model"></a>RNN-based NMT Model</h3><p>NMT任务常采用encoder-decoder框架，可以基于RNN或CNN或纯attention。论文提出的消除train阶段和infer阶段差别的方法，可以用于任何NMT模型。论文以基于RNN的NMT模型为例，来介绍这种方法。这一节先介绍RNN-based NMT模型。下一节介绍NMT模型如何结合这种方法。</p>
+<h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h4><p>记输入为$X = \lbrace{x_1,x_2,…,x_m}\rbrace$，真实输出为$Y = \lbrace{y_1,y_2,…,y_n}\rbrace$。encoder采用bi-GRU分别获取正向和反向的隐藏状态$\overrightarrow{h_i},\overleftarrow{h_i}$。$x_i$的embedding向量为$e_{x_i}$。$$\overrightarrow{h_i} = GRU(e_{x_i},h_{i-1})$$ $$\overleftarrow{h_i} = GRU(e_{x_i},h_{i+1})$$ 将$\overrightarrow{h_i},\overleftarrow{h_i}$连接起来，作为$x_i$对应的隐藏状态：$$h_i = [\overrightarrow{h_i},\overleftarrow{h_i}] \tag{1}$$</p>
+<h4 id="attention"><a href="#attention" class="headerlink" title="attention"></a>attention</h4><p>attention机制用来联系encoder和decoder，更好地捕捉source sequence的信息。也就是在时间步t,通过encoder所有的隐藏状态$\lbrace h_1,h_2,…,h_m \rbrace$来计算context vector $c_t$。记decoder上一时间步的隐藏状态为$s_{t-1}$。 $c_t$是encoder所有隐藏状态$\lbrace h_1,h_2,…,h_m \rbrace$的加权和：$$c_t = \sum_{i=1}^{m}\alpha_{ti}h_i \tag{2}$$ 其中$\alpha_{ti}$是attention权重，计算方式为:$$\beta_{ti} = v_a^\top tanh(W_as_{t-1} + U_ah_i) \tag{3}$$ $$\alpha_{ti} = softmax(\beta_{ti}) = \frac{exp(\beta_{ti})}{\sum_jexp(\beta_{tj})}$$</p>
+<h4 id="decoder"><a href="#decoder" class="headerlink" title="decoder"></a>decoder</h4><p>decoder采用单向GRU的变体，隐藏状态更新公式为:$$s_t = GRU(s_{t-1},e_{y_{t-1}^*},c_t) \tag{4}$$ 最后根据e_{y_{t-1}^*}，decoder的隐藏状态$s_t$，对应的context vector $c_t$来预测$y_t$。 $$o_t = W_og(e_{y_{t-1}^*},s_t,c_t) \tag{5}$$ 在词汇表上的概率分布为：$$P_t(y_t = w) = softmax(o_t) \tag{6}$$</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>为了消除或减轻train阶段和infer阶段的差别，论文提出 从真实的词$y_{t-1}*$和$y_{t-1}^{oracle}$预测的词中抽样，decoder根据抽样的词来预测下一个词$y_t$。使用论文提出的方法，在时间步t预测$y_t$分为三步：</p>
+<ol>
+<li>先从预测的词中选择$y_{t-1}^{oracle}$。 论文提出了两种方法来选择oracle word，分别是词级别的方法和句子级别的方法。</li>
+<li>从$\lbrace{y_{t-1}^{oracle},y_{t-1}*}\rbrace$中抽样得到$y_{t-1}$，抽中$y_{t-1}*$的概率为$p$，抽中$y_{t-1}^{oracle}$的概率为$1-p$。</li>
+<li>用抽样的词$y_{t-1}$来替换公式$(4)(5)$中的$y_{t-1}^*$来预测下一个词。</li>
+</ol>
+<h4 id="oracle-word的选择"><a href="#oracle-word的选择" class="headerlink" title="oracle word的选择"></a>oracle word的选择</h4><p>传统的方法中，decoder会根据上一个时间步真实的$y_{t-1}^*$来预测$y_t$。为了消除train阶段的infer阶段的差别，可以从预测的词中选择oracle word $y_{t-1}^{oracle}$来代替$y_{t-1}^*$。一种方法是每个时间步采用词级别的greedy search来生成oracle word，称为word-level oracle(WO)，另一种方法是采用beam-search，扩大搜索空间，用句子级的衡量指标(如：BLEU)对beam-search的结果进行排序，称为sentence-level oracle(SO).</p>
+<h5 id="word-level-oracle"><a href="#word-level-oracle" class="headerlink" title="word-level oracle"></a>word-level oracle</h5><p>选择$y_{t-1}^{oracle}$最简单直观的方法是，在时间步t-1，选择公式$P_{t-1}$中概率最高的词作为$y_{t-1}^{oracle}$，如Fig.2所示。 为了获得更健壮的$y_{t-1}^{oracle}$，更好地选择是使用<a href="https://www.cnblogs.com/initial-h/p/9468974.html" target="_blank" rel="noopener">gumbel max技术</a>来冲离散分布中进行抽样，如Fig.3所示。<br>具体地讲，将gumbel noise $\eta$作为正则化项加到公式(5)中的$o_{t-1}$，再进行softmax操作得到$y_{t-1}$的概率分布。$$\eta = -log(-log(u)) $$ $$\tilde{o_{t-1}} = \frac{o_{t-1} + \eta}{\tau} \tag{7}$$ $$\tilde{P_{t-1}} = softmax(\tilde{o_{t-1}}) \tag{8}$$ 其中变量$u \sim U(0,1)$服从均匀分布。$\tau$为温度系数，当$\tau \to 0$时，公式(8)的softmax()逐渐相当于argmax()函数；当$\tau \to \infty$时，softmax()函数逐渐相当于均匀分布。<br>则$y_{t-1}^{oracle}$为$$y_{t-1}^{oracle} = y_{t-1}^{WO} =argmax(\tilde{P_{t-1}}) \tag{9}$$需要注意的是gumbel noise $\eta$只用来选择oracle word，而不会影响train阶段的目标函数。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/word_level_oracle_without_gumbel_noise.png" alt="Fig.2. word level oracle without gumbel noise" title>
+                </div>
+                <div class="image-caption">Fig.2. word level oracle without gumbel noise</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/word_level_oracle_with_gumbel_noise.png" alt="Fig.3. word level oracle with gumbel noise" title>
+                </div>
+                <div class="image-caption">Fig.3. word level oracle with gumbel noise</div>
+            </figure>
+<h5 id="sentence-level-oracle"><a href="#sentence-level-oracle" class="headerlink" title="sentence-level oracle"></a>sentence-level oracle</h5><p>为了选择sentence-level oracle word，首先要进行beam-search解码，设beam size为k，得到k个candidate句子。在beam-search解码的过程中，生成每个词时也应用gumbel max技术。<br>接着，得到k个candidate句子后，用句子级衡量指标BLEU来给这k个句子打分，得分最高的句子为oracle sentence $Y^S = \lbrace{y_1^S,y_2^S,..,y_{|y^S|}^S}\rbrace$。<br>则时间步t解码对应的oracle word $y_{t-1}^{oracle}$为$$y_{t-1}^{oracle} = y_{t-1}^{SO} = y_{t-1}^{S} \tag{10}$$ 当模型从真实输出$Y$和sentence oracle $Y^S$抽样，这有一个前提是，这两个序列的长度需要是一致的。但beam-search decode不能保证解码序列的长度。为了保证这两个序列长度一致，论文提出了<em>force decoding</em>的解决方法。</p>
+<p><strong>force decoding</strong><br>设真实输出$Y = \lbrace{y_1,y_2,…,y_n}\rbrace$的序列长度为n。<em>force decoding</em>需要解码得到长度同样为n的序列，以特殊字符”EOS”结束。设beam search decode时，时间步t对应的概率分布为$P_t$。</p>
+<ul>
+<li>当$t&lt; n$时，对于概率分布$P_t$，即使字符”EOS”是概率最高的词，那么生成概率次高的词。</li>
+<li>当$t = n+1$时，对于概率分布$P_{n+1}$，即使字符”EOS”不是概率最高的词，也要生成”EOS”。</li>
+</ul>
+<p>果真是强制生成长度为n的序列。这样beam-search decode得到的序列与真实输出序列的长度就是一致的，都为n。</p>
+<h4 id="递减抽样"><a href="#递减抽样" class="headerlink" title="递减抽样"></a>递减抽样</h4><p>根据公式(9)或(10)得到$y_{t-1}^{oracle}$后，下一步是从$\lbrace{y_{t-1}^{oracel},y_{t-1}^*}\rbrace$中抽样，抽中$y_{t-1}^*$的概率是p，抽中$y_{t-1}^{oracle}$的概率是1-p。在训练的初始阶段，如果过多地选择$y_{t-1}^{oracle}$，会导致模型收敛速度慢；在训练的后期阶段，如果过多地选择$y_{t-1}^*$，会导致模型在train阶段没有学习到如何处理infer阶段的差别。<br>因此，好的选择是：在训练的初始阶段，更大概率地选择$y_{t-1}^*$来加快模型收敛，当模型逐渐收敛后，以更大概率选择$y_{t-1}^{oracle}$，来让模型学习到如何处理infer阶段的差别。从数学表示上，概率$p$先大后逐渐衰减，$p$随着训练轮数$e$的增大而逐渐变小。$$p = \frac{\mu}{\mu + exp(\frac{e}{\mu})} \tag{11}$$其中，$\mu$是超参数。$p$是轮数$e$的单调递减函数。$e$从0开始，此时，$p=1$。</p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p>将采样得到的$y_{t-1}$代替公式(4)-(6)中的$y_{t-1}^*$来预测$y_t$在词汇表上的概率分布。采用最大似然估计，相当于最小化以下目标函数：$$L(\theta) = -\sum_{n=1}^{N}\sum_{j=1}^{|y_n|}logP_j^n[y_j^n]$$</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-05T05:06:42.000Z" itemprop="dateUpdated">2019-08-05 13:06:42</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACL2019/">ACL2019</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Neural-Machine-Translation/">Neural Machine Translation</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/&title=《论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/&title=《论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》》 — spring's Blog&source=
+【来源】：ACL2019【链接】：https://arxiv.org/abs/1906.02448【代码、数据集】： 无
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》》 — spring's Blog&url=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/08/01/论文笔记《Multi-Level-Memory-for-Task-Oriented-Dialogs》/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">论文笔记《Multi-Level Memory for Task Oriented Dialogs》</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/&title=《论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/&title=《论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》》 — spring's Blog&source=
+【来源】：ACL2019【链接】：https://arxiv.org/abs/1906.02448【代码、数据集】： 无
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》》 — spring's Blog&url=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/08/02/论文笔记《Bridging-the-Gap-between-Training-and-Inference-for-Neural-Machine-Translation》/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
