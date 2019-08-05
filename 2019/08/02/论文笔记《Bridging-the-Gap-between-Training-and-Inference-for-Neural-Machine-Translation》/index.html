@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://yoursite.com/images/oracle.png">
 <meta property="og:image" content="http://yoursite.com/images/word_level_oracle_without_gumbel_noise.png">
 <meta property="og:image" content="http://yoursite.com/images/word_level_oracle_with_gumbel_noise.png">
-<meta property="og:updated_time" content="2019-08-05T05:06:42.000Z">
+<meta property="og:updated_time" content="2019-08-05T05:14:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记《Bridging the Gap between Training and Inference for Neural Machine Translation》">
 <meta name="twitter:description" content="【来源】：ACL2019【链接】：https://arxiv.org/abs/1906.02448【代码、数据集】： 无">
@@ -185,7 +185,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#要解决的问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">要解决的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RNN-based-NMT-Model"><span class="post-toc-number">2.</span> <span class="post-toc-text">RNN-based NMT Model</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encoder"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">encoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#attention"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#decoder"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">decoder</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方法"><span class="post-toc-number">3.</span> <span class="post-toc-text">方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#oracle-word的选择"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">oracle word的选择</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#word-level-oracle"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">word-level oracle</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#sentence-level-oracle"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">sentence-level oracle</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#递减抽样"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">递减抽样</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#训练"><span class="post-toc-number">4.</span> <span class="post-toc-text">训练</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#要解决的问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">要解决的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RNN-based-NMT-Model"><span class="post-toc-number">2.</span> <span class="post-toc-text">RNN-based NMT Model</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encoder"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">encoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#attention"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#decoder"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">decoder</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方法"><span class="post-toc-number">3.</span> <span class="post-toc-text">方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#oracle-word的选择"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">oracle word的选择</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#word-level-oracle"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">word-level oracle</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#sentence-level-oracle"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">sentence-level oracle</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#递减抽样"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">递减抽样</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#训练"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">训练</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -262,7 +262,7 @@
 </ul>
 <p>果真是强制生成长度为n的序列。这样beam-search decode得到的序列与真实输出序列的长度就是一致的，都为n。</p>
 <h4 id="递减抽样"><a href="#递减抽样" class="headerlink" title="递减抽样"></a>递减抽样</h4><p>根据公式(9)或(10)得到$y_{t-1}^{oracle}$后，下一步是从$\lbrace{y_{t-1}^{oracel},y_{t-1}^*}\rbrace$中抽样，抽中$y_{t-1}^*$的概率是p，抽中$y_{t-1}^{oracle}$的概率是1-p。在训练的初始阶段，如果过多地选择$y_{t-1}^{oracle}$，会导致模型收敛速度慢；在训练的后期阶段，如果过多地选择$y_{t-1}^*$，会导致模型在train阶段没有学习到如何处理infer阶段的差别。<br>因此，好的选择是：在训练的初始阶段，更大概率地选择$y_{t-1}^*$来加快模型收敛，当模型逐渐收敛后，以更大概率选择$y_{t-1}^{oracle}$，来让模型学习到如何处理infer阶段的差别。从数学表示上，概率$p$先大后逐渐衰减，$p$随着训练轮数$e$的增大而逐渐变小。$$p = \frac{\mu}{\mu + exp(\frac{e}{\mu})} \tag{11}$$其中，$\mu$是超参数。$p$是轮数$e$的单调递减函数。$e$从0开始，此时，$p=1$。</p>
-<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p>将采样得到的$y_{t-1}$代替公式(4)-(6)中的$y_{t-1}^*$来预测$y_t$在词汇表上的概率分布。采用最大似然估计，相当于最小化以下目标函数：$$L(\theta) = -\sum_{n=1}^{N}\sum_{j=1}^{|y_n|}logP_j^n[y_j^n]$$</p>
+<h4 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h4><p>将采样得到的$y_{t-1}$代替公式(4)-(6)中的$y_{t-1}^*$来预测$y_t$在词汇表上的概率分布。采用最大似然估计，相当于最小化以下目标函数：$$L(\theta) = -\sum_{n=1}^{N}\sum_{j=1}^{|y_n|}logP_j^n[y_j^n]$$</p>
 
         </div>
 
@@ -271,7 +271,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-08-05T05:06:42.000Z" itemprop="dateUpdated">2019-08-05 13:06:42</time>
+    最后更新时间：<time datetime="2019-08-05T05:14:53.000Z" itemprop="dateUpdated">2019-08-05 13:14:53</time>
 </span><br>
 
 
