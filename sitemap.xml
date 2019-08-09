@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/links/index.html</loc>
+    
+    <lastmod>2019-08-09T07:09:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/collection/index.html</loc>
     
     <lastmod>2019-08-05T10:02:42.000Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>http://yoursite.com/2019/07/07/ACL2019-%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F/</loc>
     
     <lastmod>2019-07-31T03:40:18.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/links/index.html</loc>
-    
-    <lastmod>2019-07-30T07:55:09.000Z</lastmod>
     
   </url>
   
