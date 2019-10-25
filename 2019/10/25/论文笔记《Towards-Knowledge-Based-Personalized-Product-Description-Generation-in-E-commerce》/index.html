@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Personalization,Dialog System,BiDAF,Knowledge-Based">
+    <meta name="description" content="【来源】：ARXIV 2019【链接】：https://arxiv.org/abs/1903.12457v3【代码、数据集】：https://github.com/THUDM/KOBE">
+<meta name="keywords" content="Personalization,Dialog System,BiDAF,Knowledge-Based">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》">
+<meta property="og:url" content="http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="【来源】：ARXIV 2019【链接】：https://arxiv.org/abs/1903.12457v3【代码、数据集】：https://github.com/THUDM/KOBE">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/KOBE.png">
+<meta property="og:image" content="http://yoursite.com/images/attributeFusion.png">
+<meta property="og:updated_time" content="2019-10-25T14:49:12.478Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》">
+<meta name="twitter:description" content="【来源】：ARXIV 2019【链接】：https://arxiv.org/abs/1903.12457v3【代码、数据集】：https://github.com/THUDM/KOBE">
+<meta name="twitter:image" content="http://yoursite.com/images/KOBE.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-25T10:52:24.000Z" itemprop="datePublished" class="page-time">
+  2019-10-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#任务定义"><span class="post-toc-number">1.</span> <span class="post-toc-text">任务定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型结构"><span class="post-toc-number">2.</span> <span class="post-toc-text">模型结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encoder-decoder框架"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">encoder-decoder框架</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Attribute-Fusion模块"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Attribute Fusion模块</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Knowledge-Incorporation"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Knowledge Incorporation</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-25 18:52:24" datetime="2019-10-25T10:52:24.000Z"  itemprop="datePublished">2019-10-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>【来源】：ARXIV 2019<br>【链接】：<a href="https://arxiv.org/abs/1903.12457v3" target="_blank" rel="noopener">https://arxiv.org/abs/1903.12457v3</a><br>【代码、数据集】：<a href="https://github.com/THUDM/KOBE" target="_blank" rel="noopener">https://github.com/THUDM/KOBE</a></p>
+</blockquote>
+<a id="more"></a>
+<p>清华大学和阿里巴巴发表的论文。论文的研究内容是给定商品名称，商品的属性特征和外部知识库，自动生成商品的描述。</p>
+<p><strong>数据集描述</strong><br>论文在淘宝收集了一个真实的商品描述数据集，包含了212,9187个商品名称和描述。数据集是公开的，下载地址为：<a href="https://tianchi.aliyun.com/dataset/dataDetail?dataId=9717" target="_blank" rel="noopener">https://tianchi.aliyun.com/dataset/dataDetail?dataId=9717</a></p>
+<h3 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h3><p>给定商品名称$x = \{x_1,…,x_n\}$，要求生成个性化的、富有信息的商品描述$y = \{y_1,…,y_m\}$。引入两个附加信息：商品属性 和 外部知识：</p>
+<ol>
+<li>Attributes<br> 每个商品名称$x$对应$l$个属性$a = \{a_1,…,a_l\}$。论文中包含两种属性，商品的某个方面（如质量、外观等）和用户类型（反映用户的兴趣）。</li>
+<li>Knowledge<br> 论文采用一个大规模的中文知识图谱<code>CN-DBpedia</code>作为外部knowledge。<code>CN-DBpedia</code>包含大量命名实体$V$索引的原始文本条目$W$。每个条目包含一个命名实体$v &ensp; \in V$作为key，对应一个knowledge句子 $w = \{w_1,…,w_u\} \in W$作为value。</li>
+</ol>
+<p>最终的任务定义为：给定商品名称$x$、商品属性$a$和相关的knowledge $w$，要求生成个性化的，信息量丰富的回复$y$。</p>
+<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>模型采用了基于Transformer的encoder-decoder框架，结合了两个模块：Attribute Fusion和knowledge Incorporation。</p>
+<div align="center"><img src="/images/KOBE.png" width="60%" height="60%"></div>
+<div align="center"><font color="grey" size="2">Fig.1. 模型结构的示意图</font></div>
+
+<h4 id="encoder-decoder框架"><a href="#encoder-decoder框架" class="headerlink" title="encoder-decoder框架"></a>encoder-decoder框架</h4><p>Transformer是完全基于self-attention机制 和 前馈神经网络（FFN,feed-forward neural network）的。</p>
+<ol>
+<li><strong>encoder</strong><br> 对于输入$x = \{x_1,…,x_n\}$，先经过embedding层得到word embedding representation $e = \{e_1,…,e_n\}$，连同position embedding一起，作为encoder layers的输入，得到context representation $h = \{h_1,…,h_n\}$。<br> 在embedding层之上，encoder layers由完全相同的6层堆叠组成，每层transformer包括<code>multi-head self-attention</code>和<code>FFN</code>两部分。<ol>
+<li><strong>attention机制</strong><br> attention机制根据queries $Q$和keys $K$计算在values $V$上的分布，进而得到attention的输出。$$C = \alpha V$$ $$\alpha = softmax(f(Q,K))$$其中$C$表示attention的输出，$\alpha$表示attention的分布，$f$表示计算attention分数的函数。</li>
+<li><strong>uni-head attention</strong><br> 对于单头attention，queries $Q$，keys $K$和values $V$分别是输入context $e$的线性转换。即$Q = W_Qe$, $K = W_Ke$ 和 $V = W_Ve$。此时，uni-head attention可以表示为 $$C_{self} = softmax(\frac{QK^T}{\sqrt{d_k}})V$$ 其中$d_k$表示输入$e$的维度。</li>
+<li><strong>multi-head attention</strong><br> 对于多头attention，将$C^i_{self}, i\in \{1,2,…,c\}$连接起来，作为FFN的输入。其中$c$表示heads的数量。<br>再经过前馈神经网络（FFN），FFN的函数表示为：$$FFN(z) = W_2(Relu(W_1z + b_1)) + b_2$$</li>
+</ol>
+</li>
+<li><strong>decoder</strong><br> 与encoder类似，decoder也是由完全相同的6层堆叠而成的，每层包含<code>multi-head attention</code>和<code>FFN</code>两部分。不同于encoder的”self-attenion”，decoder的<code>multi-head attention</code>是“context attention”。queries $Q$是decoder state的线性转换，keys $K$和values $V$是context states $h = \{h_1,…,h_n\}$的线性转换。</li>
+<li><strong>Training</strong><br> 模型的目标是最大化似然函数。模型的目标函数是：$$P(y|x) = \prod_{t=1}^m P(y_t|y_{&lt;t},x)\tag{1}$$</li>
+</ol>
+<h4 id="Attribute-Fusion模块"><a href="#Attribute-Fusion模块" class="headerlink" title="Attribute Fusion模块"></a>Attribute Fusion模块</h4><p>商品的属性$a = \{a_1,a_2\}$，包含商品方面 和 用户类型两个属性。先经过embedding层得到attribute representation $\{e_{a_1},e_{a_2}\}$，再做attribute average得到总的attribute representation $e_{attr}$： $$e_{attr} = \frac{1}{2}\sum_{i=1}^2e_{a_i}$$ 如何有效结合$e_{attr}$呢？在基于RNN的模型中，方法比较多，比如：用$e_{attr}$来attend context representation，或着作为decoder隐藏状态更新的输入等。但本文中的模型是基于Transformer的，直接将attribute embedding $e_{attr}$与word embedding $e_i$相加，来结合商品的属性信息。如Fig.2所示。</p>
+<div align="center"><img src="/images/attributeFusion.png" width="60%" height="60%"></div>
+<div align="center"><font color="grey" size="2">Fig.2. Attribute Fusion的示意图</font></div>
+
+<p>此时，公式（1）中的目标函数变为$$ P(y|x,a) = \prod_{t=1}^m P(y_t|y_{&lt;t},x,a)$$</p>
+<h4 id="Knowledge-Incorporation"><a href="#Knowledge-Incorporation" class="headerlink" title="Knowledge Incorporation"></a>Knowledge Incorporation</h4><p>knowledge incorporation包括三个部分，knowledge检索，knowledge编码，和knowledge结合。</p>
+<ol>
+<li><strong>knowledge retrieval</strong><br> 给定商品名称$x = \{x_1,…,x_n\}$，对于每个word $x_i$匹配对应的命名实体$v_i \in V$。再根据命名实体$v_i$，从$W$中检索对应的knowledge $w_i$。对于每个商品，最多抽取5个匹配的knowledge，再用分隔符 “<sep>”连接起来。</sep></li>
+<li><strong>knowledge encoding</strong><br> 类似于$x = \{x_1,…,x_n\}$通过encoder编码得到context representation $h = \{h_1,….,h_n\}$，将检索到的knowledge经过一个基于Transformer的knowledge encoder得到knowledge representation $u$。</li>
+<li><strong>knowledge combination</strong><br> 用BiDAF(bidirectional attention flow)来结合context representation $h$和knowledge representation $u$。BiDAF计算两个方向的attention：title-to-knowledge attention和knowledge-to-context attention。<ol>
+<li><strong>相似度矩阵S</strong><br> 先计算一个context representation $h \in R^{n \times d}$和knowledge representation $u \in R^{u \times d}$之间的相似度矩阵$S \in R^{n\times u}$。其中$S_{ij}$衡量第i个title word和第j个knowledge word之间的相似度。$$S_{ij} = \alpha(h_i,u_j) \in R$$ 其中$\alpha()$是计算两个向量之间相似度的函数。 $$\alpha(h,u) = W_s^T[h;u;h \cdot u], &emsp; W_s\in R^{3d}$$</li>
+<li><strong>title-to-knowledge attention</strong><br> 表明了对于每个title word，哪个knowledge word是最相关的。<br> $a_i \in R^u$表示对于第i个title word，在所有knowledge words上的attention权重分布。$$a_i = softmax(S_{i:}) &emsp; \in R^u$$ 其中，$S_{i:}$表示相似度矩阵$S \in R^{n\times u}$的第i个行向量。对于所有的$i$，$a_i$满足：$$\sum_ja_{ij} = 1$$ 对于第i个title word，attended knowledge vector为：$$\widetilde{u_i} = \sum_ja_{ij}u_j$$ 则对于所有的title words $\{x_1,…,x_n\}$，有$\widetilde{u} \in R^{n \times d}$</li>
+<li><strong>knowledge-to-title attention</strong><br> 表明了对于每个knowledge word，哪个title word是最相似的。<br> 计算在所有title words上的attention权重分布：$$b = softmax(max(S_{i:}))$$ 则attended title vector为$$\widetilde{h} = \sum_{k}b_kh_k$$ 把$\widetilde{h}$在列上复制n次，得到$\widetilde{h} \in R^{n\times d}$。</li>
+<li><strong>输出融合</strong><br> 做一个简单的连接操作，得到组合representation： $[h;\widetilde{u};h\circ \widetilde{u};h\circ \widetilde{h}] \in R^{4d \times n}$</li>
+</ol>
+</li>
+</ol>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li>BiDAF(bidirectional attention flow)可以参考:<ul>
+<li><a href="https://spring-quan.github.io/2019/10/23/论文笔记《BiDAF-Bi-Directional-Attention-Flow-for-Machine-Comprehension》/" target="_blank" rel="noopener">论文笔记：《(BiDAF)Bi-Directional Attention Flow for Machine Comprehension》</a></li>
+</ul>
+</li>
+<li>中文知识图谱<code>CN-DBpedia</code>可以参考：<ul>
+<li><a href="https://www.semanticscholar.org/paper/CN-DBpedia%3A-A-Never-Ending-Chinese-Knowledge-System-Xu-Xu/2c69bbb3b7ba3f324276924bab6f41de467c928a" target="_blank" rel="noopener">《CN-DBpedia: A Never-Ending Chinese Knowledge Extraction System》</a></li>
+<li><a href="http://kw.fudan.edu.cn/cndbpedia/download/" target="_blank" rel="noopener">CN-DBpedia Dump数据下载</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-10-25T14:49:12.478Z" itemprop="dateUpdated">2019-10-25 22:49:12</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BiDAF/">BiDAF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dialog-System/">Dialog System</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Knowledge-Based/">Knowledge-Based</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Personalization/">Personalization</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/&title=《论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/&title=《论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》》 — spring's Blog&source=
+【来源】：ARXIV 2019【链接】：https://arxiv.org/abs/1903.12457v3【代码、数据集】：https://githu..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》》 — spring's Blog&url=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">论文笔记《Automatic Generation of Personalized Comment Based on User Profile》</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/&title=《论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/&title=《论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》》 — spring's Blog&source=
+【来源】：ARXIV 2019【链接】：https://arxiv.org/abs/1903.12457v3【代码、数据集】：https://githu..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》》 — spring's Blog&url=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
