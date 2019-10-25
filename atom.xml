@@ -74,8 +74,8 @@
   
   <entry>
     <title>论文笔记：《(BiDAF)Bi-Directional Attention Flow for Machine Comprehension》</title>
-    <link href="http://yoursite.com/2019/10/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%EF%BC%9A%E3%80%8A-BiDAF-Bi-Directional-Attention-Flow-for-Machine-Comprehension%E3%80%8B/"/>
-    <id>http://yoursite.com/2019/10/23/论文笔记：《-BiDAF-Bi-Directional-Attention-Flow-for-Machine-Comprehension》/</id>
+    <link href="http://yoursite.com/2019/10/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%8A-BiDAF-Bi-Directional-Attention-Flow-for-Machine-Comprehension%E3%80%8B/"/>
+    <id>http://yoursite.com/2019/10/23/论文笔记《-BiDAF-Bi-Directional-Attention-Flow-for-Machine-Comprehension》/</id>
     <published>2019-10-23T01:48:41.000Z</published>
     <updated>2019-10-23T06:22:31.503Z</updated>
     
@@ -170,9 +170,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
-    
       <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
+    
+      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
       <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
     
@@ -267,9 +267,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
-    
       <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
+    
+      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
   </entry>
   
@@ -291,9 +291,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="ACL2019" scheme="http://yoursite.com/tags/ACL2019/"/>
-    
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
+    
+      <category term="ACL2019" scheme="http://yoursite.com/tags/ACL2019/"/>
     
   </entry>
   
