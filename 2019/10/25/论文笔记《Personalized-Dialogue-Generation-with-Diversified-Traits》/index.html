@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>论文笔记《Personalized Dialogue Generation with Diversified Traits》 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Dialog System,Personalization">
+    <meta name="description" content="【链接】：https://arxiv.org/abs/1901.09672【代码、数据集】：无">
+<meta name="keywords" content="Dialog System,Personalization">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记《Personalized Dialogue Generation with Diversified Traits》">
+<meta property="og:url" content="http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="【链接】：https://arxiv.org/abs/1901.09672【代码、数据集】：无">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/PersonaTraitFusion.png">
+<meta property="og:updated_time" content="2019-10-25T06:33:49.351Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文笔记《Personalized Dialogue Generation with Diversified Traits》">
+<meta name="twitter:description" content="【链接】：https://arxiv.org/abs/1901.09672【代码、数据集】：无">
+<meta name="twitter:image" content="http://yoursite.com/images/PersonaTraitFusion.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">论文笔记《Personalized Dialogue Generation with Diversified Traits》</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">论文笔记《Personalized Dialogue Generation with Diversified Traits》</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-25T02:51:12.000Z" itemprop="datePublished" class="page-time">
+  2019-10-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#任务定义"><span class="post-toc-number">1.</span> <span class="post-toc-text">任务定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模型结构"><span class="post-toc-number">2.</span> <span class="post-toc-text">模型结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Personality-Trait-Fusion"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Personality Trait Fusion</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Trait-Attention"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">Trait Attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Trait-Average"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">Trait Average</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Trait-Concatenation"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">Trait  Concatenation</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用persona-representation-v-p-进行decode"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">使用persona representation $v_p$进行decode</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Persona-Aware-Attention"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">Persona-Aware Attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Persona-Aware-Bias"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">Persona-Aware Bias</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">论文笔记《Personalized Dialogue Generation with Diversified Traits》</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-25 10:51:12" datetime="2019-10-25T02:51:12.000Z"  itemprop="datePublished">2019-10-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>【链接】：<a href="https://arxiv.org/abs/1901.09672" target="_blank" rel="noopener">https://arxiv.org/abs/1901.09672</a><br>【代码、数据集】：无</p>
+</blockquote>
+<a id="more"></a>
+<p>三星电子中国、清华大学黄明烈教授提交到<code>ARXIV</code>的论文。论文的研究内容是基于persona的单轮对话系统。<br><strong>数据集描述</strong><br>论文中构建了一个<code>PersonaDialog</code>的数据集，但数据集没有公开。数据是从微博上爬取，把用户的博文作为对话的post，把用户的评论作为回复。persona是用键值对来描述用户的属性（年龄、性别、地址、兴趣标签等）。而不是用几句话的文本来描述用户画像的。</p>
+<h2 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h2><p>给定单句的对话历史$X = \lbrace{x_1,…,x_n\rbrace}$，以及回复者的N个属性$T = \lbrace{t_1,…,t_N\rbrace}$，其中$t_i = &ensp; &lt;k_i,v_i&gt;$为键值对。要求生成与用户的画像相一致的回复$Y = \lbrace{y_1,y_2,…,y_m\rbrace}$。$$Y^* = \underset{Y}{arg max} P(Y|X,T)$$</p>
+<h2 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h2><p>基本框架当然是<code>seq2seq模型+attention机制</code>。将对话历史$X = \lbrace{x_1,…,x_n}\rbrace$经过encoder编码为$\lbrace{h_1,…,h_n}\rbrace$。设时间步t，decoder的上一个隐藏状态为$s_{t-1}$，计算attention得到总的context vector $c_t$：$$c_t = \sum_{i=1}^n\alpha_ih_i$$ $$alpha_i = softmax(\beta_i)$$ $$\beta_i = score(s_{t-1},h_i) = V^T\cdot tanh(W^1_{\alpha}s_{t-1} + W^2_{\alpha}h_i) \tag{1}$$decoder RNN的隐藏状态更新公式是：$$s_t = f(s_{t-1},y_{t-1},c_t)$$ 生成$y_t$的概率分布为：$$p(y_t) = softmax(W_os_t + b_{out})$$</p>
+<div align="center"><img src="/images/PersonaTraitFusion.png" width="150%" height="150%"></div>
+<div align="center"><font color="grey" size="2">Fig.1. 模型结构的示意图</font></div>
+
+<h3 id="Personality-Trait-Fusion"><a href="#Personality-Trait-Fusion" class="headerlink" title="Personality Trait Fusion"></a>Personality Trait Fusion</h3><p>这个模块用来把整合persona得到persona representation $v_p$，并用$v_p$来影响decode过程。<br>将回复者的属性描述$T = \lbrace{t_1,…,t_N}\rbrace$经过embedding层，得到对应的向量表示$\lbrace{v_{t_1},…,v_{t_N}}\rbrace$。论文提出了三种整合persona Trait的方法。</p>
+<h4 id="Trait-Attention"><a href="#Trait-Attention" class="headerlink" title="Trait Attention"></a>Trait Attention</h4><p>计算decoder的隐藏状态$s_{t-1}$在Trait representation $\lbrace{v_{t_1},…,v_{t_N}}\rbrace$上的attention，来整合persona Trait，得到persona representation $v_p$。$$v_p = \sum_{i=1}^N\alpha_i^pv_{t_i}$$ $$\alpha_i^p = softmax(\beta_i^p)$$ $$\beta_i^p = score(s_{t-1},v_{t_i}) = V_p^T \cdot tanh(W_p^1s_{t-1} + W_p^2v_{t_i})$$</p>
+<h4 id="Trait-Average"><a href="#Trait-Average" class="headerlink" title="Trait Average"></a>Trait Average</h4><p>直接在Trait representation $\lbrace{v_{t_1},…,v_{t_N}}\rbrace$上取平均值，来作为persona representation $v_p$：$$v_p = \frac{1}{N}\sum_{i=1}^Nv_{t_i}$$</p>
+<h4 id="Trait-Concatenation"><a href="#Trait-Concatenation" class="headerlink" title="Trait  Concatenation"></a>Trait  Concatenation</h4><p>直接把Trait representation $\lbrace{v_{t_1},…,v_{t_N}}\rbrace$做连接操作，作为persona representation $v_p$。</p>
+<h3 id="使用persona-representation-v-p-进行decode"><a href="#使用persona-representation-v-p-进行decode" class="headerlink" title="使用persona representation $v_p$进行decode"></a>使用persona representation $v_p$进行decode</h3><h4 id="Persona-Aware-Attention"><a href="#Persona-Aware-Attention" class="headerlink" title="Persona-Aware Attention"></a>Persona-Aware Attention</h4><p>让persona representation $v_p$来影响式（1）中attention权重的计算。这种方法可以获得基于persona representation $v_p$的context vector $c_t$。$$\beta_i = f(s_{t-1},h_i,v_p) = V^T \cdot tanh(W^1_{\alpha}s_{t-1} + W^2_{\alpha}h_i + W^3_{\alpha}v_p)$$</p>
+<h4 id="Persona-Aware-Bias"><a href="#Persona-Aware-Bias" class="headerlink" title="Persona-Aware Bias"></a>Persona-Aware Bias</h4><p>在输出层结合$v_p$，来影响decode过程。$$p(y_t) = softmax(a_t\cdot W_o^1s_t + (1-s_t)\cdot W_o^2v_p + b_{out})$$ $$a_t = \sigma(V_o^T\cdot s_t)$$ 其中$a_t\in [0,1]$作为一个门机制，来控制生成persona相关的词，或者语义相关的词。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-10-25T06:33:49.351Z" itemprop="dateUpdated">2019-10-25 14:33:49</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dialog-System/">Dialog System</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Personalization/">Personalization</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/&title=《论文笔记《Personalized Dialogue Generation with Diversified Traits》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/&title=《论文笔记《Personalized Dialogue Generation with Diversified Traits》》 — spring's Blog&source=
+【链接】：https://arxiv.org/abs/1901.09672【代码、数据集】：无
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Personalized Dialogue Generation with Diversified Traits》》 — spring's Blog&url=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/10/24/论文笔记《DEEPCOPY-Grounded-Response-Generation-with-Hierarchical-Pointer-Networks》/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">论文笔记《DEEPCOPY: Grounded Response Generation with Hierarchical Pointer Networks》</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/&title=《论文笔记《Personalized Dialogue Generation with Diversified Traits》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/&title=《论文笔记《Personalized Dialogue Generation with Diversified Traits》》 — spring's Blog&source=
+【链接】：https://arxiv.org/abs/1901.09672【代码、数据集】：无
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Personalized Dialogue Generation with Diversified Traits》》 — spring's Blog&url=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
