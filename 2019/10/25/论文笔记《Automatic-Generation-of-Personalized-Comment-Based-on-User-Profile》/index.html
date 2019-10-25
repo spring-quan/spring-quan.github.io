@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>论文笔记《Automatic Generation of Personalized Comment Based on User Profile》 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Personalization,Dialog System">
+    <meta name="description" content="【来源】：ACL2019【链接】：https://arxiv.org/abs/1907.10371【代码、数据集】：https://github.com/Walleclipse/AGPC">
+<meta name="keywords" content="Personalization,Dialog System">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记《Automatic Generation of Personalized Comment Based on User Profile》">
+<meta property="og:url" content="http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="【来源】：ACL2019【链接】：https://arxiv.org/abs/1907.10371【代码、数据集】：https://github.com/Walleclipse/AGPC">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/PCdata.png">
+<meta property="og:image" content="http://yoursite.com/images/PersonalComment.png">
+<meta property="og:updated_time" content="2019-10-25T09:09:29.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文笔记《Automatic Generation of Personalized Comment Based on User Profile》">
+<meta name="twitter:description" content="【来源】：ACL2019【链接】：https://arxiv.org/abs/1907.10371【代码、数据集】：https://github.com/Walleclipse/AGPC">
+<meta name="twitter:image" content="http://yoursite.com/images/PCdata.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">论文笔记《Automatic Generation of Personalized Comment Based on User Profile》</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">论文笔记《Automatic Generation of Personalized Comment Based on User Profile》</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-25T07:15:24.000Z" itemprop="datePublished" class="page-time">
+  2019-10-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据集描述"><span class="post-toc-number">1.</span> <span class="post-toc-text">数据集描述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#任务定义"><span class="post-toc-number">2.</span> <span class="post-toc-text">任务定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型结构"><span class="post-toc-number">3.</span> <span class="post-toc-text">模型结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encoder-decoder框架"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">encoder-decoder框架</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#User-Feature-Embedding-with-Gated-Memory"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">User Feature Embedding with Gated Memory</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Blog-User-Co-Attention"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Blog-User Co-Attention</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#External-Personal-Expression"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">External Personal Expression</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#相似论文"><span class="post-toc-number">4.</span> <span class="post-toc-text">相似论文</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">论文笔记《Automatic Generation of Personalized Comment Based on User Profile》</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-25 15:15:24" datetime="2019-10-25T07:15:24.000Z"  itemprop="datePublished">2019-10-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>【来源】：ACL2019<br>【链接】：<a href="https://arxiv.org/abs/1907.10371" target="_blank" rel="noopener">https://arxiv.org/abs/1907.10371</a><br>【代码、数据集】：<a href="https://github.com/Walleclipse/AGPC" target="_blank" rel="noopener">https://github.com/Walleclipse/AGPC</a></p>
+</blockquote>
+<a id="more"></a>
+<p>北京大学发表在ACL2019的论文。论文的研究内容是基于User profile的评论生成。</p>
+<h3 id="数据集描述"><a href="#数据集描述" class="headerlink" title="数据集描述"></a>数据集描述</h3><p>论文从微博收集了一个中文数据集，没有公开，但给出了部分样例数据。这个数据集可以看作基于persona的单轮对话数据集。将微博的博文看作对话历史，将用户的评论看作回复。用户画像包括两个部分，键值对形式的人口统计特征属性（年龄、性别、地区等）和 句子形式的个人描述（微博签名）。</p>
+<div align="center"><img src="/images/PCdata.png" width="60%" height="60%"></div>
+<div align="center"><font color="grey" size="2">Fig.1. 数据样例</font></div>
+
+<h3 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h3><p>给定博文 $X = \lbrace{x_1,…,x_n}\rbrace$和用户画像 $U = \lbrace{F,D}\rbrace$，其中$F = \lbrace{f_1,…,f_k}\rbrace$是用户的数值化属性特征，$D = \lbrace{d_1,…,d_l}\rbrace$是句子形式的个人描述。要求生成与personal profile一致的回复$Y = \lbrace{y_1,…,y_m}\rbrace$。$$Y^* = \underset{Y}{argmax}(Y|X,U)$$</p>
+<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><div align="center"><img src="/images/PersonalComment.png" width="100%" height="100%"></div>
+<div align="center"><font color="grey" size="2">Fig.2.模型结构的示意图</font></div>
+
+<h4 id="encoder-decoder框架"><a href="#encoder-decoder框架" class="headerlink" title="encoder-decoder框架"></a>encoder-decoder框架</h4><p>基本框架当然还是<code>seq2seq模型 + attention机制</code>。$X= \{x_1,…,x_n\}$经过encoder转换为向量表示$h^X = \{h^X_1,…,h_n^X\}$，encoder采用Bi-LSTM。$$h_t^X = LSTM_{enc}^X(h_{t-1}^X,x_t)$$ decoder采用单向LSTM，decoder的隐藏状态更新公式为：$$s_t = LSTM_{dec}(s_{t-1},[c_t^X;e(y_{t-1})]) \tag{1}$$其中$c_t^X$表示时间步t，在所有encoder hidden states $h^X = \{h^X_1,…,h_n^X\}$上使用attention得到的context vector。<br>则decoder生成词的概率分布为：$$p(y_t) = softmax(W_os_t)$$ 采用负对数似然函数作为目标函数，模型最大化真实回复 $Y^* = \{y_1,…,y_m\}$ 的似然函数：$$Loss = -\sum_{t=1}^m log\Bigl(p(y_t|y_{&lt;t},X,U)\Bigr)$$</p>
+<h4 id="User-Feature-Embedding-with-Gated-Memory"><a href="#User-Feature-Embedding-with-Gated-Memory" class="headerlink" title="User Feature Embedding with Gated Memory"></a>User Feature Embedding with Gated Memory</h4><p>将用户的数值化特征属性$F = \{f_1,…,f_k\}$经过一个全连接层，得到向量表示$v_u$。$v_u$可以看作是<code>user feature embedding</code>，表明用户的个人特征。如果user feature embedding是静态的，在decode过程中会影响生成回复的语法性。为了解决这个问题，设计了一个<code>gated memory</code>来动态地表达用户的个人特征。<br>在decode过程中，保持一个<code>Internal personal state</code>$M_t$，在decode过程中$M_t$逐渐衰减，decode结束，$M_t$衰减为0，表示用户的个人特征完全表达了。$M_0$的初始值设为$v_u$。 $$g_t^u = sigmoid(W_g^us_t)$$ $$M_0 = v_u$$ $$M_t = g_t^u \cdot M_{t-1}, &emsp; t&gt;0$$ 引入输出门机制$g_t^o$来充值persona信息的流动：$$g_t^o = sigmoid(W_g^o[s_{t-1};e(y_{t-1});c_t^X])$$ 则时间步t，personal information为：$$M_t^o = g_t^o\cdot M_t$$</p>
+<h4 id="Blog-User-Co-Attention"><a href="#Blog-User-Co-Attention" class="headerlink" title="Blog-User Co-Attention"></a>Blog-User Co-Attention</h4><p>实质上是在用户的个人描述$D = \{d_1,…,d_l\}$上使用attention机制。先用另一个persona encoder来编码$D = \{d_1,…,d_l\}$，得到向量表示$\{h_1^D,…,h_l^D\}$。persona encoder采用LSTM: $$h_t^D = LSTM_{enc}^D(h_{t-1}^D,d_t)$$ 在$\{h_1^D,…,h_l^D\}$上使用attention机制，得到总的persona context vector $c_t^D$ $$c_t^D = \sum_{j=1}^k\alpha_{tj}h_j^D$$ $$\alpha_{tj} = softmax(\beta_{tj})$$ $$\beta_{tj} = score(s_{t-1},h_j^D) = s_{t-1}W_ah_j^D$$ 结合$c_t^D$和$c_t^X$作为时间步t总的context vector $c_t$: $$c_t = [c_t^X,c_t^D]$$ 则式（1）中decoder的隐藏状态更新公式变为：$$s_t = LSTM_{dec}(s_{t-1},[c_t;e(y_{t-1});M_t^o])$$</p>
+<h4 id="External-Personal-Expression"><a href="#External-Personal-Expression" class="headerlink" title="External Personal Expression"></a>External Personal Expression</h4><p>通过将<code>internal persona state</code>$M_t$和persona context vector $c_t^D$作为decoder隐藏状态更新的输入，来结合persona信息，进而影响decode过程。这种影响是隐性的，为了更明确地利用用户信息来指导word的生成，将用户信息直接作为输出层的输入。先计算一个<code>user representation</code> $r_t^u$: $$r_t^u = W_r[v_u;c_t^D]$$ 将$r_t^u$作为输出层的输入，则生成词的概率分布为：$$p(y_t) = softmax(W_o[s_t;r_t^u])$$</p>
+<h3 id="相似论文"><a href="#相似论文" class="headerlink" title="相似论文"></a>相似论文</h3><ul>
+<li><a href="https://arxiv.org/abs/1901.09672" target="_blank" rel="noopener">《Personalized Dialogue Generation with Diversified Traits》</a> <ul>
+<li><a href="https://spring-quan.github.io/2019/10/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%8APersonalized-Dialogue-Generation-with-Diversified-Traits%E3%80%8B/" target="_blank" rel="noopener">笔记链接</a></li>
+<li>异同点比较：<ul>
+<li>不同点是：本篇论文用internal persona state $M_t$和personal context vector $c_t^D$来作为decoder隐藏状态$s_t$更新的输入，进而影响word的生成。<br>而相似的这篇论文中，将personal vector $v_p$ 作为attention机制的query，来attend对话历史。含义是用persona vector $v_p$来选择context相关的信息。</li>
+<li>相同点是：两篇论文都把persona information 作为输出层的输入，来明确地影响word的生成。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-10-25T09:09:29.504Z" itemprop="dateUpdated">2019-10-25 17:09:29</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dialog-System/">Dialog System</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Personalization/">Personalization</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/&title=《论文笔记《Automatic Generation of Personalized Comment Based on User Profile》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/&title=《论文笔记《Automatic Generation of Personalized Comment Based on User Profile》》 — spring's Blog&source=
+【来源】：ACL2019【链接】：https://arxiv.org/abs/1907.10371【代码、数据集】：https://github.com..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Automatic Generation of Personalized Comment Based on User Profile》》 — spring's Blog&url=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/10/25/论文笔记《Personalized-Dialogue-Generation-with-Diversified-Traits》/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">论文笔记《Personalized Dialogue Generation with Diversified Traits》</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/&title=《论文笔记《Automatic Generation of Personalized Comment Based on User Profile》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/&title=《论文笔记《Automatic Generation of Personalized Comment Based on User Profile》》 — spring's Blog&source=
+【来源】：ACL2019【链接】：https://arxiv.org/abs/1907.10371【代码、数据集】：https://github.com..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Automatic Generation of Personalized Comment Based on User Profile》》 — spring's Blog&url=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/10/25/论文笔记《Automatic-Generation-of-Personalized-Comment-Based-on-User-Profile》/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
