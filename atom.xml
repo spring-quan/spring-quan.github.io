@@ -36,9 +36,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
-    
       <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
+    
+      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
     
   </entry>
   
@@ -62,9 +62,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
-    
       <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
+    
+      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
     
       <category term="BiDAF" scheme="http://yoursite.com/tags/BiDAF/"/>
     
@@ -92,9 +92,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
-    
       <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
+    
+      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
     
   </entry>
   
@@ -118,9 +118,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
-    
       <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
+    
+      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
     
   </entry>
   
@@ -254,9 +254,9 @@
     
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
-      <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
-    
       <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
+    
+      <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
     
   </entry>
   
@@ -302,9 +302,9 @@
       <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="attention" scheme="http://yoursite.com/tags/attention/"/>
-    
       <category term="rnn" scheme="http://yoursite.com/tags/rnn/"/>
+    
+      <category term="attention" scheme="http://yoursite.com/tags/attention/"/>
     
   </entry>
   
