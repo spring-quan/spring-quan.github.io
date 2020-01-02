@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>论文笔记《A Dynamic Speaker Model for Conversational Interactions》 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Personalization,Dialog System">
+    <meta name="description" content="【来源】：NAACL2019【链接】：https://www.aclweb.org/anthology/N19-1284/【代码】：https://github.com/hao-cheng/dynamic_speaker_model">
+<meta name="keywords" content="Personalization,Dialog System">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记《A Dynamic Speaker Model for Conversational Interactions》">
+<meta property="og:url" content="http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="【来源】：NAACL2019【链接】：https://www.aclweb.org/anthology/N19-1284/【代码】：https://github.com/hao-cheng/dynamic_speaker_model">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/Dynamic_user_embedding.png">
+<meta property="og:updated_time" content="2020-01-02T14:08:56.015Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文笔记《A Dynamic Speaker Model for Conversational Interactions》">
+<meta name="twitter:description" content="【来源】：NAACL2019【链接】：https://www.aclweb.org/anthology/N19-1284/【代码】：https://github.com/hao-cheng/dynamic_speaker_model">
+<meta name="twitter:image" content="http://yoursite.com/images/Dynamic_user_embedding.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">论文笔记《A Dynamic Speaker Model for Conversational Interactions》</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">论文笔记《A Dynamic Speaker Model for Conversational Interactions》</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-01-02T12:31:22.000Z" itemprop="datePublished" class="page-time">
+  2020-01-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#个性化对话系统的研究现状"><span class="post-toc-number">1.</span> <span class="post-toc-text">个性化对话系统的研究现状</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#论文简介"><span class="post-toc-number">2.</span> <span class="post-toc-text">论文简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型结构"><span class="post-toc-number">3.</span> <span class="post-toc-text">模型结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Latent-Mode-Analyzer"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Latent Mode Analyzer</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Speaker-State-Tracker"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Speaker State Tracker</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Speaker-Language-Predictor"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Speaker Language Predictor</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#损失函数"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">损失函数</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">论文笔记《A Dynamic Speaker Model for Conversational Interactions》</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-01-02 20:31:22" datetime="2020-01-02T12:31:22.000Z"  itemprop="datePublished">2020-01-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/论文/">论文</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>【来源】：NAACL2019<br>【链接】：<a href="https://www.aclweb.org/anthology/N19-1284/" target="_blank" rel="noopener">https://www.aclweb.org/anthology/N19-1284/</a><br>【代码】：<a href="https://github.com/hao-cheng/dynamic_speaker_model" target="_blank" rel="noopener">https://github.com/hao-cheng/dynamic_speaker_model</a></p>
+</blockquote>
+<a id="more"></a>
+<p>这篇论文是由华盛顿大学发表的。</p>
+<h3 id="个性化对话系统的研究现状"><a href="#个性化对话系统的研究现状" class="headerlink" title="个性化对话系统的研究现状"></a>个性化对话系统的研究现状</h3><p>近几年来，基于用户画像（personal information）来生成个性化的回复已经成为对话系统领域的一个研究热点。为什么要将persona结合到对话系统模型中呢？目的是提高生成回复的一致性，来获取用户信任，让用户在对话中更投入。生成回复的一致性具体指什么呢？举个例子，你问对话系统“你的职业是什么？”，它可能回答是出租车司机；当你再次问这个问题时，它又可能回答是老师。给定对话系统一个用户画像（persona），基于这个persona来生成回复，就可以提高生成回复的一致性，避免出现这种问题。基于persona来生成个性化的回复，也是对话系统可以通过图灵测试的必要条件。</p>
+<p>现有的工作中，将persona结合到对话系统模型中的思路有两种。</p>
+<ol>
+<li>学习一个潜在的向量user embedding（或user representation）来潜在地表示用户画像，再基于这个user embedding来生成个性化的回复。这样做的一个原因是现有的对话语料中没有相应的用户画像文本信息，随着个性化对话数据集<a href="https://arxiv.org/abs/1801.07243" target="_blank" rel="noopener">Persona-Chat</a>以及<a href="https://arxiv.org/abs/1902.00098" target="_blank" rel="noopener">CONVAI2</a>的提出，就有了第二种思路。</li>
+<li>直接用键值对属性值信息或者是自由文本来明确地描述用户画像，再生成个性化的回复。</li>
+</ol>
+<h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>这篇论文属于第一种思路，主要内容是用神经网络模型从对话历史中学习一个动态更新的user embedding。并且将学习到的user embedding用到了两个下游任务（对话话题分类、dialog acts分类）中来评估user embedding的学习效果。<br>论文中提到，学习一个动态更新的user embedding的动机有两个：</p>
+<ol>
+<li>用户的对话反映了这个用户的对话意图、语言风格等特征。因此，可以从用户的对话中来学习user embedding来建模和表征用户的这些个性化特征。</li>
+<li>随着对话的进行，用户的个人信息得到累积。因此，可以从对话中提炼和动态更新user embedding。</li>
+</ol>
+<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>如下图所示，模型包括三个部分：<strong>Latent Mode Analyzer</strong>，<strong>Speaker State Tracker</strong>，<strong>Speaker Language Predictor</strong>。 </p>
+<div align="center"><img src="/images/Dynamic_user_embedding.png" width="60%" height="60%"></div>
+<div align="center"><font color="grey" size="2">Fig.1. 模型的整体框架图</font></div>
+
+<h4 id="Latent-Mode-Analyzer"><a href="#Latent-Mode-Analyzer" class="headerlink" title="Latent Mode Analyzer"></a>Latent Mode Analyzer</h4><p><strong>Latent Mode Analyzer</strong>的作用是从输入的单轮对话中学到一个 local speaker vector。采用了Bi-LSTM + Attention机制。<br>时间步t，输入为单轮对话$\lbrace{w_{t,1},w_{t,2},…,w_{t,{N_t}}\rbrace}$，经过embedding层后送入到Bi-LSTM层，将前向LSTM和后向LSTM的最后一个隐藏状态连接起来作为句子总的向量表示$s_t$: $$s_t=[e^F_{t,N_t},e^B_{t,1}]$$ 其中，$e^F_{t,N_t},e^B_{t,1}$分别表示前向LSTM和后向LSTM的最后一个隐藏状态。<br>接着，再使用attention机制。将句子的向量表示作为attention机制的query，将 $K$ 个全局的mode vectors $\lbrace{u_1,u_2,…,u_K\rbrace}$作为attention机制的keys和values。这$K$个mode vectors也是模型参数，可以看作是用户在不同方面的个性化特征。那么可以通过attention机制计算得到local speaker vector $\tilde{u_t}$ :$$\tilde{u_t} = \sum_{k=1}^Ka_{t,k}u_k$$ $$a_{t,k} = softmax(\beta_{t,k})$$ $$\beta_{t,k} = &lt;Ps_t,Qu_k&gt;$$ 其中$&lt; , &gt;$表示点乘操作。</p>
+<h4 id="Speaker-State-Tracker"><a href="#Speaker-State-Tracker" class="headerlink" title="Speaker State Tracker"></a>Speaker State Tracker</h4><p><strong>Speaker State Tracker</strong> 的作用是动态更新speaker state vector。实质上是一个单向的LSTM。<br>在时间步t，根据当前的local speaker vector $\tilde{u_t}$ 和 上一个时间步的隐藏状态$h_{t-1}$来更新隐藏状态$h_t$。将$h_t$作为时间步t的speaker state vector。$$h_t = LSTM(\tilde{u_t},h_{t-1})$$</p>
+<h4 id="Speaker-Language-Predictor"><a href="#Speaker-Language-Predictor" class="headerlink" title="Speaker Language Predictor"></a>Speaker Language Predictor</h4><p><strong>Speaker Language Predictor</strong>的作用是促进前两个模块的参数学习，根据speaker state vector来重构句子$\lbrace{w_{t,1},w_{t,2},…,w_{t,{N_t}}}\rbrace$。<br>该模块实质上是一个条件语言模型，预测条件概率 $P(w_{t,n}|w_{t,&lt;n})$。采用了单向的LSTM，LSTM的隐藏状态更新公式为：$$d_{t,n} = LSTM(R^I(w_{t,n-1},h_t),d_{t,n-1})$$ 其中$R^I()$是一个线性层。<br>则语言模型生成下一个词的条件概率为：$$P(w_{t,n}|w_{t,&lt;n}) = softmax(VR^O(h_t,d_{t,n}))$$ 其中$R^O()$是一个线性层。</p>
+<h4 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h4><p>模型最小化负对数似然函数来更新模型参数: $$L = -\sum_{t}\sum_{n}log P(w_{t,n}|w_{t,&lt;n})$$</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-01-02T14:08:56.015Z" itemprop="dateUpdated">2020-01-02 22:08:56</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dialog-System/">Dialog System</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Personalization/">Personalization</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/&title=《论文笔记《A Dynamic Speaker Model for Conversational Interactions》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/&title=《论文笔记《A Dynamic Speaker Model for Conversational Interactions》》 — spring's Blog&source=
+【来源】：NAACL2019【链接】：https://www.aclweb.org/anthology/N19-1284/【代码】：https://gi..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《A Dynamic Speaker Model for Conversational Interactions》》 — spring's Blog&url=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/10/25/论文笔记《Towards-Knowledge-Based-Personalized-Product-Description-Generation-in-E-commerce》/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/&title=《论文笔记《A Dynamic Speaker Model for Conversational Interactions》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/&title=《论文笔记《A Dynamic Speaker Model for Conversational Interactions》》 — spring's Blog&source=
+【来源】：NAACL2019【链接】：https://www.aclweb.org/anthology/N19-1284/【代码】：https://gi..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《A Dynamic Speaker Model for Conversational Interactions》》 — spring's Blog&url=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

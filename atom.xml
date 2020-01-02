@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-10-25T14:49:12.478Z</updated>
+  <updated>2020-01-02T14:08:56.015Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>论文笔记《A Dynamic Speaker Model for Conversational Interactions》</title>
+    <link href="http://yoursite.com/2020/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%8AA-Dynamic-Speaker-Model-for-Conversational-Interactions%E3%80%8B/"/>
+    <id>http://yoursite.com/2020/01/02/论文笔记《A-Dynamic-Speaker-Model-for-Conversational-Interactions》/</id>
+    <published>2020-01-02T12:31:22.000Z</published>
+    <updated>2020-01-02T14:08:56.015Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>【来源】：NAACL2019<br>【链接】：<a href="https://www.aclweb.org/anthology/N19-1284/" target="_blank" rel="noopener">https://www.aclweb.org/anthology/N19-1284/</a><br>【代码】：<a href="https://github.com/hao-cheng/dynamic_speaker_model" target="_blank" rel="noopener">https://github.com/hao-cheng/dynamic_speaker_model</a></p></blockquote><a id="more"></a><p>这篇论文是由华盛顿大学发表的。</p><h3 id="个性化对话系统的研究现状"><a href="#个性化对话系统的研究现状" class="headerlink" title="个性化对话系统的研究现状"></a>个性化对话系统的研究现状</h3><p>近几年来，基于用户画像（personal information）来生成个性化的回复已经成为对话系统领域的一个研究热点。为什么要将persona结合到对话系统模型中呢？目的是提高生成回复的一致性，来获取用户信任，让用户在对话中更投入。生成回复的一致性具体指什么呢？举个例子，你问对话系统“你的职业是什么？”，它可能回答是出租车司机；当你再次问这个问题时，它又可能回答是老师。给定对话系统一个用户画像（persona），基于这个persona来生成回复，就可以提高生成回复的一致性，避免出现这种问题。基于persona来生成个性化的回复，也是对话系统可以通过图灵测试的必要条件。</p><p>现有的工作中，将persona结合到对话系统模型中的思路有两种。</p><ol><li>学习一个潜在的向量user embedding（或user representation）来潜在地表示用户画像，再基于这个user embedding来生成个性化的回复。这样做的一个原因是现有的对话语料中没有相应的用户画像文本信息，随着个性化对话数据集<a href="https://arxiv.org/abs/1801.07243" target="_blank" rel="noopener">Persona-Chat</a>以及<a href="https://arxiv.org/abs/1902.00098" target="_blank" rel="noopener">CONVAI2</a>的提出，就有了第二种思路。</li><li>直接用键值对属性值信息或者是自由文本来明确地描述用户画像，再生成个性化的回复。</li></ol><h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>这篇论文属于第一种思路，主要内容是用神经网络模型从对话历史中学习一个动态更新的user embedding。并且将学习到的user embedding用到了两个下游任务（对话话题分类、dialog acts分类）中来评估user embedding的学习效果。<br>论文中提到，学习一个动态更新的user embedding的动机有两个：</p><ol><li>用户的对话反映了这个用户的对话意图、语言风格等特征。因此，可以从用户的对话中来学习user embedding来建模和表征用户的这些个性化特征。</li><li>随着对话的进行，用户的个人信息得到累积。因此，可以从对话中提炼和动态更新user embedding。</li></ol><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>如下图所示，模型包括三个部分：<strong>Latent Mode Analyzer</strong>，<strong>Speaker State Tracker</strong>，<strong>Speaker Language Predictor</strong>。 </p><div align="center"><img src="/images/Dynamic_user_embedding.png" width="60%" height="60%"></div><div align="center"><font color="grey" size="2">Fig.1. 模型的整体框架图</font></div><h4 id="Latent-Mode-Analyzer"><a href="#Latent-Mode-Analyzer" class="headerlink" title="Latent Mode Analyzer"></a>Latent Mode Analyzer</h4><p><strong>Latent Mode Analyzer</strong>的作用是从输入的单轮对话中学到一个 local speaker vector。采用了Bi-LSTM + Attention机制。<br>时间步t，输入为单轮对话$\lbrace{w_{t,1},w_{t,2},…,w_{t,{N_t}}\rbrace}$，经过embedding层后送入到Bi-LSTM层，将前向LSTM和后向LSTM的最后一个隐藏状态连接起来作为句子总的向量表示$s_t$: $$s_t=[e^F_{t,N_t},e^B_{t,1}]$$ 其中，$e^F_{t,N_t},e^B_{t,1}$分别表示前向LSTM和后向LSTM的最后一个隐藏状态。<br>接着，再使用attention机制。将句子的向量表示作为attention机制的query，将 $K$ 个全局的mode vectors $\lbrace{u_1,u_2,…,u_K\rbrace}$作为attention机制的keys和values。这$K$个mode vectors也是模型参数，可以看作是用户在不同方面的个性化特征。那么可以通过attention机制计算得到local speaker vector $\tilde{u_t}$ :$$\tilde{u_t} = \sum_{k=1}^Ka_{t,k}u_k$$ $$a_{t,k} = softmax(\beta_{t,k})$$ $$\beta_{t,k} = &lt;Ps_t,Qu_k&gt;$$ 其中$&lt; , &gt;$表示点乘操作。</p><h4 id="Speaker-State-Tracker"><a href="#Speaker-State-Tracker" class="headerlink" title="Speaker State Tracker"></a>Speaker State Tracker</h4><p><strong>Speaker State Tracker</strong> 的作用是动态更新speaker state vector。实质上是一个单向的LSTM。<br>在时间步t，根据当前的local speaker vector $\tilde{u_t}$ 和 上一个时间步的隐藏状态$h_{t-1}$来更新隐藏状态$h_t$。将$h_t$作为时间步t的speaker state vector。$$h_t = LSTM(\tilde{u_t},h_{t-1})$$</p><h4 id="Speaker-Language-Predictor"><a href="#Speaker-Language-Predictor" class="headerlink" title="Speaker Language Predictor"></a>Speaker Language Predictor</h4><p><strong>Speaker Language Predictor</strong>的作用是促进前两个模块的参数学习，根据speaker state vector来重构句子$\lbrace{w_{t,1},w_{t,2},…,w_{t,{N_t}}}\rbrace$。<br>该模块实质上是一个条件语言模型，预测条件概率 $P(w_{t,n}|w_{t,&lt;n})$。采用了单向的LSTM，LSTM的隐藏状态更新公式为：$$d_{t,n} = LSTM(R^I(w_{t,n-1},h_t),d_{t,n-1})$$ 其中$R^I()$是一个线性层。<br>则语言模型生成下一个词的条件概率为：$$P(w_{t,n}|w_{t,&lt;n}) = softmax(VR^O(h_t,d_{t,n}))$$ 其中$R^O()$是一个线性层。</p><h4 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h4><p>模型最小化负对数似然函数来更新模型参数: $$L = -\sum_{t}\sum_{n}log P(w_{t,n}|w_{t,&lt;n})$$</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;【来源】：NAACL2019&lt;br&gt;【链接】：&lt;a href=&quot;https://www.aclweb.org/anthology/N19-1284/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.aclweb.org/anthology/N19-1284/&lt;/a&gt;&lt;br&gt;【代码】：&lt;a href=&quot;https://github.com/hao-cheng/dynamic_speaker_model&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/hao-cheng/dynamic_speaker_model&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
+    
+    
+      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
+    
+      <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
+    
+  </entry>
   
   <entry>
     <title>论文笔记《Towards Knowledge-Based Personalized Product Description Generation in E-commerce》</title>
@@ -228,9 +254,9 @@
     
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
-      <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
-    
       <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
+    
+      <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
     
   </entry>
   
@@ -276,9 +302,9 @@
       <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="rnn" scheme="http://yoursite.com/tags/rnn/"/>
-    
       <category term="attention" scheme="http://yoursite.com/tags/attention/"/>
+    
+      <category term="rnn" scheme="http://yoursite.com/tags/rnn/"/>
     
   </entry>
   
@@ -502,30 +528,6 @@
       <category term="LSTM" scheme="http://yoursite.com/tags/LSTM/"/>
     
       <category term="循环神经网络" scheme="http://yoursite.com/tags/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pytorch实现Word embedding</title>
-    <link href="http://yoursite.com/2019/03/20/pytorch%E5%AE%9E%E7%8E%B0Word-embedding/"/>
-    <id>http://yoursite.com/2019/03/20/pytorch实现Word-embedding/</id>
-    <published>2019-03-20T12:16:21.000Z</published>
-    <updated>2019-07-07T07:11:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>word embedding是稠密的实数向量。Word embedding是一个词的语义表示，有效地编码了词的语义信息。</p><a id="more"></a> <h2 id="one-hot编码"><a href="#one-hot编码" class="headerlink" title="one-hot编码"></a>one-hot编码</h2><p>在自然语言处理任务中，我们常常要与词打交道。那么在计算机上，我们怎么表示一个单词呢？一种思路是one-hot编码。假设词汇表为$V$,词汇表大小(vocab_size)为$N_V$。我们可以用向量$N_V$维向量$[1,0,0…,0,0]$来表示第一个词。以此类推，来表示所有的词。<br>这种方法有致命的弱点。首先是向量维度太大，太稀疏，效率太低。更要命的是，one-hot编码把词与词间看做完全独立的，没有表达出词与词之间的联系和相似性。而这正是我们想要的。<br>举个例子，我们想要构建一个语言模型。有以下三个句子</p><ul><li>数学家待在实验室里。</li><li>物理学家待在实验室里。</li><li>数学家解决了一个难题。</li></ul><p>我们又看到一个新的句子：</p><ul><li>物理学家解决了一个难题。</li></ul><p>我们希望语言模型可以学习到以下特点：</p><ul><li><code>数学家</code>和<code>物理学家</code>在一个句子中同样的位置出现。这两个词之间有某种语义上的联系</li><li><code>数学家</code>曾经出现在我们看到的这个新句子中<code>物理学家</code>出现的位置。</li></ul><p>这就是<strong>语义相似性</strong>想表达的。语义相似性可以将没见过的数据与已经见过的数据联系起来，来解决语言数据的稀疏性问题。这个例子基于一个基本的语义学假设：出现在相似文本中的词汇在语义上是相互联系的。这称为<strong>distributional hypothesis</strong><br>值得一提的是，在分类问题中，one-hot编码很适合用在类别的编码上。</p><h2 id="word-embedding"><a href="#word-embedding" class="headerlink" title="word embedding"></a>word embedding</h2><p>我们怎样编码来表达词汇的语义相似性呢？我们考虑词汇的semantic attributes。例如，物理学家和数学家学可能[头发不多，爱喝咖啡，会看论文，会说英语]。我们可以用这四个属性来编码<code>物理学家</code>和<code>数学家</code>。$$q_物 = [0.9,0.8,0.98,0.8]$$$$q_数 = [0.91,0.89,0.9,0.85]$$<br>我们可以衡量这两个词之间的语义相似度：$$similarity(q_物,q_数) = \frac{q_物\cdot q_数}{|q_物| \cdot |q_数|}=cos(\phi)    其中\phi是两个向量之间的夹角。$$<br>但我们如何选择属性特征，并决定每个属性的值呢？深度学习的核心思想是神经网络学习特征表示，而不用人为指定特征。我们干脆将Word embedding作为神经网络的参数，让神经网络在训练的过程中学习Word embedding。<br>神经网络学到的Word embedding是潜在语义属性。也就是说，如果两个词在某个维度上都有大的值，我们并不知道这个维度代表了什么属性，这不能人为解释。这就是潜在语义属性的含义。<br>总的来说，Word embedding是一个词的语义表示，有效地编码了词的语义信息。</p><h2 id="PyTorch实现word-embedding"><a href="#PyTorch实现word-embedding" class="headerlink" title="PyTorch实现word embedding"></a>PyTorch实现word embedding</h2><p>代码如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import torch </span><br><span class="line">import torch.nn as nn</span><br><span class="line">from torch.autograd import Variable</span><br><span class="line"># 词汇表字典</span><br><span class="line">word_to_ix = &#123;&apos;The&apos;: 0, &apos;dog&apos;: 1, &apos;ate&apos;: 2, &apos;the&apos;: 3, &apos;apple&apos;: 4, &apos;Everybody&apos;: 5, &apos;read&apos;: 6, &apos;that&apos;: 7, &apos;book&apos;: 8&#125;</span><br><span class="line">vocab_size = len(word_to_ix) </span><br><span class="line">embedding_dim = 15</span><br><span class="line">word_embeddings = nn.Embedding(vocab_size,embedding_dim)</span><br></pre></td></tr></table></figure><p><code>nn.Embedding()</code>随机初始化了一个形状为[vocab_size,embedding_dim]的词向量矩阵，是神经网络的参数。<br>接下来我们查询”dog”这个词的向量表示。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dog_idx = torch.LongTensor([word_to_ix[&apos;dog&apos;]]) #注意输入应该是一维数组。</span><br><span class="line">dog_idx = Variable(dog_idx)</span><br><span class="line">dog_embed = word_embeddings(dog_idx) #注意不是索引</span><br><span class="line">print(dog_embed)</span><br></pre></td></tr></table></figure><p>上述代码中，要访问<code>dog</code>的词向量，要得到一个Variable。word_embeddings的输入应该是一个一维tensor。<br>接下来，我们查询一句话的向量表示。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sent = &apos;The dog ate the apple&apos;.split()</span><br><span class="line">sent_idxs = [word_to_ix[w] for w in sent]</span><br><span class="line">sent_idxs = torch.LongTensor(sent_idxs)</span><br><span class="line">sent_idxs = Variable(sent_idxs)</span><br><span class="line">sent_embeds = embeds(sent_idxs) </span><br><span class="line">print(sent_embeds)</span><br></pre></td></tr></table></figure><h2 id="pytorch加载预训练词向量"><a href="#pytorch加载预训练词向量" class="headerlink" title="pytorch加载预训练词向量"></a>pytorch加载预训练词向量</h2><p>之前的方法中，词向量是随机初始化的，作为模型参数在训练过程中不断优化。通常我们要用到预训练的词向量，这样可以节省训练时间，并可能取得更好的训练结果。下面介绍两种加载预训练词向量的方式。<br>方式一：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import torch </span><br><span class="line">word_embeddings = torch.nn.Embedding(vocab_size,embedding_dim) #创建一个词向量矩阵</span><br><span class="line">pretrain_embedding  = np.array(np.load(np_path),dtype = &apos;float32&apos;) #np_path是一个存储预训练词向量的文件路径</span><br><span class="line">word_embeddings.weight.data.copy_(troch.from_numpy(pretrain_embedding)) #思路是将np.ndarray形式的词向量转换为pytorch的tensor，再复制到原来创建的词向量矩阵中</span><br></pre></td></tr></table></figure><p>方式二：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">word_embeddings = torch.nn.Embedding(vocab_size,embedding_dim) #创建一个词向量矩阵</span><br><span class="line">word_embeddings.weight = nn.Parameter(torch.FloatTensor(pretrain_embedding))</span><br></pre></td></tr></table></figure><h3 id="涉及函数详解"><a href="#涉及函数详解" class="headerlink" title="涉及函数详解"></a>涉及函数详解</h3><h4 id="numpy-与from-numpy"><a href="#numpy-与from-numpy" class="headerlink" title="numpy()与from_numpy()"></a>numpy()与from_numpy()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.from_numpy(ndarray) $\to$ tensor</span><br></pre></td></tr></table></figure><ul><li>作用：numpy桥，将<code>numpy.ndarray</code>转换为pytorch的<code>tensor</code>.返回的张量与numpy.ndarray共享同一内存空间，修改一个另一个也会被修改。</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor.numpy()</span><br></pre></td></tr></table></figure><ul><li>作用：numpy桥，将pytorch的<code>tensor</code>转换为<code>numpy.ndarray</code>.二者共享同一内存空间，修改一个另一个也会被修改。</li></ul><p>举个例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.arange(5)</span><br><span class="line">b = torch.from_numpy(a)</span><br><span class="line">c = b.numpy()</span><br></pre></td></tr></table></figure><h4 id="tensor-copy-src"><a href="#tensor-copy-src" class="headerlink" title="tensor.copy_(src)"></a>tensor.copy_(src)</h4><ul><li>作用：将<code>src</code>中的元素复制到tensor并返回。两个tensor应该有相同数目的元素和形状，可以是不同数据类型或存储在不同设备上。</li></ul><p>举个例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(1,5)</span><br><span class="line">b = torch.randn(1,5)</span><br><span class="line">b.copy_(a)</span><br></pre></td></tr></table></figure><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul><li><a href="https://pytorch.org/tutorials/beginner/nlp/word_embeddings_tutorial.html?highlight=embed" target="_blank" rel="noopener">Word Embeddings: Encoding Lexical Semantics</a></li><li><a href="https://ptorch.com/news/11.html" target="_blank" rel="noopener">PyTorch快速入门教程七（RNN做自然语言处理）</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;word embedding是稠密的实数向量。Word embedding是一个词的语义表示，有效地编码了词的语义信息。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="pytorch" scheme="http://yoursite.com/categories/pytorch/"/>
-    
-    
-      <category term="pytorch" scheme="http://yoursite.com/tags/pytorch/"/>
-    
-      <category term="word embedding" scheme="http://yoursite.com/tags/word-embedding/"/>
     
   </entry>
   
