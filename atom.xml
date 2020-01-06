@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-05T04:51:42.806Z</updated>
+  <updated>2020-01-06T07:23:14.566Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>论文笔记《A Pre-training Based Personalized Dialogue Generation Model with Persona-sparse Data》</title>
+    <link href="http://yoursite.com/2020/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%8AA-Pre-training-Based-Personalized-Dialogue-Generation-Model-with-Persona-sparse-Data%E3%80%8B/"/>
+    <id>http://yoursite.com/2020/01/06/论文笔记《A-Pre-training-Based-Personalized-Dialogue-Generation-Model-with-Persona-sparse-Data》/</id>
+    <published>2020-01-06T03:30:13.000Z</published>
+    <updated>2020-01-06T07:23:14.566Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>【来源】AAAI2020<br>【链接】<a href="https://arxiv.org/abs/1911.04700" target="_blank" rel="noopener">https://arxiv.org/abs/1911.04700</a><br>【代码】未公布</p></blockquote><a id="more"></a><p>这篇论文是清华大学<a href="http://coai.cs.tsinghua.edu.cn/hml/" target="_blank" rel="noopener">黄民烈</a>教授组发表在AAAI2020的论文。</p><h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>论文主要研究个性化的对话系统。论文中提出了“persona-dense”和“persona-sparse”的概念。</p><ul><li>persona-dense: 像<code>Persona-Chat</code>数据集中，在收集语料的过程中，对话人要求在有限的轮数内交流彼此的个性化信息，对话内容是与persona是密切相关的。</li><li>persona-sparse：而在现实的对话中，只有少数的对话与persona是相关的，大多数的对话往往是与persona不相关的。直接在真实对话的语料上训练和微调模型，可能会让模型学习到大多数与persona无关的对话，而把少数与persona相关的对话当作是语料中的噪声。</li></ul><p>为了解决这个问题，对话模型应该学习到哪些对话是与persona相关的，哪些对话是与persona不相关的。<br>论文采用了基于encoder-decoder框架的transformer模型。预训练的方法在许多NLP任务上取得了好的效果，论文提出用预训练的语言模型参数来初始化encoder和decoder。将attribute embedding添加到了encoder的输入；用了attention route机制来建模dialogue history，target persona和previous tokens这三种不同的特征；另外，用了dynamic weight predictor来控制这三种不同的特征在解码生成回复时起到不同程度的作用。</p><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>任务可以描述为：给定对话历史$C$和回复者的target persona $T$，要求生成流畅的回复$Y$。 $$Y = argmax_{Y^{‘}}P(Y^{‘}|C,T)$$ 其中persona $T$由一系列属性来描述，$T = {t_1,t_2,…,t_N}$；每个属性用键值对来表示：$t_i = &lt;k_i,v_i&gt;$。对话历史扩展了说话人的信息，$C=\lbrace{(U_1,T_1),(U_2,T_2),…,(U_M,T_M)}\rbrace$</p><div align="center"><img src="/images/pretrain_personalized_dialogue.png" width="120%" height="120%"></div><div align="center"><font color="grey" size="2">Fig.1. 模型结构的示意图</font></div><h4 id="Encoding-with-Persona"><a href="#Encoding-with-Persona" class="headerlink" title="Encoding with Persona"></a>Encoding with Persona</h4><p>模型的输入包括两个部分对话历史$C$和回复者的target persona $T$。</p><ol><li>先说对话历史$C=\lbrace{(U_1,T_1),(U_2,T_2),…,(U_M,T_M)}\rbrace$的的编码，将所有的句子用特定的字符’_SPE’连接起来，并且将对话人$T_i$属性$t_i$映射为embedding表示。具体地，论文中的用户属性包括性别、地址、爱好三个。前两个的属性只有一个值，直接经过embedding层就可以了。爱好可能有多个值，经过embedding层后再取平均值即可。最终将word embedding + positional embedding + attribute embedding作为transformer encoder的输入。 <div align="center"><img src="/images/input_representation.png" width="60%" height="60%"></div> <div align="center"><font color="grey" size="2">Fig.2. input representation of dialogue context</font></div></li><li>至于回复者的target persona $T$的编码，将所有的键值对属性连接起来作为一个序列，经过embedding层，直接作为transformer encoder的输入。</li></ol><h4 id="Attention-Routing"><a href="#Attention-Routing" class="headerlink" title="Attention Routing"></a>Attention Routing</h4><p>对于<code>persona-sparse</code>的对话语料，与persona无关的训练样例，在生成回复时不使用persona信息；与persona相关的训练样例，在生成回复时使用persona信息。论文为此设计了<code>Attention routing</code>模块来控制target persona $T$在生成回复时起到的作用。<br>具体地，将previous decoded tokens的表示$E_{prev}$作为attention的query，在对话历史$E_C$、回复者的target persona $E_T$和previous decoded tokens $E_{prev}$这三种特征上使用multi-head attention机制： $$O_T = MultiHead(E_{prev},E_T,E_T)$$ $$O_C = MultiHead(E_{prev},E_C,E_C)$$ $$O_{prev} = MultiHead(E_{prev},E_{prev},E_{prev})$$ 计算$O_T$和$O_C$时使用unmasked self-attention机制，计算$O_{prev}$时使用masked self-attention机制为避免decoder看到未来时刻的信息。<br>用一个persona weight $\alpha$把三个attention route $O_T,O_C,O_{prev}$结合起来：$$O_{merge} = \alpha O_T + (1-\alpha)O_C + O_C + O_{prev}$$ persona weight $\alpha$应该基于对话是否与persona有关，论文设计了<code>dynamic weight predictor</code>来预测$\alpha$。具体地，这个predictor是一个以对话历史$E_C$为输入的二元分类器$P_{\theta}(r|E_C)$：$$\alpha = P_{\theta}(r = 1|E_C)$$ 这个<code>dynamic weight predictor</code>的训练损失采用交叉熵函数：$$L_W(\theta) = -\sum_i r_i log P_{\theta}(r_i|E_C) + (1-r_i)log(1-P_{\theta}(r_i|E_C))$$</p><h4 id="Pre-training-and-Fine-tuning"><a href="#Pre-training-and-Fine-tuning" class="headerlink" title="Pre-training and Fine-tuning"></a>Pre-training and Fine-tuning</h4><p>我们先在大规模的文本语料上预训练一个语言模型，最小化负对数似然函数：$$L_{LM}(\phi) = -\sum_ilog P_\phi(u_i|u_{i-k},…,u_{i-1})$$其中$\phi$是语言模型的参数，$k$是窗口大小。<br>接着用预训练好的语言模型的参数来初始化transformer模型的encoder和decoder，对于回复生成任务，最优化以下的目标函数：$$L_D(\phi) = -\sum_ilogP_{\phi}(u_i|u_{i-k},…,u_{i-1},E_C,E_T)$$<br>为了把<code>预训练阶段</code>和<code>微调阶段</code>联系起来，在微调阶段，也会在对话语料训练集上最小化语言模型的损失函数。也就是把语言模型的损失函数作为微调阶段的辅助损失函数。则微调阶段，模型总的损失函数为：$$L(\phi,\theta) = L_D(\phi) + \lambda_1L_{LM}(\phi) + \lambda_2L_W(\theta)$$</p><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul><li><a href="https://github.com/silverriver/PersonalDilaog" target="_blank" rel="noopener">https://github.com/silverriver/PersonalDilaog</a></li><li><a href="https://github.com/SpiderClub/weibospider" target="_blank" rel="noopener">https://github.com/SpiderClub/weibospider</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;【来源】AAAI2020&lt;br&gt;【链接】&lt;a href=&quot;https://arxiv.org/abs/1911.04700&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://arxiv.org/abs/1911.04700&lt;/a&gt;&lt;br&gt;【代码】未公布&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
+    
+    
+      <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
+    
+      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
+    
+      <category term="Transformer" scheme="http://yoursite.com/tags/Transformer/"/>
+    
+  </entry>
   
   <entry>
     <title>论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》</title>
@@ -508,32 +536,6 @@
       <category term="GPU" scheme="http://yoursite.com/tags/GPU/"/>
     
       <category term="cuda" scheme="http://yoursite.com/tags/cuda/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>nvidia-smi返回错误信息‘Failed to initialize NVML: Driver/library version mismatch’</title>
-    <link href="http://yoursite.com/2019/03/29/nvidia-smi%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E2%80%98Failed-to-initialize-NVML-Driver-library-version-mismatch%E2%80%99/"/>
-    <id>http://yoursite.com/2019/03/29/nvidia-smi返回错误信息‘Failed-to-initialize-NVML-Driver-library-version-mismatch’/</id>
-    <published>2019-03-29T11:47:03.000Z</published>
-    <updated>2019-07-21T15:23:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Ubuntu运行命令<code>nvidia-smi</code>出错。</p><a id="more"></a> <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在Ubuntu18.04的命令行中运行命令<code>nvidia-smi</code>，返回错误信息</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to initialize NVML: Driver/library version mismatch</span><br></pre></td></tr></table></figure><h2 id="方法1：重启解决大部分问题"><a href="#方法1：重启解决大部分问题" class="headerlink" title="方法1：重启解决大部分问题"></a>方法1：重启解决大部分问题</h2><p>博客<a href="https://comzyh.com/blog/archives/967/" target="_blank" rel="noopener">解决Driver/library version mismatch</a>讲述的很清楚，这里就不再赘述。<br>或者参考大型交友网站stack overflow的问题<a href="https://stackoverflow.com/questions/43022843/nvidia-nvml-driver-library-version-mismatch/45319156" target="_blank" rel="noopener">NVIDIA NVML Driver/library version mismatch</a></p><h2 id="方法2：重装驱动"><a href="#方法2：重装驱动" class="headerlink" title="方法2：重装驱动"></a>方法2：重装驱动</h2><p>看返回的错误信息，这个问题出现的原因是NVIDIA Driver的版本不匹配。如果重启不能解决问题，我们需要卸载重装NVIDIA driver。</p><ol><li><strong>查看驱动程序版本</strong></li></ol><ul><li><code>dpkg -l | grep nvidia</code> <figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/31.png" alt title>                </div>                <div class="image-caption"></div>            </figure>可以看到驱动版本是<code>390.116</code></li><li><code>cat /proc/driver/nvidia/version</code> <figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/32.png" alt title>                </div>                <div class="image-caption"></div>            </figure>这里NVRM的版本是<code>390.87</code>。错误信息就是这两个版本不匹配造成的。接下来先卸载NVIDIA driver，再重新安装。</li></ul><ol start="2"><li><p><strong>卸载旧版本的NVIDIA driver</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove --purge nvidia-\*</span><br></pre></td></tr></table></figure></li><li><p><strong>添加NVIDIA的ppa源</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:graphics-drivers/ppa</span><br></pre></td></tr></table></figure></li><li><p><strong>重新安装NVIDIA的驱动</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install nvidia-390</span><br></pre></td></tr></table></figure><p> 用你自己的版本号替换<code>390</code>。</p></li></ol><p>这时再用<code>cat /proc/driver/nvidia/version</code>查看NVIDIA driver的驱动。<figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/33.png" alt title>                </div>                <div class="image-caption"></div>            </figure> 可以看到NVRM的版本是<code>390.116</code>，这时版本就匹配了。<br>再次执行<code>nvidia-smi</code>,终于看到<figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/34.png" alt title>                </div>                <div class="image-caption"></div>            </figure></p><p>在<a href="https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa" target="_blank" rel="noopener">nvidia driver各版本总览</a>可以看到NVIDIA driver的各个版本。</p><h2 id="额外的：update-与-upgrade"><a href="#额外的：update-与-upgrade" class="headerlink" title="额外的：update 与 upgrade"></a>额外的：update 与 upgrade</h2><p>记录下<code>sudo apt-get update</code>与<code>sudo apt-get upgrade</code>的区别。<br>在windows系统中安装软件，只需要有exe文件，双击即可安装了。Linux系统中则不同，Linux会维护一个自己的软件仓库，几乎所有软件都在这个仓库里，而且里面的软件完全安全，绝对可以安装。<br>我们自己的Ubuntu服务器上，维护一个软件源列表文件<code>/etc/apt/sources.list</code>,里面都是一些网址信息，每个网址就是一个软件源，这个地址指向的数据标识着有哪些软件可以安装使用。</p><ol><li><p>查看源列表：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/apt/sources.list</span><br></pre></td></tr></table></figure></li><li><p>更新软件列表</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure><p> 这个命令对访问源列表里的每个网址，读取软件列表，保存到本地电脑。</p></li><li><p>更新软件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure><p> 这个命令会把本地已安装的软件，与软件列表里对应软件做对比，如果有可更新版本就更新软件。<br>总的来说，<code>sudo apt-get update</code>是更新软件列表，<code>sudo apt-get upgrade</code>是更新软件。</p></li></ol><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul><li><a href="https://comzyh.com/blog/archives/967/" target="_blank" rel="noopener">解决Driver/library version mismatch</a></li><li><a href="https://www.cnblogs.com/yizhichun/p/6397168.html" target="_blank" rel="noopener">Ubuntu配置GPU+CUDA+CAFFE</a></li><li><a href="https://sthsf.github.io/wiki/Algorithm/DeepLearning/Tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Tensorflow%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86---Tensorflow-gpu%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85.html" target="_blank" rel="noopener">ubuntu下安装安装CUDA、cuDNN和tensotflow-gpu版本流程和问题总结</a></li><li><a href="https://wiki.ubuntu.org.cn/NVIDIA#PPA.E6.BA.90" target="_blank" rel="noopener">NVIDIA的wiki</a></li><li><a href="https://www.cnblogs.com/darkknightzh/p/5638185.html" target="_blank" rel="noopener">（原）Ubuntu16中安装nvidia的显卡驱动</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Ubuntu运行命令&lt;code&gt;nvidia-smi&lt;/code&gt;出错。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="技术资料" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF%E8%B5%84%E6%96%99/"/>
-    
-    
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
-      <category term="ubuntu" scheme="http://yoursite.com/tags/ubuntu/"/>
-    
-      <category term="nvidia-smi" scheme="http://yoursite.com/tags/nvidia-smi/"/>
     
   </entry>
   
