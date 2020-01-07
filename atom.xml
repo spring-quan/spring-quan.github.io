@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-06T07:23:14.566Z</updated>
+  <updated>2020-01-07T02:29:27.650Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>论文笔记《Large-Scale Transfer Learning for Natural Language Generation》</title>
+    <link href="http://yoursite.com/2020/01/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%8ALarge-Scale-Transfer-Learning-for-Natural-Language-Generation%E3%80%8B/"/>
+    <id>http://yoursite.com/2020/01/07/论文笔记《Large-Scale-Transfer-Learning-for-Natural-Language-Generation》/</id>
+    <published>2020-01-07T01:22:38.000Z</published>
+    <updated>2020-01-07T02:29:27.650Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>【来源】ACL2019<br>【链接】<a href="https://www.aclweb.org/anthology/P19-1608.pdf" target="_blank" rel="noopener">https://www.aclweb.org/anthology/P19-1608.pdf</a><br>【代码】未公布</p></blockquote><a id="more"></a><p>这篇论文是<a href="https://huggingface.co/" target="_blank" rel="noopener">huggingface</a>发表在ACL2019的短文。</p><h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>传统的有监督学习方法是：在特定的任务上，在有标签的数据集上，有监督地训练一个模型。有监督学习的局限在于许多NLP任务缺乏有标签的数据集，或者有标签数据集的规模比较小。迁移学习就派上用场了，迁移学习在许多NLP任务上取得了好的效果。迁移学习的思路是：先在大规模的未标注文本语料上无监督地预训练一个语言模型，再把预训练好的语言模型迁移到特定的任务上，对模型参数进行微调。<br>目前迁移学习的大部分研究集中在文本分类和NLU(natural language understanding)任务上，迁移学习应用在NLG(natural language generation)任务上的研究比较少。论文认为NLG任务可以分为两类：</p><ul><li>high entropy任务。例如story generation，chit-chat dialog。输入文本包含的信息有限，可能不包含生成输出文本所需要的信息。</li><li>low entropy任务。例如文本摘要、机器翻译。特点是输入文本的信息量比较多，生成输出文本需要的信息包含在输入文本中。</li></ul><p>论文主要研究了迁移学习在对话系统上的应用。</p><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>对话系统主要有三种输入：dialogue history,facts以及previous decoded tokens。论文研究单输入模型和多输入模型。单输入模型应用场景有限，主要关注下输入的部分。多输入模型基于encoder-decoder框架，关注下decoder部分的调整。</p><div align="center"><img src="/images/single_multi_input_model.png" width="50%" height="50%"></div><div align="center"><font color="grey" size="2">Fig.1. 单输入模型与多输入模型的结构图</font></div><h4 id="单输入模型"><a href="#单输入模型" class="headerlink" title="单输入模型"></a>单输入模型</h4><p>单输入模型把三种输入连接起来作为模型的输入。连接方式有三种：</p><ul><li>用自然分隔符连接输入。论文中给每句对话添加双引号。</li><li>用空间分隔符连接。比如用’_SEP’把每个句子连接起来。</li><li>直接把句子连接起来，再用context-type embedding(CTE)来表示输入的类型。例如：$w_{CTE}^{info}$表示用户画像信息，$w_{CTE}^{p^1}$表示对话人1说的话，$w_{CTE}^{p^2}$表示对话人2说的话。<div align="center"><img src="/images/single_multi_input.png" width="40%" height="40%"></div><div align="center"><font color="grey" size="2">Fig.2. (a)单输入模型使用CTE方式的输入(b)多输入模型用起始分隔符连接的输入</font></div></li></ul><h4 id="多输入模型"><a href="#多输入模型" class="headerlink" title="多输入模型"></a>多输入模型</h4><p>多输入模型基于encoder-decoder框架。用预训练的语言模型参数来初始化encoder和decoder。多输入模型的输入同样可以采用单输入模型的处理方式。将persona information和dialogue history分别送入encoder进行编码得到两个向量表示。重点在于decoder部分的调整。decoder的multi-head attention模块处理三种特征输入(personal information,dialogue history,previous decoded tokens)，再把三者的结果取平均值即可。</p><div align="center"><img src="/images/single_multi_input_decoder.png" width="30%" height="30%"></div><div align="center"><font color="grey" size="2">Fig.3. 基于transformer模型的多输入模型</font></div>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;【来源】ACL2019&lt;br&gt;【链接】&lt;a href=&quot;https://www.aclweb.org/anthology/P19-1608.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.aclweb.org/anthology/P19-1608.pdf&lt;/a&gt;&lt;br&gt;【代码】未公布&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
+    
+    
+      <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
+    
+      <category term="Transfer Learning" scheme="http://yoursite.com/tags/Transfer-Learning/"/>
+    
+      <category term="NLG" scheme="http://yoursite.com/tags/NLG/"/>
+    
+  </entry>
   
   <entry>
     <title>论文笔记《A Pre-training Based Personalized Dialogue Generation Model with Persona-sparse Data》</title>
@@ -338,9 +366,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
-    
       <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
+    
+      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
       <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
     
@@ -435,9 +463,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
-    
       <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
+    
+      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
   </entry>
   
@@ -459,9 +487,9 @@
       <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="ACL2019" scheme="http://yoursite.com/tags/ACL2019/"/>
-    
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
+    
+      <category term="ACL2019" scheme="http://yoursite.com/tags/ACL2019/"/>
     
   </entry>
   
@@ -510,32 +538,6 @@
       <category term="csv" scheme="http://yoursite.com/tags/csv/"/>
     
       <category term="panda" scheme="http://yoursite.com/tags/panda/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>torch.cuda.is_available()返回False,但nvidia-smi正常</title>
-    <link href="http://yoursite.com/2019/04/16/torch-cuda-is-available-%E8%BF%94%E5%9B%9EFalse-%E4%BD%86nvidia-smi%E6%AD%A3%E5%B8%B8/"/>
-    <id>http://yoursite.com/2019/04/16/torch-cuda-is-available-返回False-但nvidia-smi正常/</id>
-    <published>2019-04-16T09:04:44.000Z</published>
-    <updated>2019-07-22T01:27:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><code>torch.cuda.is_available()</code>返回False,但nvidia-smi可以正常运行。</p><a id="more"></a><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在pytorch用GPU来加速计算时发现。<code>torch.cuda.is_available()</code>返回False,但nvidia-smi可以正常运行。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import torch</span><br><span class="line">&gt;&gt;&gt; torch.cuda.is_available()</span><br><span class="line">False</span><br></pre></td></tr></table></figure><p>此时，<code>nvidia-smi</code>可以正常运行。<figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/34.png" alt title>                </div>                <div class="image-caption"></div>            </figure></p><h2 id="可能原因"><a href="#可能原因" class="headerlink" title="可能原因"></a>可能原因</h2><p>在<code>nvidia-smi</code>的运行结果中可以看到，driver version是<code>390.xx</code>。可能是driver version版本太低，造成了这个问题，实际上也是如此。<br>driver version的常见版本是<code>384.xx</code>,<code>390.xx</code>,<code>396.xx</code>。接下来，把driver version升级到<code>396.xx</code>看能不能解决问题。</p><h2 id="升级nvidia-driver-version"><a href="#升级nvidia-driver-version" class="headerlink" title="升级nvidia driver version"></a>升级nvidia driver version</h2><ol><li><p>卸载旧版本的NVIDIA driver </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove --purge nvidia-\*</span><br></pre></td></tr></table></figure></li><li><p>添加NVIDIA的ppa源.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:graphics-drivers/ppa</span><br></pre></td></tr></table></figure></li><li><p>安装新版本的NVIDIA driver </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install nvidia-driver-396</span><br></pre></td></tr></table></figure></li></ol><p>此时，运行<code>nvidia-smi</code>，会报以下错误。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to initialize NVML: Driver/library version mismatch</span><br></pre></td></tr></table></figure><p>这是更新NVIDIA driver版本后的常见问题。这个问题出现的原因是kernel mod的NVIDIA driver版本没有更新。<br>执行以下命令可以查看nvidia kernel mod的version。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/driver/nvidia/version</span><br></pre></td></tr></table></figure><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/32.png" alt title>                </div>                <div class="image-caption"></div>            </figure><p>可以看到已经加载的nvidia kernel mod的版本是还是旧版本<code>390.xx</code>。一般情况下，重启服务器就能解决问题。<br>如果由于某些原因不能重启，可以重新加载kernel mod。思路是先unload kernel mod，再reload kernel mod. 详见<a href="https://comzyh.com/blog/archives/967/" target="_blank" rel="noopener">解决Driver/library version mismatch</a><br><code>nvidia-smi</code>可以正常运行后，问题就解决了。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import torch</span><br><span class="line">&gt;&gt;&gt; torch.cuda.is_available()</span><br><span class="line">True</span><br></pre></td></tr></table></figure><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul><li><a href="https://discuss.pytorch.org/t/torch-cuda-is-available-returns-false-nvidia-smi-is-working/20614" target="_blank" rel="noopener">Torch.cuda.is_available() returns False, nvidia-smi is working</a></li><li><a href="https://askubuntu.com/questions/1063871/how-can-i-update-the-nvidia-drivers-to-version-390-77" target="_blank" rel="noopener">How can I update the NVIDIA drivers to version 390.77?</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;code&gt;torch.cuda.is_available()&lt;/code&gt;返回False,但nvidia-smi可以正常运行。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="pytorch" scheme="http://yoursite.com/categories/pytorch/"/>
-    
-    
-      <category term="nvidia-smi" scheme="http://yoursite.com/tags/nvidia-smi/"/>
-    
-      <category term="GPU" scheme="http://yoursite.com/tags/GPU/"/>
-    
-      <category term="cuda" scheme="http://yoursite.com/tags/cuda/"/>
     
   </entry>
   
