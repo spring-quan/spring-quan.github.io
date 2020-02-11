@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-13T16:01:36.719Z</updated>
+  <updated>2020-02-11T07:16:47.673Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hadoop学习笔记</title>
+    <link href="http://yoursite.com/2020/02/11/Hadoop%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2020/02/11/Hadoop学习笔记/</id>
+    <published>2020-02-11T07:09:31.000Z</published>
+    <updated>2020-02-11T07:16:47.673Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>2019-蓟门烟树</title>
@@ -111,6 +133,34 @@
     <updated>2020-01-05T04:51:42.806Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>【来源】ICJAI2018<br>【链接】<a href="https://arxiv.org/abs/1706.02861" target="_blank" rel="noopener">https://arxiv.org/abs/1706.02861</a><br>【数据集】<a href="http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality" target="_blank" rel="noopener">http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality</a><br>【代码】未公布</p></blockquote><a id="more"></a><p>这篇论文是清华大学<a href="http://coai.cs.tsinghua.edu.cn/hml/" target="_blank" rel="noopener">黄民烈教授组</a>的2017年的工作，2018年发表在IJCAI。</p><h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>论文的研究内容是赋予对话系统以个性化信息(personality/profile)来生成具有一致性的回复。具体来说，对话语料中用键值对属性值来描述用户画像。对话系统先使用一个profile detector来检测生成回复时是否使用个性化信息。如果要使用，从所有的键值对属性用户画像中选择一个键值对来生成回复。采用一个bidirectional decoder来生成回复，让键值对出现在生成的回复中。进一步地，为了提高bidirectional decoder的性能，采用了position detector来检测键值对在回复中的位置。</p><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>论文提出的对话模型包括了三个重要模块。profile detector检测是否使用用户画像并选择一个键值对属性。bidirectional decoder根据选中的键值对属性来生成回复。position detector检测键值对属性值在回复中出现的位置。</p><h4 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h4><p>给定post $X = \lbrace{x_1,x_2,…,x_n}\rbrace$以及描述用户个性化信息的键值对属性$\lbrace{&lt;k_i,v_i&gt;|i=1,2,…,K}\rbrace$，目标是生成有一致性的回复$Y = \lbrace{y_1,y_2,…,y_m}\rbrace$。<br>生成过程可以定义为: $$P(Y|X,\lbrace&lt;k_i,v_i&gt;\rbrace) = P(z=0|X) \cdot P^{fr}(Y|X) + P(z=1|X) \cdot P^{bi}(Y|X,\lbrace&lt;k_i,v_i&gt;\rbrace)$$</p><div align="center"><img src="/images/bidirectional_decoder.png" width="80%" height="80%"></div><div align="center"><font color="grey" size="2">Fig.1. 模型结构的示意图</font></div><h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h4><p>采用GRU将post $X = \lbrace{x_1,x_2,…,x_n}\rbrace$编码为$\lbrace{h_1,h_2,…,h_n}\rbrace$。GRU的更新公式如下：$$h_t = GRU(h_{t-1},x_t)$$</p><h4 id="profile-detector"><a href="#profile-detector" class="headerlink" title="profile detector"></a>profile detector</h4><p>作用有两个。一是检测是否使用profile，二是如果要使用，选择一个特定的键值对属性$&lt;key,value&gt;$来生成回复。<br>第一个作用，是否使用profile是在有标签数据上训练的二元分类器$P(z|X)$，计算方式如下：$$P(z|X) = P(z|\tilde{h}) = \sigma(W_p\tilde{h})$$ $$\tilde{h} = \sum_{j}h_j$$ 第二个作用，选择一个特定的键值对属性。生成一个在所有键值对上的概率分布：$$\beta_i=MLP([\tilde{h},k_i,v_i])=softmax(W\cdot [\tilde{h},k_i,v_i])$$其中$W$是可训练的模型参数，$\tilde{h}$是post的表示。则取概率最大的键值对作为选中的键值对：$$\tilde{v} = argmax_i(\beta_i)$$ 进一步地，bidirectional decoder的解码过程可以定义为：$$P^{bi}(Y|X,&lt;\lbrace{k_i,v_i}\rbrace&gt;) = P^{bi}(Y|X,\tilde{v})$$</p><h4 id="bidirectional-decoder"><a href="#bidirectional-decoder" class="headerlink" title="bidirectional decoder"></a>bidirectional decoder</h4><p>让选中的键值对属性值$\tilde{v}$出现在生成的回复中：$Y = (Y^b,\tilde{v},Y^f) = (y_1^b,…,y_{t-1}^b,\tilde{v},y_{t+1}^f,…,y_m^f)$。backward deocder生成$Y^b$，forward decoder生成$Y^f$。 解码过程可以定义为$$P^{bi}(Y|X,\tilde{v}) = P^{b}(Y^b|X,\tilde{v}) * P^f(Y^f|Y^b,X,\tilde{v})$$ $$P^{b}(Y^b|X,\tilde{v}) = \prod_{j=t-1}^{1} P^b(y^b_j|y^b_{&lt;j},X,\tilde{v})$$ $$P^{f}(Y^f|Y^b,X,\tilde{v}) = \prod_{j=t+1}^{m}P^f(y_j^f|y_{&lt;j}^f,Y^b,X,\tilde{v})$$ 具体地，生成一个word的概率分布为：$$P^b(y^b_j|y^b_{&lt;j},X,\tilde{v}) \propto MLP([s_j^b;y^b_{j+1};c_j^b])$$ $$P^f(y_j^f|y_{&lt;j}^f,Y^b,X,\tilde{v}) \propto MLP([s_j^f;y_{j-1}^f;c_j^f])$$ 注意区分backWard decoder与forward decoder的差别，分别是逆序和顺序的，一个输入的是$y^b_{j+1}$，而另一个是$y^f_{j-1}$。$s_j^{*},{*} \in \lbrace{f,b}\rbrace$ 是相应decoder的隐藏状态，$c_j^{*}$为相应的context vector。更新方式如下：$$s_j^{*} = GRU(s_{j+l}^{*}, [y_{j+l}^{*},c_j^{*}])$$ $$c_j^* = \sum_{t=1}^n\alpha_{j,t}^{*}h_t$$ $$\alpha_{j,t} \propto MLP([s_{j+l}^{*},h_t])$$ 对于backWard decoder，有$* = b,l = 1$，而对于forward decoder，有$* = f,l = -1$。</p><h4 id="position-detector"><a href="#position-detector" class="headerlink" title="position detector"></a>position detector</h4><p>为了检测属性值$v$在回复中出现的位置，在训练阶段，检测哪个词可以被profile中的属性值代替。也就是估计概率：$P(j|y_1y_2…y_m,&lt;k,v&gt;),j\in[1,m]$，这个概率分布的意义是词$y_j$可以被属性值$v$替换的可能性大小。这里采用最大化$y_j$与属性值$v$之间的余弦相似度：$$P(j|Y,&lt;k,v&gt;) \propto cos({y_j},{v})$$</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;【来源】ICJAI2018&lt;br&gt;【链接】&lt;a href=&quot;https://arxiv.org/abs/1706.02861&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://arxiv.org/abs/1706.02861&lt;/a&gt;&lt;br&gt;【数据集】&lt;a href=&quot;http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality&lt;/a&gt;&lt;br&gt;【代码】未公布&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
+    
+    
+      <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
+    
+      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
+    
+      <category term="Bidirectional Decoder" scheme="http://yoursite.com/tags/Bidirectional-Decoder/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》</title>
+    <link href="http://yoursite.com/2020/01/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%8AAssigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation%E3%80%8B/"/>
+    <id>http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/</id>
+    <published>2020-01-05T03:10:26.000Z</published>
+    <updated>2020-02-11T07:15:55.152Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>【来源】ICJAI2018<br>【链接】<a href="https://arxiv.org/abs/1706.02861" target="_blank" rel="noopener">https://arxiv.org/abs/1706.02861</a><br>【数据集】<a href="http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality" target="_blank" rel="noopener">http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality</a><br>【代码】未公布</p></blockquote><a id="more"></a><p>这篇论文是清华大学<a href="http://coai.cs.tsinghua.edu.cn/hml/" target="_blank" rel="noopener">黄民烈教授组</a>的2017年的工作，2018年发表在IJCAI。</p><h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>论文的研究内容是赋予对话系统以个性化信息(personality/profile)来生成具有一致性的回复。具体来说，对话语料中用键值对属性值来描述用户画像。对话系统先使用一个profile detector来检测生成回复时是否使用个性化信息。如果要使用，从所有的键值对属性用户画像中选择一个键值对来生成回复。采用一个bidirectional decoder来生成回复，让键值对出现在生成的回复中。进一步地，为了提高bidirectional decoder的性能，采用了position detector来检测键值对在回复中的位置。</p><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>论文提出的对话模型包括了三个重要模块。profile detector检测是否使用用户画像并选择一个键值对属性。bidirectional decoder根据选中的键值对属性来生成回复。position detector检测键值对属性值在回复中出现的位置。</p>]]></content>
     
     <summary type="html">
     
@@ -399,9 +449,9 @@
     
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
-      <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
-    
       <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
+    
+      <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
     
   </entry>
   
@@ -497,52 +547,6 @@
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
       <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ACL2019-对话系统</title>
-    <link href="http://yoursite.com/2019/07/07/ACL2019-%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F/"/>
-    <id>http://yoursite.com/2019/07/07/ACL2019-对话系统/</id>
-    <published>2019-07-07T11:19:27.000Z</published>
-    <updated>2019-07-31T03:40:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。<br>ACL2019的会议列表链接：<a href="http://www.acl2019.org/EN/program.xhtml" target="_blank" rel="noopener">http://www.acl2019.org/EN/program.xhtml</a></p><a id="more"></a><h3 id="《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》"><a href="#《Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference》" class="headerlink" title="《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》"></a>《Memory Consolidation for Contextual Spoken Language Understanding with Dialogue Logistic Inference》</h3><p>【链接】：<a href="https://arxiv.org/abs/1906.01788" target="_blank" rel="noopener">https://arxiv.org/abs/1906.01788</a><br>【源码】：无</p><p>中科院自动化所发表的短论文。在多轮对话中，对话历史（context information）对回复（response）的生成有重要作用。任务型对话中的管道模型分为4个模块：NLU、对话状态追踪、对话策略学习 及NLG。对话状态追踪又包含任务：domain classification、intent detection和slot filling。domain classification和intent detection任务当做分类任务来处理，常采用SVM或深度神经网络的方法；slot filling任务被当做序列标注任务来处理，常采用BiLSTM+CRF模型。NLU能否充分利用context information，对这三个下游任务有很大影响。<br>为了更好的利用context information，本文提出了对话逻辑推断任务（DLI,dialog logic inference），任务定义为：将打乱顺序的多轮对话重新排序；输入之前的对话，从剩余的utterance candidates中选中下一句对话。NLU任务采用了所谓的memory network，其实就是采用多个encoder对context information进行编码，再用attention机制或别的方法得到context information总的向量化表示。本文联合训练DLI任务和NLU任务，通过两个任务共享encoder和memory retrieve模块，来让NLU任务更好地利用context information。其实是得到context information更合理的向量化表示，来作为下游domain classification、intent detection和slot filling任务的输入。</p><p>论文提出的将打乱顺序的对话重新排序的DLI任务，可以进一步深入，将句子切分为几段打乱顺序再重新排序；可以应用到闲聊式对话系统中。</p><h3 id="《Dialogue-Natural-Language-Inference》"><a href="#《Dialogue-Natural-Language-Inference》" class="headerlink" title="《Dialogue Natural Language Inference》"></a>《Dialogue Natural Language Inference》</h3><p>【链接】：<a href="https://arxiv.org/abs/1811.00671" target="_blank" rel="noopener">https://arxiv.org/abs/1811.00671</a><br>【代码】：无<br>【数据集】：<a href="https://wellecks.github.io/dialogue_nli/" target="_blank" rel="noopener">https://wellecks.github.io/dialogue_nli/</a></p><p>加利福尼亚大学、Facebook AI Lab发表的论文。核心是提出用NLI(natural language inference)任务来提高persona-based dialog system的一致性。这里就要先搞清楚NLI任务和一致性问题两个概念。</p><ul><li><p>先从问题出发，所谓对话的一致性问题。可以分为两类：</p><ul><li><p>logical contradiction，逻辑矛盾。比如同一个人的两句话:”我有一只狗”，”我没养过狗”。就是逻辑矛盾的。</p></li><li><p>比较模糊的非逻辑矛盾。同一个人不可能说出的两句话：“我从来不运动”，“我去篮球了”。就是这种非逻辑矛盾。真香警告。</p><p>至于persona一致性问题，就是回复的utterance不能与说话人的persona矛盾，也不能与之前的回复有矛盾。</p></li></ul></li><li><p>具体介绍NLI任务。这其实是一个分类问题。论文公开了一个自己标注的NLI数据集。</p><ul><li>训练阶段：训练集形式是 {$（s_1,s_2）$,label }，对应labels $\in$（一致、无关、矛盾）。</li><li>在test阶段，给定一个句子对（句子1，句子2）来判断对应的label。</li></ul></li></ul><p>论文的最终目的是通过NLI任务训练的模型来提高persona dialog system的一致性。这是如何来实现的呢？对于一个dialog system，给定对话历史$（u_1,u_2,…,u_t）$ 及说话人的persona文本描述$（p_1,p_2,…,p_n）$,从response candidates$（y_1,y_2,…,y_m）$中选择一个$u_{t+1}$（如何生成多个responses不是这篇论文要解决的）。<br>用NLI任务的模型来预测$(y_i,u_j),(y_i,p_k)其中：i\in [1,m],j\in [1,t],k \in [1,n]$对应的label，如果句子之间是矛盾的，则添加惩罚项。从而得到一致性最好的utterance作为response。</p><h3 id="《ReCoSa-Detecting-the-Relevant-Contexts-with-Self-Attention-for-Multi-turn-Dialogue-Generation》"><a href="#《ReCoSa-Detecting-the-Relevant-Contexts-with-Self-Attention-for-Multi-turn-Dialogue-Generation》" class="headerlink" title="《ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation》"></a>《ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation》</h3><p>【链接】：<a href="https://arxiv.org/abs/1907.05339" target="_blank" rel="noopener">https://arxiv.org/abs/1907.05339</a><br>【数据集】：<a href="https://github.com/rkadlec/ubuntu-ranking-dataset-creator" target="_blank" rel="noopener">English Ubuntu dialogue corpus</a><br>【代码】：<a href="https://github.com/zhanghainan/ReCoSa" target="_blank" rel="noopener">https://github.com/zhanghainan/ReCoSa</a></p><p>中科院发表的论文。<br>在多轮对话中，生成response时，对话历史中最相关的部分起着重要的作用。论文要解决的问题：如何更准确地找到并利用relevant context来生成response。<br>多轮对话中广泛使用的HRED模型,[<a href="https://arxiv.org/abs/1507.04808" target="_blank" rel="noopener">(Serban et al.,2016;</a>,<a href="https://arxiv.org/abs/1507.02221" target="_blank" rel="noopener">Sordoni et al., 2015</a>]无差别地利用context information，忽略了relevant context。虽然有利用relevant context的相关工作，但这些工作都有各自的问题。[<a href="https://www.aclweb.org/anthology/P17-2036" target="_blank" rel="noopener">Tian et al., 2017</a>]提出计算context 与post之间的cosine similarity来衡量context relevance，其假设是context与response之间的relevance等价于post与response之间的relevance，这个假设是站不住脚的。[<a href>Xing et al., 2018</a>]向HRED模型引入了attention机制，但attention机制定位relevant context时会产生偏差，因为基于RNN的attention机制倾向于最靠近的context（close context）。论文提出了自己的解决办法，用self-attention机制来衡量context于response之间的relevance。self-attention机制的优点是可以有效捕捉到长距离的依赖关系。</p><p>模型分为三个部分：<br>context包含N轮对话： ${s_1,s_2,…,s_N}$其中，$s_i = {x_1,x_2,…,x_M}$，M为句子长度。<br>response为$Y = {y_1,y_2,…,y_M}$</p><ol><li><strong>context representation encoder</strong>：<br> 将context encode为vector。<ol><li>word-level encoder：<br> 用LSTM对sentence编码，将LSTM最后一个时间步的hidden state作为sentence representation: $h^{s_i}$；<br> 由于self-attention机制不能区分word位置信息，还需要添加position embedding: $p^{s_i}$,<br> 把两个向量做concatenate操作，得到总得sentence representation:$(h^{s_i},p^{s_i})$。<br> 对于context中的N个句子有${(h^{s_1},p^{s_1}),…,(h^{s_N},p^{s_N})}$</li><li>context self-attention:<br> 采用multi-head self-attention机制，将${(h^{s_1},p^{s_1}),…,(h^{s_N},p^{s_N})}$经过不同的线性变换作为query、keys、values matrix,由N个sentence representation得到总的context representation $O_s$。</li></ol></li><li><strong>response representation encoder</strong><br> 同样用multi-head self-attention机制,将response的word embedding及position embedding ${(w_1,p_1),…,(w_{t-1},p_{t-1})}$经过不同的线性变换作为query、keys、values matrix，得到response representation $O_r$。<ol><li>在train阶段<br> 采用mask操作，在时间步t对于word $y_t$，mask掉${y_t,y_{t+1},…,y_M}$，只保留${y_1,y_2,…,y_{t-1}}$来计算response representation。</li><li>在infer阶段<br> 在生成response的时间步t，将生成的response ${g_1,…,g_{t-1}}$，来作为response representation。</li></ol></li><li><strong>context-response attention decoder</strong><br> 采用multi-head self-attention机制，将context attention representation $O_s$作为keys、values matrix，将response hidden representation $O_r$作为query matrix。得到输出$O_d$. <figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/42.png" alt="模型框架图" title>                </div>                <div class="image-caption">模型框架图</div>            </figure></li></ol><h3 id="《Persuasion-for-Good-Towards-a-Personalized-Persuasive-Dialogue-System-for-Social-Good》"><a href="#《Persuasion-for-Good-Towards-a-Personalized-Persuasive-Dialogue-System-for-Social-Good》" class="headerlink" title="《Persuasion for Good: Towards a Personalized Persuasive Dialogue System for Social Good》"></a>《Persuasion for Good: Towards a Personalized Persuasive Dialogue System for Social Good》</h3><p>【链接】：<a href="https://arxiv.org/abs/1906.06725" target="_blank" rel="noopener">https://arxiv.org/abs/1906.06725</a><br>【代码、数据集】：<a href="https://gitlab.com/ucdavisnlp/persuasionforgood/tree/master" target="_blank" rel="noopener">https://gitlab.com/ucdavisnlp/persuasionforgood/tree/master</a></p><p>浙江大学、加利福尼亚大学发表。获得ACL2019 best paper提名。<br>论文的主要贡献是公开了一个包含说话人个人信息的劝说数据集，在子集上标注了十种不同的劝说策略。并训练了用于分类不同劝说策略的分类器。</p><h3 id="《Do-Neural-Dialog-Systems-Use-the-Conversation-History-Effectively-An-Empirical-Study》"><a href="#《Do-Neural-Dialog-Systems-Use-the-Conversation-History-Effectively-An-Empirical-Study》" class="headerlink" title="《Do Neural Dialog Systems Use the Conversation History Effectively? An Empirical Study》"></a>《Do Neural Dialog Systems Use the Conversation History Effectively? An Empirical Study》</h3><p>【链接】：<a href="https://arxiv.org/abs/1906.01603" target="_blank" rel="noopener">https://arxiv.org/abs/1906.01603</a><br>【代码】：<a href="https://github.com/chinnadhurai/ParlAI/" target="_blank" rel="noopener">https://github.com/chinnadhurai/ParlAI/</a></p><p>论文获得ACL2019 best short paper提名。<br>论文的研究点是：生成式对话系统是否有效利用或正确理解了对话历史？论文通过向对话历史中引入不同类型的扰动，来研究生成式对话系统生成回复的困惑度变化。这个方法的一个前提是如果生成式对话系统对某种信息的扰动不敏感，那么它没有有效利用这种信息。</p><p>论文在比较了三种模型。</p><ul><li>基于LSTM的seq2seq模型。</li><li>基于LSTM的seq2seq模型 + attention机制。</li><li>基于transformer的seq2seq模型。</li></ul><p>论文在四个多轮对话数据集上进行实验。</p><ul><li>bAbI dialog。<a href="https://arxiv.org/abs/1605.07683" target="_blank" rel="noopener">(Bordes and Weston, 2016)</a></li><li>Persona Chat。<a href="https://www.aclweb.org/anthology/papers/P/P18/P18-1205/" target="_blank" rel="noopener">(Zhang et al., 2018)</a></li><li>Dailydialog。 <a href="https://arxiv.org/abs/1710.03957" target="_blank" rel="noopener">(Li et al., 2017)</a></li><li>MutualFriends。<a href="https://arxiv.org/abs/1704.07130" target="_blank" rel="noopener">(He et al., 2017)</a></li></ul><p>论文向对话历史引入了不同的扰动。</p><ul><li>句子级别的扰动：<ul><li>随机打乱对话历史中句子的顺序。</li><li>倒序对话历史中句子的顺序。</li><li>随机去掉对话历史中特定的句子。</li><li>对话历史中有n个句子，只保留最近的k个句子$(k \le n)$。</li></ul></li><li>词级别的扰动：<ul><li>随机打乱一个句子中词的顺序。</li><li>倒序一个句子中词的顺序。</li><li>随机去掉对话历史中30%的词。</li><li>去掉所有的名词。</li><li>去掉所有的动词。</li></ul></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;记录ACL2019对话系统相关的论文阅读笔记。包括任务型和闲聊式对话系统，对论文的思路和模型做简单介绍，值得反复精读的论文会单独开一篇博文来写。&lt;br&gt;ACL2019的会议列表链接：&lt;a href=&quot;http://www.acl2019.org/EN/program.xhtml&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://www.acl2019.org/EN/program.xhtml&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
-    
-    
-      <category term="ACL2019" scheme="http://yoursite.com/tags/ACL2019/"/>
-    
-      <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自然语言处理---会议列表</title>
-    <link href="http://yoursite.com/2019/04/24/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86-%E4%BC%9A%E8%AE%AE%E5%88%97%E8%A1%A8/"/>
-    <id>http://yoursite.com/2019/04/24/自然语言处理-会议列表/</id>
-    <published>2019-04-24T06:55:43.000Z</published>
-    <updated>2019-07-07T09:00:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>记录自然语言处理方向的国际会议列表。</p><a id="more"></a><h2 id="A类会议"><a href="#A类会议" class="headerlink" title="A类会议"></a>A类会议</h2><p><a href="http://www.aaai.org/" target="_blank" rel="noopener">AAAI</a>，Association for the Advancement of Artificial Intelligence</p><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><a href="https://iclr.cc/" target="_blank" rel="noopener">ICLR</a>，The International Conference on Learning Representations，国际学习表征会议<br>2013年才刚刚成立了第一届。这个一年一度的会议已经被学术研究者们广泛认可，被认为「深度学习的顶级会议」。<br>这个会议的来头不小，由位列深度学习三大巨头之二的 Yoshua Bengio 和 Yann LeCun 牵头创办。Yoshua Bengio 是蒙特利尔大学教授，深度学习三巨头之一，他领导蒙特利尔大学的人工智能实验室（MILA）进行 AI 技术的学术研究。MILA 是世界上最大的人工智能研究中心之一，与谷歌也有着密切的合作。而 Yann LeCun 就自不用提，同为深度学习三巨头之一的他现任 Facebook 人工智能研究院（FAIR）院长、纽约大学教授。作为卷积神经网络之父，他为深度学习的发展和创新作出了重要贡献。</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul><li><a href="https://www.ccf.org.cn/xspj/gyml/" target="_blank" rel="noopener">中国计算机学会推荐国际学术会议和期刊目录</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;记录自然语言处理方向的国际会议列表。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
-    
-    
-      <category term="会议列表" scheme="http://yoursite.com/tags/%E4%BC%9A%E8%AE%AE%E5%88%97%E8%A1%A8/"/>
     
   </entry>
   

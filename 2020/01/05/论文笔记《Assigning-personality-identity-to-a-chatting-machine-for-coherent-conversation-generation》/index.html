@@ -14,7 +14,7 @@
     
     
     
-    <title>论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <title>论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -24,17 +24,15 @@
     <meta name="description" content="【来源】ICJAI2018【链接】https://arxiv.org/abs/1706.02861【数据集】http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality【代码】未公布">
 <meta name="keywords" content="Dialog System,Personalization,Bidirectional Decoder">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》">
-<meta property="og:url" content="http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/index.html">
+<meta property="og:title" content="论文笔记《Assigning personality&#x2F;identity to a chatting machine for coherent conversation generation》">
+<meta property="og:url" content="http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/index.html">
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="【来源】ICJAI2018【链接】https://arxiv.org/abs/1706.02861【数据集】http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality【代码】未公布">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/bidirectional_decoder.png">
-<meta property="og:updated_time" content="2020-01-05T04:51:42.806Z">
+<meta property="og:updated_time" content="2020-02-11T07:15:55.152Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》">
+<meta name="twitter:title" content="论文笔记《Assigning personality&#x2F;identity to a chatting machine for coherent conversation generation》">
 <meta name="twitter:description" content="【来源】ICJAI2018【链接】https://arxiv.org/abs/1706.02861【数据集】http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality【代码】未公布">
-<meta name="twitter:image" content="http://yoursite.com/images/bidirectional_decoder.png">
     
         <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
     
@@ -136,7 +134,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》</div>
+        <div class="flex-col header-title ellipsis">论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -158,7 +156,7 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》</h1>
+        <h1 class="title">论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》</h1>
         <h5 class="subtitle">
             
                 <time datetime="2020-01-05T03:10:26.000Z" itemprop="datePublished" class="page-time">
@@ -183,16 +181,16 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#论文简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">论文简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型结构"><span class="post-toc-number">2.</span> <span class="post-toc-text">模型结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#任务定义"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">任务定义</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encoder"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">encoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#profile-detector"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">profile detector</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#bidirectional-decoder"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">bidirectional decoder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#position-detector"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">position detector</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#论文简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">论文简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型结构"><span class="post-toc-number">2.</span> <span class="post-toc-text">模型结构</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》"
+<article id="post-论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》</h1>
+        <h1 class="post-card-title">论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》</h1>
         <div class="post-meta">
             <time class="post-time" title="2020-01-05 11:10:26" datetime="2020-01-05T03:10:26.000Z"  itemprop="datePublished">2020-01-05</time>
 
@@ -216,14 +214,6 @@
 <p>这篇论文是清华大学<a href="http://coai.cs.tsinghua.edu.cn/hml/" target="_blank" rel="noopener">黄民烈教授组</a>的2017年的工作，2018年发表在IJCAI。</p>
 <h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>论文的研究内容是赋予对话系统以个性化信息(personality/profile)来生成具有一致性的回复。具体来说，对话语料中用键值对属性值来描述用户画像。对话系统先使用一个profile detector来检测生成回复时是否使用个性化信息。如果要使用，从所有的键值对属性用户画像中选择一个键值对来生成回复。采用一个bidirectional decoder来生成回复，让键值对出现在生成的回复中。进一步地，为了提高bidirectional decoder的性能，采用了position detector来检测键值对在回复中的位置。</p>
 <h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>论文提出的对话模型包括了三个重要模块。profile detector检测是否使用用户画像并选择一个键值对属性。bidirectional decoder根据选中的键值对属性来生成回复。position detector检测键值对属性值在回复中出现的位置。</p>
-<h4 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h4><p>给定post $X = \lbrace{x_1,x_2,…,x_n}\rbrace$以及描述用户个性化信息的键值对属性$\lbrace{&lt;k_i,v_i&gt;|i=1,2,…,K}\rbrace$，目标是生成有一致性的回复$Y = \lbrace{y_1,y_2,…,y_m}\rbrace$。<br>生成过程可以定义为: $$P(Y|X,\lbrace&lt;k_i,v_i&gt;\rbrace) = P(z=0|X) \cdot P^{fr}(Y|X) + P(z=1|X) \cdot P^{bi}(Y|X,\lbrace&lt;k_i,v_i&gt;\rbrace)$$</p>
-<div align="center"><img src="/images/bidirectional_decoder.png" width="80%" height="80%"></div>
-<div align="center"><font color="grey" size="2">Fig.1. 模型结构的示意图</font></div>
-
-<h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h4><p>采用GRU将post $X = \lbrace{x_1,x_2,…,x_n}\rbrace$编码为$\lbrace{h_1,h_2,…,h_n}\rbrace$。GRU的更新公式如下：$$h_t = GRU(h_{t-1},x_t)$$</p>
-<h4 id="profile-detector"><a href="#profile-detector" class="headerlink" title="profile detector"></a>profile detector</h4><p>作用有两个。一是检测是否使用profile，二是如果要使用，选择一个特定的键值对属性$&lt;key,value&gt;$来生成回复。<br>第一个作用，是否使用profile是在有标签数据上训练的二元分类器$P(z|X)$，计算方式如下：$$P(z|X) = P(z|\tilde{h}) = \sigma(W_p\tilde{h})$$ $$\tilde{h} = \sum_{j}h_j$$ 第二个作用，选择一个特定的键值对属性。生成一个在所有键值对上的概率分布：$$\beta_i=MLP([\tilde{h},k_i,v_i])=softmax(W\cdot [\tilde{h},k_i,v_i])$$其中$W$是可训练的模型参数，$\tilde{h}$是post的表示。则取概率最大的键值对作为选中的键值对：$$\tilde{v} = argmax_i(\beta_i)$$ 进一步地，bidirectional decoder的解码过程可以定义为：$$P^{bi}(Y|X,&lt;\lbrace{k_i,v_i}\rbrace&gt;) = P^{bi}(Y|X,\tilde{v})$$</p>
-<h4 id="bidirectional-decoder"><a href="#bidirectional-decoder" class="headerlink" title="bidirectional decoder"></a>bidirectional decoder</h4><p>让选中的键值对属性值$\tilde{v}$出现在生成的回复中：$Y = (Y^b,\tilde{v},Y^f) = (y_1^b,…,y_{t-1}^b,\tilde{v},y_{t+1}^f,…,y_m^f)$。backward deocder生成$Y^b$，forward decoder生成$Y^f$。 解码过程可以定义为$$P^{bi}(Y|X,\tilde{v}) = P^{b}(Y^b|X,\tilde{v}) * P^f(Y^f|Y^b,X,\tilde{v})$$ $$P^{b}(Y^b|X,\tilde{v}) = \prod_{j=t-1}^{1} P^b(y^b_j|y^b_{&lt;j},X,\tilde{v})$$ $$P^{f}(Y^f|Y^b,X,\tilde{v}) = \prod_{j=t+1}^{m}P^f(y_j^f|y_{&lt;j}^f,Y^b,X,\tilde{v})$$ 具体地，生成一个word的概率分布为：$$P^b(y^b_j|y^b_{&lt;j},X,\tilde{v}) \propto MLP([s_j^b;y^b_{j+1};c_j^b])$$ $$P^f(y_j^f|y_{&lt;j}^f,Y^b,X,\tilde{v}) \propto MLP([s_j^f;y_{j-1}^f;c_j^f])$$ 注意区分backWard decoder与forward decoder的差别，分别是逆序和顺序的，一个输入的是$y^b_{j+1}$，而另一个是$y^f_{j-1}$。$s_j^{*},{*} \in \lbrace{f,b}\rbrace$ 是相应decoder的隐藏状态，$c_j^{*}$为相应的context vector。更新方式如下：$$s_j^{*} = GRU(s_{j+l}^{*}, [y_{j+l}^{*},c_j^{*}])$$ $$c_j^* = \sum_{t=1}^n\alpha_{j,t}^{*}h_t$$ $$\alpha_{j,t} \propto MLP([s_{j+l}^{*},h_t])$$ 对于backWard decoder，有$* = b,l = 1$，而对于forward decoder，有$* = f,l = -1$。</p>
-<h4 id="position-detector"><a href="#position-detector" class="headerlink" title="position detector"></a>position detector</h4><p>为了检测属性值$v$在回复中出现的位置，在训练阶段，检测哪个词可以被profile中的属性值代替。也就是估计概率：$P(j|y_1y_2…y_m,&lt;k,v&gt;),j\in[1,m]$，这个概率分布的意义是词$y_j$可以被属性值$v$替换的可能性大小。这里采用最大化$y_j$与属性值$v$之间的余弦相似度：$$P(j|Y,&lt;k,v&gt;) \propto cos({y_j},{v})$$</p>
 
         </div>
 
@@ -232,7 +222,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-01-05T04:51:42.806Z" itemprop="dateUpdated">2020-01-05 12:51:42</time>
+    最后更新时间：<time datetime="2020-02-11T07:15:55.152Z" itemprop="dateUpdated">2020-02-11 15:15:55</time>
 </span><br>
 
 
@@ -266,7 +256,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/&title=《论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/&title=《论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -276,23 +266,23 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/&title=《论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》》 — spring's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/&title=《论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》》 — spring's Blog&source=
 【来源】ICJAI2018【链接】https://arxiv.org/abs/1706.02861【数据集】http://coai.cs.tsinghu..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》》 — spring's Blog&url=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》》 — spring's Blog&url=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -315,18 +305,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2020/01/06/论文笔记《A-Pre-training-Based-Personalized-Dialogue-Generation-Model-with-Persona-sparse-Data》/" id="post-prev" class="post-nav-link">
+      <a href="/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">论文笔记《A Pre-training Based Personalized Dialogue Generation Model with Persona-sparse Data》</h4>
+        <h4 class="title">论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/" id="post-next" class="post-nav-link">
+      <a href="/2020/01/03/论文笔记《Learning-Personalized-End-to-End-Goal-Oriented-Dialog》/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》</h4>
+        <h4 class="title">论文笔记《Learning Personalized End-to-End Goal-Oriented Dialog》</h4>
       </a>
     </div>
   
@@ -459,7 +449,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/&title=《论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/&title=《论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -469,23 +459,23 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/&title=《论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》》 — spring's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/&title=《论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》》 — spring's Blog&source=
 【来源】ICJAI2018【链接】https://arxiv.org/abs/1706.02861【数据集】http://coai.cs.tsinghu..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Assigning Personality（Profile） to a Chatting Machine for Coherent Conversation Generation》》 — spring's Blog&url=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》》 — spring's Blog&url=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -496,7 +486,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/01/05/论文笔记《Assigning-Personality-Profile-to-a-Chatting-Machine-for-Coherent-Conversation-Generation》/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/" alt="微信分享二维码">
 </div>
 
 
