@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-11T07:16:47.673Z</updated>
+  <updated>2020-02-13T10:30:34.529Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,24 +17,52 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hadoop学习笔记</title>
-    <link href="http://yoursite.com/2020/02/11/Hadoop%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://yoursite.com/2020/02/11/Hadoop学习笔记/</id>
-    <published>2020-02-11T07:09:31.000Z</published>
-    <updated>2020-02-11T07:16:47.673Z</updated>
+    <title>pySpark学习笔记</title>
+    <link href="http://yoursite.com/2020/02/13/pySpark%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2020/02/13/pySpark学习笔记/</id>
+    <published>2020-02-13T06:14:50.000Z</published>
+    <updated>2020-02-13T10:30:34.529Z</updated>
     
-    <content type="html"><![CDATA[<a id="more"></a>]]></content>
+    <content type="html"><![CDATA[<a id="more"></a><h3 id="pyspark下载与环境设置"><a href="#pyspark下载与环境设置" class="headerlink" title="pyspark下载与环境设置"></a>pyspark下载与环境设置</h3><p><strong>前提：</strong> 安装pyspark之前，要检查电脑是否安装了JAVA环境，可以用命令<code>java -version</code>来查看。<br>参考链接：<a href="https://blog.csdn.net/ricardo_leite/article/details/76070490" target="_blank" rel="noopener">Centos下JDK的安装与卸载</a></p><ul><li><p>Centos下JDK的安装</p><ol><li>查看yum库中有哪些可用的JDK版本：<code>yum search java | grep jdk</code>。</li><li>选择版本安装JDK，可以用<code>yum install java-1.8.0-openjdk-devel.x86_64</code>命令来安装JAVA环境。</li></ol></li><li><p>Centos下JDK的卸载</p><ol><li>先查看系统中安装了哪些rpm软件包,查看相关Java包的信息：<br> <code>rpm -qa | grep java</code></li><li>卸载已安装的JDK: <code>yum -y remove java &lt;包名&gt;</code>，比如<code>yum -y remove java java-1.6.0-openjdk-1.6.0.38-1.13.10.0.el7_2.x86_64</code>。</li></ol></li></ul><p>在清华大学镜像源<a href="http://mirrors.tuna.tsinghua.edu.cn/apache/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/apache/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz</a>下载pyspark安装包。</p><h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ol><li>在<code>./bin/pyspark</code>启动pyspark时，报以下错误：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.UnsupportedClassVersionError: org/apache/spark/launcher/Main : Unsupported major.minor version 52.0</span><br></pre></td></tr></table></figure></li></ol><p>出错原因是：pyspark 2.1需要Java 1.7以上的版本，而安装的Java版本是1.6的。</p><ol start="2"><li>在python代码中调用pyspark报错：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ModuleNotFoundError: No module named &apos;py4j&apos;</span><br></pre></td></tr></table></figure></li></ol><p>这是因为<code>~/.bashrc</code>中py4j的版本与实际的版本不同。修改<code>~/.bashrc</code>中py4j的版本为实际的版本即可。<br>参考链接：<a href="https://blog.csdn.net/skyejy/article/details/90690742" target="_blank" rel="noopener">https://blog.csdn.net/skyejy/article/details/90690742</a></p><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul><li><a href="http://codingdict.com/article/8881" target="_blank" rel="noopener">编程字典-pyspark教程</a></li></ul>]]></content>
     
     <summary type="html">
     
       
       
         &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-
+&lt;h3 id=&quot;pyspark下载与环境设置&quot;&gt;&lt;a href=&quot;#pyspark下载与环境设置&quot; class=&quot;headerlink&quot; title=&quot;pyspark下载与环境设置&quot;&gt;&lt;/a&gt;pyspark下载与环境设置&lt;/h3&gt;&lt;p&gt;&lt;str
       
     
     </summary>
     
+      <category term="技术资料" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF%E8%B5%84%E6%96%99/"/>
+    
+    
+      <category term="pySpark" scheme="http://yoursite.com/tags/pySpark/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop学习笔记</title>
+    <link href="http://yoursite.com/2020/02/11/Hadoop%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2020/02/11/Hadoop学习笔记/</id>
+    <published>2020-02-11T07:09:31.000Z</published>
+    <updated>2020-02-11T09:36:22.143Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。</p><a id="more"></a><h3 id="Hadoop简介"><a href="#Hadoop简介" class="headerlink" title="Hadoop简介"></a>Hadoop简介</h3><p>Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。随着技术发展，人类每天都会产生海量数据，用单一的机器来存储和处理这些数据已经不能满足需求。而Hadoop允许在从单一的机器扩展到上千台机器，从而在跨计算机的分布式环境中来存储和处理大数据。</p><p>Hadoop的架构如下图所示：<figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/hadoop_architecture.png" alt="Hadoop的架构图" title>                </div>                <div class="image-caption">Hadoop的架构图</div>            </figure></p><ul><li>HDFS: 分布式文件存储系统</li><li>YARN: 分布式资源管理</li><li>MapReduce: 分布式计算</li><li>Others: 利用YARN的资源管理来实现其他的数据处理方式</li></ul><h3 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h3><p>HDFS(Hadoop Distributed File System)是Hadoop应用主要的分布式文件系统。HDFS是基于“Master-Worker”架构的，一个HDFS集群由一个NameNode和多个DataNode组成。NameNode是一个中心服务器，管理文件系统的命名空间(NameSpace)，管理文件系统的元数据(MataData)，相当于是一个目录。DataNode负责存储实际的数据。</p><p>   HDFS暴露了文件系统的命名空间，用户可以以文件的形式来存储数据。具体来看，一个文件被分为一个或者多个数据块(Block)，这些数据块存储在一组DataNode上；每个数据库对应NameNode上的一条记录。NameNode执行文件系统的命名空间操作，比如打开、关闭、重命名文件或目录；它也负责数据库与DataNode之间的映射。DataNode负责处理文件系统客户端的读写请求，在NameNode的统一管理下来进行数据块的创建、删除和复制。</p><div align="center"><img src="/images/hdfs-architecture.png" width="85%" height="85%"></div><div align="center"><font color="grey" size="2">HDFS的架构</font></div><ul><li><strong>Block</strong> <ol><li>数据块block是基本存储单位，一般大小为64MB。</li><li>一个文件会被分成一个或多个数据块来存储。如果文件大小小于一个Block的大小，那么实际占用的空间为文件大小。</li><li>Block是基本的读写单位，相当于磁盘的页，每次都会读写一个Block。</li><li>每个Block会被存储到多个机器，默认是3个。防止机器故障造成数据丢失。</li></ol></li><li><strong>NameNode</strong><ol><li>存储文件的元数据，管理文件系统的命名空间。整个HDFS可存储文件的大小受限于NameNode的内存大小。</li><li>一个Block对应NameNode中的一条记录。</li><li>NameNode失效后，整个HDFS就都失效了。要保证NameNode的可用性。</li></ol></li><li><strong>DataNode</strong><ol><li>存储具体的block数据。</li><li>负责数据的读写操作和复制操作。</li><li>DataNode启动时会向NameNode汇报当前存储的block信息，随后也会定时向NameNode汇报修改信息。</li><li>DataNode之间会进行通信，复制block，保证数据的冗余性。</li></ol></li></ul><h4 id="HDFS-shell命令"><a href="#HDFS-shell命令" class="headerlink" title="HDFS shell命令"></a>HDFS shell命令</h4><p>Hadoop包含了一系列类shell命令，可以直接和HDFS或hadoop支持的其他文件系统进行直接的交互。<code>hadoop fs -help</code>可以列出所有的shell命令。这些shell命令支持大部分普通文件系统的操作，比如复制、删除文件、更改文件权限等。</p><p>调用文件系统shell命令应该采用<code>hadoop fs &lt;arg&gt;</code>的形式，所有的FS shell命令都使用URI路径作为参数。URI路径的格式是’scheme://authority/path’，对于HDFS文件系统，scheme是<code>hdfs</code>；对于本地文件系统，scheme是<code>file</code>。其中scheme参数和authority参数是可选的，省略的话会使用默认的参数scheme。</p><ul><li><p><strong>ls</strong><br>  使用方式： <code>hadoop fs -ls &lt;args&gt;</code><br>  如果是文件，会显示文件信息；如果是目录，会显示目录下所有的文件。</p></li><li><p><strong>test</strong><br>  使用方式： <code>hadoop fs -test [edz] URI</code><br>  选项：<br>  -e 检查文件是否存在，如果存在返回0；<br>  -z 检查文件是否是0字节，如果是返回0；<br>  -d 如果路径是个目录，返回1，否则返回0</p></li></ul><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul><li><a href="https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_design.html" target="_blank" rel="noopener">官方手册-Hadoop分布式文件系统：架构和设计</a></li><li><a href="https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html" target="_blank" rel="noopener">官方手册-Hadoop Shell命令</a></li><li><a href="https://pennywong.gitbooks.io/hadoop-notebook/content/introduction.html" target="_blank" rel="noopener">Hadoop简介</a></li><li><a href="https://www.w3cschool.cn/hadoop/i1la1jyc.html" target="_blank" rel="noopener">Hadoop教程-W3Cschool</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术资料" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF%E8%B5%84%E6%96%99/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+      <category term="HDFS" scheme="http://yoursite.com/tags/HDFS/"/>
     
   </entry>
   
@@ -133,34 +161,6 @@
     <updated>2020-01-05T04:51:42.806Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>【来源】ICJAI2018<br>【链接】<a href="https://arxiv.org/abs/1706.02861" target="_blank" rel="noopener">https://arxiv.org/abs/1706.02861</a><br>【数据集】<a href="http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality" target="_blank" rel="noopener">http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality</a><br>【代码】未公布</p></blockquote><a id="more"></a><p>这篇论文是清华大学<a href="http://coai.cs.tsinghua.edu.cn/hml/" target="_blank" rel="noopener">黄民烈教授组</a>的2017年的工作，2018年发表在IJCAI。</p><h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>论文的研究内容是赋予对话系统以个性化信息(personality/profile)来生成具有一致性的回复。具体来说，对话语料中用键值对属性值来描述用户画像。对话系统先使用一个profile detector来检测生成回复时是否使用个性化信息。如果要使用，从所有的键值对属性用户画像中选择一个键值对来生成回复。采用一个bidirectional decoder来生成回复，让键值对出现在生成的回复中。进一步地，为了提高bidirectional decoder的性能，采用了position detector来检测键值对在回复中的位置。</p><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>论文提出的对话模型包括了三个重要模块。profile detector检测是否使用用户画像并选择一个键值对属性。bidirectional decoder根据选中的键值对属性来生成回复。position detector检测键值对属性值在回复中出现的位置。</p><h4 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h4><p>给定post $X = \lbrace{x_1,x_2,…,x_n}\rbrace$以及描述用户个性化信息的键值对属性$\lbrace{&lt;k_i,v_i&gt;|i=1,2,…,K}\rbrace$，目标是生成有一致性的回复$Y = \lbrace{y_1,y_2,…,y_m}\rbrace$。<br>生成过程可以定义为: $$P(Y|X,\lbrace&lt;k_i,v_i&gt;\rbrace) = P(z=0|X) \cdot P^{fr}(Y|X) + P(z=1|X) \cdot P^{bi}(Y|X,\lbrace&lt;k_i,v_i&gt;\rbrace)$$</p><div align="center"><img src="/images/bidirectional_decoder.png" width="80%" height="80%"></div><div align="center"><font color="grey" size="2">Fig.1. 模型结构的示意图</font></div><h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h4><p>采用GRU将post $X = \lbrace{x_1,x_2,…,x_n}\rbrace$编码为$\lbrace{h_1,h_2,…,h_n}\rbrace$。GRU的更新公式如下：$$h_t = GRU(h_{t-1},x_t)$$</p><h4 id="profile-detector"><a href="#profile-detector" class="headerlink" title="profile detector"></a>profile detector</h4><p>作用有两个。一是检测是否使用profile，二是如果要使用，选择一个特定的键值对属性$&lt;key,value&gt;$来生成回复。<br>第一个作用，是否使用profile是在有标签数据上训练的二元分类器$P(z|X)$，计算方式如下：$$P(z|X) = P(z|\tilde{h}) = \sigma(W_p\tilde{h})$$ $$\tilde{h} = \sum_{j}h_j$$ 第二个作用，选择一个特定的键值对属性。生成一个在所有键值对上的概率分布：$$\beta_i=MLP([\tilde{h},k_i,v_i])=softmax(W\cdot [\tilde{h},k_i,v_i])$$其中$W$是可训练的模型参数，$\tilde{h}$是post的表示。则取概率最大的键值对作为选中的键值对：$$\tilde{v} = argmax_i(\beta_i)$$ 进一步地，bidirectional decoder的解码过程可以定义为：$$P^{bi}(Y|X,&lt;\lbrace{k_i,v_i}\rbrace&gt;) = P^{bi}(Y|X,\tilde{v})$$</p><h4 id="bidirectional-decoder"><a href="#bidirectional-decoder" class="headerlink" title="bidirectional decoder"></a>bidirectional decoder</h4><p>让选中的键值对属性值$\tilde{v}$出现在生成的回复中：$Y = (Y^b,\tilde{v},Y^f) = (y_1^b,…,y_{t-1}^b,\tilde{v},y_{t+1}^f,…,y_m^f)$。backward deocder生成$Y^b$，forward decoder生成$Y^f$。 解码过程可以定义为$$P^{bi}(Y|X,\tilde{v}) = P^{b}(Y^b|X,\tilde{v}) * P^f(Y^f|Y^b,X,\tilde{v})$$ $$P^{b}(Y^b|X,\tilde{v}) = \prod_{j=t-1}^{1} P^b(y^b_j|y^b_{&lt;j},X,\tilde{v})$$ $$P^{f}(Y^f|Y^b,X,\tilde{v}) = \prod_{j=t+1}^{m}P^f(y_j^f|y_{&lt;j}^f,Y^b,X,\tilde{v})$$ 具体地，生成一个word的概率分布为：$$P^b(y^b_j|y^b_{&lt;j},X,\tilde{v}) \propto MLP([s_j^b;y^b_{j+1};c_j^b])$$ $$P^f(y_j^f|y_{&lt;j}^f,Y^b,X,\tilde{v}) \propto MLP([s_j^f;y_{j-1}^f;c_j^f])$$ 注意区分backWard decoder与forward decoder的差别，分别是逆序和顺序的，一个输入的是$y^b_{j+1}$，而另一个是$y^f_{j-1}$。$s_j^{*},{*} \in \lbrace{f,b}\rbrace$ 是相应decoder的隐藏状态，$c_j^{*}$为相应的context vector。更新方式如下：$$s_j^{*} = GRU(s_{j+l}^{*}, [y_{j+l}^{*},c_j^{*}])$$ $$c_j^* = \sum_{t=1}^n\alpha_{j,t}^{*}h_t$$ $$\alpha_{j,t} \propto MLP([s_{j+l}^{*},h_t])$$ 对于backWard decoder，有$* = b,l = 1$，而对于forward decoder，有$* = f,l = -1$。</p><h4 id="position-detector"><a href="#position-detector" class="headerlink" title="position detector"></a>position detector</h4><p>为了检测属性值$v$在回复中出现的位置，在训练阶段，检测哪个词可以被profile中的属性值代替。也就是估计概率：$P(j|y_1y_2…y_m,&lt;k,v&gt;),j\in[1,m]$，这个概率分布的意义是词$y_j$可以被属性值$v$替换的可能性大小。这里采用最大化$y_j$与属性值$v$之间的余弦相似度：$$P(j|Y,&lt;k,v&gt;) \propto cos({y_j},{v})$$</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;【来源】ICJAI2018&lt;br&gt;【链接】&lt;a href=&quot;https://arxiv.org/abs/1706.02861&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://arxiv.org/abs/1706.02861&lt;/a&gt;&lt;br&gt;【数据集】&lt;a href=&quot;http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality&lt;/a&gt;&lt;br&gt;【代码】未公布&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
-    
-    
-      <category term="Dialog System" scheme="http://yoursite.com/tags/Dialog-System/"/>
-    
-      <category term="Personalization" scheme="http://yoursite.com/tags/Personalization/"/>
-    
-      <category term="Bidirectional Decoder" scheme="http://yoursite.com/tags/Bidirectional-Decoder/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文笔记《Assigning personality/identity to a chatting machine for coherent conversation generation》</title>
-    <link href="http://yoursite.com/2020/01/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%8AAssigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation%E3%80%8B/"/>
-    <id>http://yoursite.com/2020/01/05/论文笔记《Assigning-personality-identity-to-a-chatting-machine-for-coherent-conversation-generation》/</id>
-    <published>2020-01-05T03:10:26.000Z</published>
-    <updated>2020-02-11T07:15:55.152Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>【来源】ICJAI2018<br>【链接】<a href="https://arxiv.org/abs/1706.02861" target="_blank" rel="noopener">https://arxiv.org/abs/1706.02861</a><br>【数据集】<a href="http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality" target="_blank" rel="noopener">http://coai.cs.tsinghua.edu.cn/hml/dataset/#AssignPersonality</a><br>【代码】未公布</p></blockquote><a id="more"></a><p>这篇论文是清华大学<a href="http://coai.cs.tsinghua.edu.cn/hml/" target="_blank" rel="noopener">黄民烈教授组</a>的2017年的工作，2018年发表在IJCAI。</p><h3 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h3><p>论文的研究内容是赋予对话系统以个性化信息(personality/profile)来生成具有一致性的回复。具体来说，对话语料中用键值对属性值来描述用户画像。对话系统先使用一个profile detector来检测生成回复时是否使用个性化信息。如果要使用，从所有的键值对属性用户画像中选择一个键值对来生成回复。采用一个bidirectional decoder来生成回复，让键值对出现在生成的回复中。进一步地，为了提高bidirectional decoder的性能，采用了position detector来检测键值对在回复中的位置。</p><h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><p>论文提出的对话模型包括了三个重要模块。profile detector检测是否使用用户画像并选择一个键值对属性。bidirectional decoder根据选中的键值对属性来生成回复。position detector检测键值对属性值在回复中出现的位置。</p>]]></content>
     
     <summary type="html">
     
@@ -449,9 +449,9 @@
     
       <category term="dialog system" scheme="http://yoursite.com/tags/dialog-system/"/>
     
-      <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
-    
       <category term="Memory Network" scheme="http://yoursite.com/tags/Memory-Network/"/>
+    
+      <category term="NAACL2019" scheme="http://yoursite.com/tags/NAACL2019/"/>
     
   </entry>
   

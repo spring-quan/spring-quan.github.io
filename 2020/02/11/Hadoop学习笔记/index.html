@@ -20,15 +20,22 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content>
-    <meta property="og:type" content="article">
+    <meta name="keywords" content="Hadoop,HDFS">
+    <meta name="description" content="Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。">
+<meta name="keywords" content="Hadoop,HDFS">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hadoop学习笔记">
 <meta property="og:url" content="http://yoursite.com/2020/02/11/Hadoop学习笔记/index.html">
 <meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-11T07:16:47.673Z">
+<meta property="og:image" content="http://yoursite.com/images/hadoop_architecture.png">
+<meta property="og:image" content="http://yoursite.com/images/hdfs-architecture.png">
+<meta property="og:updated_time" content="2020-02-11T09:36:22.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop学习笔记">
+<meta name="twitter:description" content="Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。">
+<meta name="twitter:image" content="http://yoursite.com/images/hadoop_architecture.png">
     
         <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
     
@@ -160,6 +167,8 @@
 </time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术资料/">技术资料</a></li></ul>
+
             
         </h5>
     </div>
@@ -172,6 +181,13 @@
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hadoop简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">Hadoop简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HDFS"><span class="post-toc-number">2.</span> <span class="post-toc-text">HDFS</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#HDFS-shell命令"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">HDFS shell命令</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+        </nav>
+    </aside>
+
 
 <article id="post-Hadoop学习笔记"
   class="post-article article-type-post fade" itemprop="blogPost">
@@ -182,6 +198,8 @@
             <time class="post-time" title="2020-02-11 15:09:31" datetime="2020-02-11T07:09:31.000Z"  itemprop="datePublished">2020-02-11</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术资料/">技术资料</a></li></ul>
+
 
 
             
@@ -192,7 +210,64 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <a id="more"></a>
+            <p>Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。</p>
+<a id="more"></a>
+
+<h3 id="Hadoop简介"><a href="#Hadoop简介" class="headerlink" title="Hadoop简介"></a>Hadoop简介</h3><p>Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。随着技术发展，人类每天都会产生海量数据，用单一的机器来存储和处理这些数据已经不能满足需求。而Hadoop允许在从单一的机器扩展到上千台机器，从而在跨计算机的分布式环境中来存储和处理大数据。</p>
+<p>Hadoop的架构如下图所示：<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/hadoop_architecture.png" alt="Hadoop的架构图" title>
+                </div>
+                <div class="image-caption">Hadoop的架构图</div>
+            </figure></p>
+<ul>
+<li>HDFS: 分布式文件存储系统</li>
+<li>YARN: 分布式资源管理</li>
+<li>MapReduce: 分布式计算</li>
+<li>Others: 利用YARN的资源管理来实现其他的数据处理方式</li>
+</ul>
+<h3 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h3><p>HDFS(Hadoop Distributed File System)是Hadoop应用主要的分布式文件系统。HDFS是基于“Master-Worker”架构的，一个HDFS集群由一个NameNode和多个DataNode组成。NameNode是一个中心服务器，管理文件系统的命名空间(NameSpace)，管理文件系统的元数据(MataData)，相当于是一个目录。DataNode负责存储实际的数据。</p>
+<p>   HDFS暴露了文件系统的命名空间，用户可以以文件的形式来存储数据。具体来看，一个文件被分为一个或者多个数据块(Block)，这些数据块存储在一组DataNode上；每个数据库对应NameNode上的一条记录。NameNode执行文件系统的命名空间操作，比如打开、关闭、重命名文件或目录；它也负责数据库与DataNode之间的映射。DataNode负责处理文件系统客户端的读写请求，在NameNode的统一管理下来进行数据块的创建、删除和复制。</p>
+<div align="center"><img src="/images/hdfs-architecture.png" width="85%" height="85%"></div>
+<div align="center"><font color="grey" size="2">HDFS的架构</font></div>
+
+<ul>
+<li><strong>Block</strong> <ol>
+<li>数据块block是基本存储单位，一般大小为64MB。</li>
+<li>一个文件会被分成一个或多个数据块来存储。如果文件大小小于一个Block的大小，那么实际占用的空间为文件大小。</li>
+<li>Block是基本的读写单位，相当于磁盘的页，每次都会读写一个Block。</li>
+<li>每个Block会被存储到多个机器，默认是3个。防止机器故障造成数据丢失。</li>
+</ol>
+</li>
+<li><strong>NameNode</strong><ol>
+<li>存储文件的元数据，管理文件系统的命名空间。整个HDFS可存储文件的大小受限于NameNode的内存大小。</li>
+<li>一个Block对应NameNode中的一条记录。</li>
+<li>NameNode失效后，整个HDFS就都失效了。要保证NameNode的可用性。</li>
+</ol>
+</li>
+<li><strong>DataNode</strong><ol>
+<li>存储具体的block数据。</li>
+<li>负责数据的读写操作和复制操作。</li>
+<li>DataNode启动时会向NameNode汇报当前存储的block信息，随后也会定时向NameNode汇报修改信息。</li>
+<li>DataNode之间会进行通信，复制block，保证数据的冗余性。</li>
+</ol>
+</li>
+</ul>
+<h4 id="HDFS-shell命令"><a href="#HDFS-shell命令" class="headerlink" title="HDFS shell命令"></a>HDFS shell命令</h4><p>Hadoop包含了一系列类shell命令，可以直接和HDFS或hadoop支持的其他文件系统进行直接的交互。<code>hadoop fs -help</code>可以列出所有的shell命令。这些shell命令支持大部分普通文件系统的操作，比如复制、删除文件、更改文件权限等。</p>
+<p>调用文件系统shell命令应该采用<code>hadoop fs &lt;arg&gt;</code>的形式，所有的FS shell命令都使用URI路径作为参数。URI路径的格式是’scheme://authority/path’，对于HDFS文件系统，scheme是<code>hdfs</code>；对于本地文件系统，scheme是<code>file</code>。其中scheme参数和authority参数是可选的，省略的话会使用默认的参数scheme。</p>
+<ul>
+<li><p><strong>ls</strong><br>  使用方式： <code>hadoop fs -ls &lt;args&gt;</code><br>  如果是文件，会显示文件信息；如果是目录，会显示目录下所有的文件。</p>
+</li>
+<li><p><strong>test</strong><br>  使用方式： <code>hadoop fs -test [edz] URI</code><br>  选项：<br>  -e 检查文件是否存在，如果存在返回0；<br>  -z 检查文件是否是0字节，如果是返回0；<br>  -d 如果路径是个目录，返回1，否则返回0</p>
+</li>
+</ul>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_design.html" target="_blank" rel="noopener">官方手册-Hadoop分布式文件系统：架构和设计</a></li>
+<li><a href="https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html" target="_blank" rel="noopener">官方手册-Hadoop Shell命令</a></li>
+<li><a href="https://pennywong.gitbooks.io/hadoop-notebook/content/introduction.html" target="_blank" rel="noopener">Hadoop简介</a></li>
+<li><a href="https://www.w3cschool.cn/hadoop/i1la1jyc.html" target="_blank" rel="noopener">Hadoop教程-W3Cschool</a></li>
+</ul>
 
         </div>
 
@@ -201,7 +276,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-02-11T07:16:47.673Z" itemprop="dateUpdated">2020-02-11 15:16:47</time>
+    最后更新时间：<time datetime="2020-02-11T09:36:22.143Z" itemprop="dateUpdated">2020-02-11 17:36:22</time>
 </span><br>
 
 
@@ -225,6 +300,8 @@
 
         <div class="post-footer">
             
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+
 
             
 <div class="page-share-wrap">
@@ -243,7 +320,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/02/11/Hadoop学习笔记/&title=《Hadoop学习笔记》 — spring's Blog&source=游龙当归海，海不迎我自来也。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/02/11/Hadoop学习笔记/&title=《Hadoop学习笔记》 — spring's Blog&source=Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -278,7 +355,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/02/13/pySpark学习笔记/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">pySpark学习笔记</h4>
+      </a>
+    </div>
   
 
   
@@ -428,7 +512,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/02/11/Hadoop学习笔记/&title=《Hadoop学习笔记》 — spring's Blog&source=游龙当归海，海不迎我自来也。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/02/11/Hadoop学习笔记/&title=《Hadoop学习笔记》 — spring's Blog&source=Hadoop是一个开源框架，允许在跨计算机的分布式环境中来存储和处理数据。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
