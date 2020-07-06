@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>布尔检索 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="信息检索,倒排索引">
+    <meta name="description" content="信息检索的含义是非常广泛的，在学术界将其定义为：在海量数据中找到符合信息需要的文档或文本。信息检索可以按照操作规模分为三类：网页搜索、个人信息搜索、企业或特定领域的搜索。  网页搜索： 提供了给 存放在百万台电脑上的百亿篇文档的搜索服务。网页搜索特有的问题是 需要爬取收集建索引的海量文档，并且在海量文档尺度上建立高效的搜索系统。另外，还需要处理一些网页特有的问题，比如超链接的爆炸性增长。 个人信">
+<meta name="keywords" content="信息检索,倒排索引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="布尔检索">
+<meta property="og:url" content="http://yoursite.com/2020/06/22/布尔检索/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="信息检索的含义是非常广泛的，在学术界将其定义为：在海量数据中找到符合信息需要的文档或文本。信息检索可以按照操作规模分为三类：网页搜索、个人信息搜索、企业或特定领域的搜索。  网页搜索： 提供了给 存放在百万台电脑上的百亿篇文档的搜索服务。网页搜索特有的问题是 需要爬取收集建索引的海量文档，并且在海量文档尺度上建立高效的搜索系统。另外，还需要处理一些网页特有的问题，比如超链接的爆炸性增长。 个人信">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/term_document_matrix.png">
+<meta property="og:image" content="http://yoursite.com/images/inverted_index.png">
+<meta property="og:image" content="http://yoursite.com/images/inverted_index_build.png">
+<meta property="og:image" content="http://yoursite.com/images/boolean_intersect.png">
+<meta property="og:updated_time" content="2020-07-06T05:01:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="布尔检索">
+<meta name="twitter:description" content="信息检索的含义是非常广泛的，在学术界将其定义为：在海量数据中找到符合信息需要的文档或文本。信息检索可以按照操作规模分为三类：网页搜索、个人信息搜索、企业或特定领域的搜索。  网页搜索： 提供了给 存放在百万台电脑上的百亿篇文档的搜索服务。网页搜索特有的问题是 需要爬取收集建索引的海量文档，并且在海量文档尺度上建立高效的搜索系统。另外，还需要处理一些网页特有的问题，比如超链接的爆炸性增长。 个人信">
+<meta name="twitter:image" content="http://yoursite.com/images/term_document_matrix.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">布尔检索</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">布尔检索</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-06-22T09:33:07.000Z" itemprop="datePublished" class="page-time">
+  2020-06-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/信息检索/">信息检索</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#词-文档矩阵-term-document-matrix"><span class="post-toc-number">1.</span> <span class="post-toc-text">词-文档矩阵(term-document matrix)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#倒排索引-inverted-index"><span class="post-toc-number">2.</span> <span class="post-toc-text">倒排索引(inverted index)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#如何建立倒排索引"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">如何建立倒排索引</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基于倒排索引进行boolean-query"><span class="post-toc-number">3.</span> <span class="post-toc-text">基于倒排索引进行boolean query</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-布尔检索"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">布尔检索</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-06-22 17:33:07" datetime="2020-06-22T09:33:07.000Z"  itemprop="datePublished">2020-06-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/信息检索/">信息检索</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <a id="more"></a>
+<p>信息检索的含义是非常广泛的，在学术界将其定义为：在海量数据中找到符合信息需要的文档或文本。信息检索可以按照操作规模分为三类：网页搜索、个人信息搜索、企业或特定领域的搜索。</p>
+<ul>
+<li>网页搜索： 提供了给 存放在百万台电脑上的百亿篇文档的搜索服务。网页搜索特有的问题是 需要爬取收集建索引的海量文档，并且在海量文档尺度上建立高效的搜索系统。另外，还需要处理一些网页特有的问题，比如超链接的爆炸性增长。</li>
+<li>个人信息搜索： 消费者客户端提供了信息搜索功能。比如个人邮件系统不仅可以搜索，还可以实现垃圾邮件分类。个人信息搜索特有的问题是 搜索服务启动、运行计算、磁盘占用的轻量级。</li>
+<li>企业或特定领域搜索：这个规模是介于 网页搜索和个人信息搜索之间的。</li>
+</ul>
+<h3 id="词-文档矩阵-term-document-matrix"><a href="#词-文档矩阵-term-document-matrix" class="headerlink" title="词-文档矩阵(term-document matrix)"></a>词-文档矩阵(term-document matrix)</h3><p>有一个需求，在《莎士比亚全集》中，我们要找到包含词”Brutus”、”Caesar”但不包含词”Calpurnia”的书。一种方式是从头到尾读一遍这些书，保留包含词”Brutus”、”Caesar”的书，排除掉包含词”Calpurnia”的书。对于计算机来说，找出包含某些词的文档 对应于linux系统下的<code>grep</code>操作。但实际情况中，我们需要的比<code>grep</code>操作更多：</p>
+<ol>
+<li>在海量的数据上进行检索操作。</li>
+<li>需要进行 更复杂的匹配操作。比如: 查询词”Brutus”<em>接近</em> 词”Caesar”的文档，这里<em>接近</em> 可以定义为在同一个句子内。</li>
+<li>对搜索结果进行排序，我们希望 高质量的匹配文档排序更靠前。</li>
+</ol>
+<p>避免每次query都进行线性检索(也就是从头到尾把文档都读一遍)的方法是：提前为每篇文档建立索引。假设我们为每篇文档 记录是否包含某个词，我们可以得到一个 <code>二元词-文档关联矩阵</code>(binary term-document incidence matrix)，如图1所示。对于 词-文档关联矩阵，它的行向量表示对于某个词，这个词出现在了哪些文档中；它的列向量表示 对于某篇文档，这篇文档包含了哪些词。</p>
+<div align="center"><img src="/images/term_document_matrix.png" width="90%" height="90%"></div>      
+有了词-文档关联矩阵，就可以实现"Brutus AND Caesar AND NOT Calpurnia"这个查询(query)了。词"Brutus"、"Caesar"、"Calpurnia"对应的行向量分为为"110100","110111"、"010000"。
+
+<blockquote>
+<p>110100 AND 110111 AND NOT 010000 = 110100 AND 110111 AND 101111 = 100100</p>
+</blockquote>
+<p>那么查询的结果就是《Antony and Cleopatra》和《Hamlet》。<br>布尔检索模型(boolean retrieval model)是可以把查询(query)表示成词的布尔表达式(词之间用与或非逻辑运算符连接)的一种信息检索模型，布尔检索模型把每篇文档看作是词袋（词的集合）。而 词-文档关联矩阵是进行布尔查询的基础。</p>
+<h3 id="倒排索引-inverted-index"><a href="#倒排索引-inverted-index" class="headerlink" title="倒排索引(inverted index)"></a>倒排索引(inverted index)</h3><p>接下来我们考虑一种更现实的搜索场景。假设我们有 N = 1000,000篇文档(documents)，我们在这个文档集合(collections)上进行检索。假设每篇文档有1000个词，每个词占用内存大约6字节，那么整个文档集合占用的内存约为6GB。另外，整个文档集合大约有 500,000个不同的词。这种情况下，构建一个 $500K \times 1M$ 的词-文档矩阵是不切实际的，这样的词-文档矩阵占用了太多的内存，并且这个矩阵是非常稀疏的(矩阵只有很少一部分元素是非零的)。更好的表示方法是只记录词出现在哪些文档中，这种想法是信息检索的一个重要概念：<strong>倒排索引(inverted index)</strong>。<br>图2展示了一个倒排索引的例子，我们维护一个词表(dictionary)，对于每个词，对应一个包含这个词的文档列表。 每个词对应文档列表被称为”postings list”，所有文档列表的集合被称为”Postings”。</p>
+<div align="center"><img src="/images/inverted_index.png" width="90%" height="90%"></div>   
+
+<h4 id="如何建立倒排索引"><a href="#如何建立倒排索引" class="headerlink" title="如何建立倒排索引"></a>如何建立倒排索引</h4><p>为了提高检索效率，缩短检索时间，我们需要提前构建好索引。构建倒排索引需要四步：</p>
+<ol>
+<li>收集需要建立索引的文档；</li>
+<li>对文本进行分词处理，将文档转换为词的列表；</li>
+<li>对词进行语言学预处理，得到标准化的词。比如 $Friends \to friend; was \to is$</li>
+<li>为包含每个词的文档建立倒排索引。倒排索引包含两个部分:dictionary 和postings。</li>
+</ol>
+<p>图3左侧，我们为每篇文档分配一个唯一的文档号(docID),文档中的每个词对应它的文档号; 图3中间，按字母对词进行排序，图3右侧，按照词进行分组，合并文档号。这样就得到了倒排索引的dictionary 和 postings。dictionary不仅保存了每个词，还保存了其他一些统计信息(比如 包含每个词的文档数)，这些统计信息可以提高 加权排序检索模型的搜索效率。每个词的postings list中保存了包含这个词的文档列表，也可以保存一些统计信息(比如这个词在每篇文档中的出现次数，出现的位置)。</p>
+<div align="center"><img src="/images/inverted_index_build.png" width="90%" height="90%"></div>  
+这里有两次排序和一次分组值得注意。两次排序是 按照字母对词进行了排序，按docID对每个词的postings list进行排序。一次分组是 按照词进行分组，合并了每个词对应的文档号，得到了每个词的postings list。
+
+<p>接下来讨论一下dictionary和 postings list的存储。dictionary保存在访问速度更快的内存中，postings list更大，通常保存在磁盘中。用什么数据结构来保存postings list呢？固定长度的数组比较浪费存储空间，因为高频词出现在更多的文档中，低频词则出现在很少的文档中。好的两种数据结构是 单链表 和 可变长度的数组。单链表的优点是方便进行postings list的更新操作，可以很快的插入新的docID。可变长度的数组 的优点是不需要存储单链表的指针，从而节省了磁盘空间；另外可变长度数组存储在连续的内存中从而提高了处理速度。</p>
+<h3 id="基于倒排索引进行boolean-query"><a href="#基于倒排索引进行boolean-query" class="headerlink" title="基于倒排索引进行boolean query"></a>基于倒排索引进行boolean query</h3><p>如何基于倒排索引来进行布尔查询呢？考虑最简单的联合查询<code>Brutus AND Calpurnia</code>。如图4所示，可以分为以下两步:</p>
+<ol>
+<li>从dictionary中取出词<code>Brutus</code>的postings list 和 词<code>Calpurnia</code>的postings list.</li>
+<li>取这两个postings list的交集。这个交集就是包含两个词的文档。</li>
+</ol>
+<div align="center"><img src="/images/boolean_intersect.png" width="90%" height="90%"></div>  
+<div align="center"><font color="grey" size="2">Fig.4</font></div>
+可以按图5所示的算法，来取两个postings list的交集。为两个postings list分别维护一个指针，遍历两个数组。每一步，当两个指针指向的docID一致时，将这个docID添加到result list; 当不一致时，向前移动指向较小docID的指针。当两个指针都到达列表末尾时，循环结束。设两个postings list的长度分别为x和y，则取交集的时间负责度为$O(x+y)$，而之前线性检索的时间负责度为$\Theta(N)$，通过建立倒排索引，把线性时间复杂度 降低到了常数时间复杂度。
+
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://nlp.stanford.edu/IR-book/html/htmledition/boolean-retrieval-1.html#810" target="_blank" rel="noopener">boolean-retrieval</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-07-06T05:01:33.000Z" itemprop="dateUpdated">2020-07-06 13:01:33</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/信息检索/">信息检索</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/倒排索引/">倒排索引</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/06/22/布尔检索/&title=《布尔检索》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/06/22/布尔检索/&title=《布尔检索》 — spring's Blog&source=游龙当归海，海不迎我自来也。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/06/22/布尔检索/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《布尔检索》 — spring's Blog&url=http://yoursite.com/2020/06/22/布尔检索/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/06/22/布尔检索/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/02/13/pySpark学习笔记/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">pySpark学习笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/06/22/布尔检索/&title=《布尔检索》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/06/22/布尔检索/&title=《布尔检索》 — spring's Blog&source=游龙当归海，海不迎我自来也。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/06/22/布尔检索/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《布尔检索》 — spring's Blog&url=http://yoursite.com/2020/06/22/布尔检索/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/06/22/布尔检索/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/06/22/布尔检索/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
