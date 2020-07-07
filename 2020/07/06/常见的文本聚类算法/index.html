@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>常见的文本聚类算法 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="文本聚类">
+    <meta name="description" content="文本聚类就是把一些没有标签的，但有相同特征的数据聚在一起。聚类模型将样本划分为若干个簇(cluster)，每个簇对应一些潜在的概念或类别。">
+<meta name="keywords" content="文本聚类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见的文本聚类算法">
+<meta property="og:url" content="http://yoursite.com/2020/07/06/常见的文本聚类算法/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="文本聚类就是把一些没有标签的，但有相同特征的数据聚在一起。聚类模型将样本划分为若干个簇(cluster)，每个簇对应一些潜在的概念或类别。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/kmeans_1.png">
+<meta property="og:image" content="http://yoursite.com/images/kmeans_2.png">
+<meta property="og:image" content="http://yoursite.com/images/dbscan_1.png">
+<meta property="og:image" content="http://yoursite.com/images/dbscan_2.png">
+<meta property="og:updated_time" content="2020-07-07T05:44:33.207Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见的文本聚类算法">
+<meta name="twitter:description" content="文本聚类就是把一些没有标签的，但有相同特征的数据聚在一起。聚类模型将样本划分为若干个簇(cluster)，每个簇对应一些潜在的概念或类别。">
+<meta name="twitter:image" content="http://yoursite.com/images/kmeans_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">常见的文本聚类算法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">常见的文本聚类算法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-06T05:17:24.000Z" itemprop="datePublished" class="page-time">
+  2020-07-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/nlp/">nlp</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#K-means算法"><span class="post-toc-number">1.</span> <span class="post-toc-text">K-means算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#目标函数的单调递减性"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">目标函数的单调递减性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#K-means的时间复杂度"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">K-means的时间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">参考链接</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Louvain社区发现算法"><span class="post-toc-number">2.</span> <span class="post-toc-text">Louvain社区发现算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#模块度-Modularity"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">模块度(Modularity)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考链接-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">参考链接</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DBSCAN密度聚类算法"><span class="post-toc-number">3.</span> <span class="post-toc-text">DBSCAN密度聚类算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一些基本概念"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">一些基本概念</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#DBSCAN密度聚类思想"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">DBSCAN密度聚类思想</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#DBSCAN聚类算法"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">DBSCAN聚类算法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#DBSCAN算法的优缺点"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">DBSCAN算法的优缺点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考链接-2"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">参考链接</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-常见的文本聚类算法"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">常见的文本聚类算法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-06 13:17:24" datetime="2020-07-06T05:17:24.000Z"  itemprop="datePublished">2020-07-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/nlp/">nlp</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>文本聚类就是把一些没有标签的，但有相同特征的数据聚在一起。聚类模型将样本划分为若干个簇(cluster)，每个簇对应一些潜在的概念或类别。</p>
+<a id="more"></a>
+
+<h3 id="K-means算法"><a href="#K-means算法" class="headerlink" title="K-means算法"></a>K-means算法</h3><p>K-means聚类是最重要的聚类方法之一。我们假设已经将文档(document)表示为长度归一化的向量表示，也就是将文本数据映射到了欧式空间里。<br>K-means聚类算法的主要思想是：对于每个簇(cluster)，选出一个中心点(cluster center)，使得该cluster内的点到该簇<code>中心点</code>的距离小于到其他簇的<code>中心点</code>的距离。我们将簇$w$的cluster center $\vec{\mu}$ 定义为簇的形心: $$\vec{\mu}(w) = \frac{1}{|w|}\sum_{\vec{x} \in w}\vec{x} \tag{1} \label{1}$$ 其中，$|w|$表示簇$w$内 点 的个数。<br>如何衡量cluster center是否很好地表示了整个cluster内的点呢？我们用cluster内每个点到cluster center的残差平方和(residual sum of squares, RSS)来衡量。对于第$k$个cluster：$$RSS_{k} = \sum_{\vec{x} \in w_{k}}|\vec{x} - \vec{\mu}(w_k)|^{2} \tag{2}$$ 对于整个数据集来说: $$RSS = \sum_{k=1}^{K}RSS_{k} = \sum_{k=1}^{K} \sum_{\vec{x} \in w_{k}} |\vec{x} - \vec{\mu}(w_{k})|^{2} \tag{3} \label{RSS}$$ 上式$\eqref{RSS}$就是K-means聚类算法的目标函数, 我们的目标是最小化该目标函数。<br>接下来介绍K-means算法的优化迭代过程。第一步是随机选择$K$个点作为cluster center，接下来K-means模型迭代执行两步来最小化目标函数，直到满足停止条件：(1) 固定cluster center $\vec{\mu}(w_k)$，把数据集中的每个点重新分配到最近的cluster center所属的簇中；(2)根据重新分配后簇内的点，重新计算cluster center $\vec{\mu}(w_k)$。我们可以用以下停止条件:</p>
+<ol>
+<li>固定的迭代次数$maxstep$。限制最大迭代次数 可以限制模型的迭代时间，但有可能由于模型迭代次数不够，导致聚类效果不好。</li>
+<li>一直迭代到每个cluster内的点不再变化。这样会有很好的聚类效果，但可能导致迭代时间太长。</li>
+<li>一直迭代到每个cluster的cluster center不再变化。</li>
+<li>目标函数减小到某个阈值时停止迭代， 这个阈值保证了聚类模型有了不错的聚类效果。</li>
+<li>目标函数的减少幅度小于某个很小的阈值，这表示聚类模型 接近于收敛了。</li>
+</ol>
+<p>图1展示了K-means聚类算法的伪代码。</p>
+<div align="center"><img src="/images/kmeans_1.png" width="70%" height="70%"></div>  
+<div align="center"><font color="grey" size="2">Fig.1</font></div>
+图2是一个K=2的K-means算法的例子。
+<div align="center"><img src="/images/kmeans_2.png" width="80%" height="80%"></div>  
+<div align="center"><font color="grey" size="2">Fig.2</font></div>
+
+
+<h4 id="目标函数的单调递减性"><a href="#目标函数的单调递减性" class="headerlink" title="目标函数的单调递减性"></a>目标函数的单调递减性</h4><p>接下来，我们证明: 每次迭代中，目标函数$RSS$会逐渐减小，从而K-means模型逐渐收敛。</p>
+<ol>
+<li>在重新分配 点 的过程中，由于把每个点分配到 离它最近的 cluster center对应的簇中，从而目标函数$RSS$是减小的。</li>
+<li>在重新计算cluster center的过程中，当cluster center为cluster的形心时，$RSS_k$达到它的最小值。证明如下: $$RSS_k(\vec{v}) = \sum_{\vec{x} \in w_k}|\vec{x} - \vec{v}|^2 = $\sum_{\vec{x} \in w_k} \sum_{m=1}^{M}(x_m - v_m)^2 \tag{4} \label{4}$$ 其中$\vec{x}$和$\vec{v}$是一个$M$维的向量，$x_m, v_m$分别是其对应向量的第$m$个值，令该式$\eqref{4}$的偏导数等于0：$$\frac{\partial{RSS_k(\vec{v})}}{\partial{v_m}} = \sum_{\vec{x} \in w_k}2(v_m - x_m) = 0$$ $$v_m = \frac{1}{|w_k|}\sum_{\vec{x} \in w_k}x_m \tag{5} \label{5}$$ 式子$\eqref{5}$是形心公式$\eqref{1}$的逐点表示形式。当偏导数=0时，即$\vec{v} = \vec{\mu{w_k}}$时，式子$\eqref{4}$取得最小值。 </li>
+</ol>
+<p>需要注意的是，K-means算法不能保证得到目标函数的最小值，这与初始中心点的选择有关。选择不同的初始中心点，可能会得到不同的聚类结果。如果数据集中包含多个离群点(远离其他的点，从而不适合分到任何一个簇中)，这样的离群点被选为初始中心点，在迭代过程中不会有其他的任何一个点被分配到这个簇中，迭代结束后我们会得到一个只有一个点的簇(singleton cluster)。即使还有其他的聚类方法，可以得到更小的目标函数值。<br>因此，初始中心点的选择是个重要的问题。有以下几种方法：</p>
+<ol>
+<li>把离群点从初始中心点的候选集中排除。</li>
+<li>选择不同的初始中心点进行多次聚类，选择目标函数值最小的聚类结果。</li>
+</ol>
+<h4 id="K-means的时间复杂度"><a href="#K-means的时间复杂度" class="headerlink" title="K-means的时间复杂度"></a>K-means的时间复杂度</h4><p>假设数据集有$N$个点，每个点的向量表示的维度为$M$，聚类的簇的个数为$K$。K-means算法的大多数时间花在计算向量之间的距离，每次计算的时间复杂度是$\Theta(M)$。在重新分配点的步骤中，需要进行$KN$次距离计算。每次迭代的时间复杂度为$\Theta(KNM)$。进行$I$次迭代的时间复杂度为$\Theta(IKNM)$。 可以看出: K-means算法的时间复杂度与 迭代次数、 簇的个数、样本数、向量空间的维度线性相关。</p>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
+<li><a href="https://nlp.stanford.edu/IR-book/html/htmledition/k-means-1.html" target="_blank" rel="noopener">K-means</a></li>
+</ul>
+<h3 id="Louvain社区发现算法"><a href="#Louvain社区发现算法" class="headerlink" title="Louvain社区发现算法"></a>Louvain社区发现算法</h3><p>Louvain算法是基于模块度(modularity)的社区发现算法，能够发现层次性的社区结构，其优化目标是最大化整个社区网络的模块度。</p>
+<h4 id="模块度-Modularity"><a href="#模块度-Modularity" class="headerlink" title="模块度(Modularity)"></a>模块度(Modularity)</h4><p>模块度是评估一个社区网络划分好坏的度量方法。模块度的物理意义是：模块度越大，同一个社区内的节点之间联系更加紧密，不同社区之间的节点联系更加松散。对于没有权重的无向图，模块度的取值范围是[-1/2,1]。如果 社区内 <code>边的数量</code>超过随机情况下边的数量，那么模块度是一个正值。</p>
+<p>模块度的定义是 社区(group, or cluster, or community)内节点之间的实际连边数 与随机情况下连边数 的差值。如何理解随机情况下的连边数呢？对于一个有$n$个节点(nodes)，$m$条边(edges)的网络。其中对于节点$v$有$k_v$条边(我们把节点$v$的边数$k_v$成为节点$v$的度)。接下来我们要在满足网络内的节点数$n$、边数$m$、以及每个节点$v$的边数$k_v$保持不变的情况下，生成一个随机网络。具体地，把每条边分成两半(我们称每半条边为一个 stub)，每半条边 与 网络中其他的 任意半条边(stub)连接起来，这样我们就得到了一个完全随机的网络。<br>考虑两个节点有$k_v$条边的$v$和$k_u$条边的$u$。在$2m$半条边中，一个半条边stub连接到另一个半条边的概率是$\frac{1}{2m-1}$，则有$k_v$条半边的节点$v$和有$k_u$条半边的节点$u$的边数为$$\frac{k_vk_u}{2m-1}\approx\frac{k_vk_u}{2m}$$当$m$很大时，可以取近似值。则两个节点之间的实际 连边数与随机情况下 连边数的差值为:$$A_{ij} - \frac{k_i,k_j}{2m} \tag{6} $$<br>在$2m$个节点对上求和，可以得到整个网络的模块度$Q$： $$Q = \frac{1}{2m}\sum_{i,j}[A_{ij} - \frac{k_ik_j}{2m}]\delta(c_i,c_j) \tag{7} \label{7}$$<br>$$ \delta(x,y) =<br>\begin{cases}<br>1; when x==y  \<br>0; when x!= y<br>\end{cases} $$</p>
+<blockquote>
+<p>$A_{ij}$表示节点$i$和节点$j$之间边的权重，当网络是无权图是，所有边的权重可以看作是1；<br>$k_i = \sum_jA_{ij}$表示节点$i$相连的边的权重之和(度数)；<br>$c_i$表示节点$i$所属的社区；<br>$m = \frac{1}{2}\sum_{ij}A_{ij}$表示所有边的权重之和（边的数目）。</p>
+</blockquote>
+<p>对式子$\eqref{7}$进行简化，$$Q = \frac{1}{2m}\sum_{ij}[A_{ij} - \frac{k_ik_j}{2m}]\delta(c_i,c_j) $$ $$ = \frac{1}{2m}[\sum_{ij}A_{ij} - \frac{\sum_ik_i\sum_jk_j}{2m}]\delta(c_i,c_j) $$ $$= \frac{1}{2m}\sum_{c}[\sum_{in} - \frac{(\sum_{total})^2}{2m}] \tag{8} \label{8}$$ 其中$\sum_{in}$表示社区$c$内部 边的权重之和(数目，对于无权图），$\sum_{total}$表示所有与社区$c$内的节点相连的边的权重之和(数目，对于无权图)。<br>对式子$\eqref{8}$进一步简化: $$Q = \sum_{c}[\frac{\sum_{in}}{2m} - (\frac{\sum_{total}}{2m})^2]$$ $$=\sum_{c}[e_c - (a_c)^2]$$ 这样模块度可以理解为 社区内部边的权重和 减去 所有与社区内节点相连的边的权重和的平方。对于无权图，模块度为 社区内部的度数 减去 社区内节点的 总度数的平方。 </p>
+<h4 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
+<li><a href="https://www.cnblogs.com/fengfenggirl/p/louvain.html" target="_blank" rel="noopener">模块度与Louvain社区发现算法</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Modularity_(networks)" target="_blank" rel="noopener">维基百科-模块度</a></li>
+<li><a href="https://arxiv.org/abs/0803.0476" target="_blank" rel="noopener">《Fast unfolding of communities in large networks》–louvain算法原论文，2008</a></li>
+</ul>
+<h3 id="DBSCAN密度聚类算法"><a href="#DBSCAN密度聚类算法" class="headerlink" title="DBSCAN密度聚类算法"></a>DBSCAN密度聚类算法</h3><p>DBSCAN(Density-Based Spatial Cluster of Applications with Noise，有噪声的基于密度的聚类方法)是非常典型的基于密度的聚类方法。DBSCAN算法是一种基于样本分布密度的聚类算法，密度聚类算法一般假定可以类别通过样本分布的紧密程度来决定。把紧密相连的点划分到同一个簇。</p>
+<h4 id="一些基本概念"><a href="#一些基本概念" class="headerlink" title="一些基本概念"></a>一些基本概念</h4><p>设数据集为$D = \lbrace{x_1, x_2, …, x_m\rbrace}$。</p>
+<ol>
+<li><strong>1个核心思想：基于密度</strong><br> DBSCAN算法可以找到 数据集中所有 样本紧密分布的区域，并分别将这些紧密的区域作为一个一个的簇。</li>
+<li><strong>2个算法参数</strong><br> DBSCAN算法用 $\epsilon$-邻域 的概念来衡量样本分布的紧密程度，也就是样本密度。对于样本点$x_j \in D$，该样本点的$\epsilon$-邻域内包含 与$x_j$距离不大于$\epsilon$的子样本集，即$N_{\epsilon}(x_j) = \lbrace{x_i|distance(x_i,x_j) \leq \epsilon\rbrace}$，这个子样本集中的样本数为$|N_{\epsilon}(x_j)|$。<ul>
+<li>$\epsilon$-邻域的半径$\epsilon$。</li>
+<li>$MinPoints$ 描述了某一样本半径为$\epsilon$的$\epsilon$-邻域中样本个数的阈值。</li>
+</ul>
+</li>
+<li><strong>3种样本点</strong><ul>
+<li>核心对象(core point)：对于一个样本点$x_j \in D$，如果其$\epsilon$-邻域中至少包含$MinPoints$个样本点，即$|N_{\epsilon}(x_j)| \geq MinPoints$，则$x_j$是核心对象。</li>
+<li>边界点(boundary point)：对于一个样本点$x_j$，它不是核心对象，但它在某个核心对象的$\epsilon$-邻域内，则$x_j$是边界点。</li>
+<li>噪声点(noise point): 或称为离群点(outlier point)。对于一个样本点$x_j$，它不是核心对象，也不在任何一个核心对象的$\epsilon$-邻域内，则$x_j$是噪声点。</li>
+</ul>
+</li>
+<li><strong>样本点之间的4种关系</strong><ul>
+<li>密度直达(directly reachable)：如果样本点$x_i$在核心对象$x_i$的$\epsilon$-邻域内，则称$x_i$由$x_j$密度可达。注意密度直达关系不是对称的，此时不能说$x_j$由$x_i$密度直达。</li>
+<li>密度可达(reachable)：对于$x_i$和$x_j$如果存在一个样本序列$p_1,p_2,…,p_T$，其中$p_1=x_i, p_T=x_j$，且$p_t+1$由$p_t$密度直达，则称$x_i$由$x_j$密度可达。密度可达具有传递性，此样本序列中的传递样本$p_1, p_2, …, p_{T-1}$都是核心对象，只有核心对象才能使得其他样本密度直达。 注意密度可达关系也不满足对称性，这可以由密度直达关系的不对称性得到。</li>
+<li>密度相连(connectedness)：对于样本点$x_i$和$x_j$，如果存在核心对象$x_k$，使得$x_i$和$x_j$均可以由$x_k$密度可达，则称$x_i$与$x_j$密度相连。密度相连关系是满足对称性的。</li>
+<li>密度不相连：不满足密度相连关系的两个样本点$x_i$和$x_j$，属于两个不同的簇，或者其中存在离群点。</li>
+</ul>
+</li>
+</ol>
+<p>如下图所示，图中$MinPoints$为5，红色的点都是核心对象，因为其$\epsilon$-邻域内至少有5个样本点(包括核心对象本身)，圆圈内的黑点都是边界点，圆圈以外的黑点都是噪声点。对于某个红点来说，其对应的圈内的其他点都是密度直达的。途中用绿色箭头连起来的核心对象组成了密度可达的样本序列，这些密度可达的样本序列的$\epsilon$-邻域内所有的样本点都是密度相连的。</p>
+<div align="center"><img src="/images/dbscan_1.png" width="90%" height="90%"></div>  
+<div align="center"><font color="grey" size="2">Fig.3 source: https://www.cnblogs.com/pinard/p/6208966.html</font></div>
+
+<h4 id="DBSCAN密度聚类思想"><a href="#DBSCAN密度聚类思想" class="headerlink" title="DBSCAN密度聚类思想"></a>DBSCAN密度聚类思想</h4><p>DBSCAN的聚类定义为: 把所有密度相连的样本点划分到同一个簇。<br>DBSCAN密度聚类得到的簇有以下特点:</p>
+<ul>
+<li>簇内至少有一个核心对象，也就是至少有$MinPoints$个样本点。</li>
+<li>簇内所有的点都是密度相连的。并且如果某个样本点与某个簇内的其他点密度相连，那么这个样本点属于这个簇。</li>
+<li>离群点(噪音点)跟所有簇内的点都不是密度相连的，因此，噪音点不属于任何一个簇。</li>
+</ul>
+<p>这里需要考虑一个问题，DBSCAN聚类算法会得到有重叠的簇吗？也就是说会有同一个点属于多个簇的情况吗？答案是不会。对于某个样本到两个核心对象的距离都小于$\epsilon$，但这两个核心对象不是密度直达的，不属于同一个簇，怎么界定这个样本点的类别呢？DBSCAN会采取”先来后到”的方式，先进行聚类的类别簇会把这个样本标记为它的类别。 $\tag{9} \label{two}$</p>
+<h4 id="DBSCAN聚类算法"><a href="#DBSCAN聚类算法" class="headerlink" title="DBSCAN聚类算法"></a>DBSCAN聚类算法</h4><p>输入：样本集$D = \lbrace{x_1, x_2, …, x_m}\rbrace$， 邻域参数($\epsilon, MinPoints$)<br>输出：簇的划分$C$</p>
+<ol>
+<li>遍历所有的样本点，找出所有的核心对象。也就是$\epsilon$-邻域内样本数不小于$MinPoints$的样本点。</li>
+<li>先忽略所有的非核心对象，只考虑核心对象，将所有密度可达的核心对象划分到一个簇。</li>
+<li>再考虑非核心对象，将每个核心对象$\epsilon$-邻域中的边界点划分到所属的簇中。噪音点不属于任何一个簇。</li>
+</ol>
+<h4 id="DBSCAN算法的优缺点"><a href="#DBSCAN算法的优缺点" class="headerlink" title="DBSCAN算法的优缺点"></a>DBSCAN算法的优缺点</h4><p>DBSCAN算法有以下优点:</p>
+<ul>
+<li>与传统的K-means算法相比，DBSCAN算法不需要输入聚类的类别数$K$；</li>
+<li>DBSCAN算法可以发现任意形状的聚类簇。传统的K-means算法一般只适用于 凸样本集的聚类，DBSCAN算法既可以用于凸样本集，也可以用于非凸样本集。</li>
+<li>对于传统的K-means算法，离群点会影响聚类的结果。DBSCAN算法有噪音点的概念，可以在聚类过程中发现离群点，因此对离群点不敏感。</li>
+<li>传统的K-means算法，K个随机初始中心点的选择会对聚类结果有很大的影响。相比之下，算法初始值的选择对DBSCAN的聚类结果影响很小(先来后到的例子)，DBSCAN的聚类结果是没有偏倚的。</li>
+</ul>
+<p>DBSCAN算法的缺点:</p>
+<ul>
+<li>DBSCAN的聚类结果不完全是确定的。对于$\eqref{two}$，聚类结果取决于数据处理的先后顺序。但对于核心对象和噪音点，聚类结果是确定的。对于边界点，聚类结果可能会有所不同。</li>
+<li>如果数据集的密度不均匀的情况下，DBSCAN的聚类效果比较差。因为当簇之间的密度差别较大时，两个模型参数$\epsilon$和$MinPoints$不可能适合于所有的簇。</li>
+<li>需要对两个算法参数$\epsilon$和$MinPoints$联合调参，不同的参数组合对聚类效果会有较大影响。</li>
+</ul>
+<div align="center"><img src="/images/dbscan_2.png" width="100%" height="100%"></div>  
+<div align="center"><font color="grey" size="2">Fig.4 source: https://towardsdatascience.com/dbscan-clustering-best-practices-38de9cf57610</font></div>
+在上图中，我们可以看出DBSCAN算法和K-means算法的聚类结果之间的差别。K-means算法倾向于生成球形的簇，这主要是由于K-means算法的目标函数实质上是最小化样本点到簇中心点的欧氏距离平均值。DBSCAN算法倾向将样本之间联系紧密的区域作为一个簇，这是由于DBSCAN算法的思想是将所有密度相连的样本点作为一个簇。
+总的来说，如果数据集是稠密的，并且数据集不是凸的，那么DBSCAN算法的聚类效果会比K-means算法的效果更好。
+
+<h4 id="参考链接-2"><a href="#参考链接-2" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
+<li><a href="https://www.cnblogs.com/pinard/p/6208966.html" target="_blank" rel="noopener">DBSCAN密度聚类算法–刘建平</a></li>
+<li><a href="https://en.wikipedia.org/wiki/DBSCAN" target="_blank" rel="noopener">DBSCAN-wikipedia</a></li>
+<li><a href="https://towardsdatascience.com/dbscan-clustering-best-practices-38de9cf57610" target="_blank" rel="noopener">dbscan-clustering-best-practices</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-07-07T05:44:33.207Z" itemprop="dateUpdated">2020-07-07 13:44:33</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文本聚类/">文本聚类</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/06/常见的文本聚类算法/&title=《常见的文本聚类算法》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/06/常见的文本聚类算法/&title=《常见的文本聚类算法》 — spring's Blog&source=文本聚类就是把一些没有标签的，但有相同特征的数据聚在一起。聚类模型将样本划分为若干个簇(cluster)，每个簇对应一些潜在的概念或类别。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/07/06/常见的文本聚类算法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《常见的文本聚类算法》 — spring's Blog&url=http://yoursite.com/2020/07/06/常见的文本聚类算法/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/07/06/常见的文本聚类算法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/06/22/布尔检索/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">布尔检索</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/06/常见的文本聚类算法/&title=《常见的文本聚类算法》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/06/常见的文本聚类算法/&title=《常见的文本聚类算法》 — spring's Blog&source=文本聚类就是把一些没有标签的，但有相同特征的数据聚在一起。聚类模型将样本划分为若干个簇(cluster)，每个簇对应一些潜在的概念或类别。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/07/06/常见的文本聚类算法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《常见的文本聚类算法》 — spring's Blog&url=http://yoursite.com/2020/07/06/常见的文本聚类算法/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/07/06/常见的文本聚类算法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/07/06/常见的文本聚类算法/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
