@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="在nlp任务中，我们常常需要判断两个文本的相似程度，计算这两个文本的相似度。比如，在文本聚类任务中，需要将相似度高的文本聚到同一个簇；在文本预处理过程中，基于文本相似度把重复的文本过滤掉；在检索式对话系统中，通过计算用户的query与数据库中的query的相似度，来选择回复。文本相似度计算 有2个关键组件：文本表示模型 和 相似度度量方法。文本表示模型 负责将文本表示为可计算的数值向量，也就是提供">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-14T08:55:34.000Z">
+<meta property="og:updated_time" content="2020-07-14T09:14:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="文本相似度的计算方法">
 <meta name="twitter:description" content="在nlp任务中，我们常常需要判断两个文本的相似程度，计算这两个文本的相似度。比如，在文本聚类任务中，需要将相似度高的文本聚到同一个簇；在文本预处理过程中，基于文本相似度把重复的文本过滤掉；在检索式对话系统中，通过计算用户的query与数据库中的query的相似度，来选择回复。文本相似度计算 有2个关键组件：文本表示模型 和 相似度度量方法。文本表示模型 负责将文本表示为可计算的数值向量，也就是提供">
@@ -216,8 +216,8 @@
 <li>一个词出现在文档中的次数。$$词频TF = 某个词出现在文档中的次数$$</li>
 <li>考虑到文档的长度不同，为了便于不同文章之间的比较，对‘词频’进行归一化。$$词频TF = \frac{某个词出现在文档中的次数}{文档的总词数}$$ 或者 $$词频TF = \frac{某个词出现在文档中的次数}{文档中出现次数最多的词的出现次数}$$</li>
 </ol>
-<p><strong>逆文档频率(inverse document frequency)</strong><br>由于常见词 ‘的’在文档中的出现频率会比较大，词频(term frequency)会错误地给 使用”的”次数更多的文档更大的权重分数，而没有给 “中国”、”蜜蜂”、”养殖”给予足够的重视。像”的”这样的常用词没有实际的意义，不是好的关键词来区分文档的相关程度，而少见词”中国”、”蜜蜂”、”养殖”可以更好地反映文档的相关程度。因此，引入逆文档频率(inverse document frequency)来给常见词分配更小的权重，给少见词分配更大的权重。<br>逆文档频率的计算方式如下: $$逆文档频率IDF = \frac{语料库中的文档数}{包含该词的文档数 + 1}$$ 一个词越常见，那么分母越大，逆文档频率越小。分母之所以要加1，是为了避免分母为0。</p>
-<p><strong>词频-逆文档频率(TF-IDF)</strong><br>TF-IDF定义为 词频和逆文档频率这两个统计量的乘积。$$TF-IDF = 词频TF \prod 逆文档频率IDF$$ 一个词的tf-idf分数反映了这个词对文档的重要性，这个词在多大程度上反映了这篇文档的特征。<br>回到”中国的蜜蜂养殖”这个检索问题上，对于每个文档，分别计算”中国”、”的”、”蜜蜂”、”养殖”这四个词的tf-idf分数，并求和作为这篇文档总的分数。用同样的方法对所有包含这四个词的文档打分，并排序。这样就得到了query”中国的蜜蜂养殖”的查询结果。 TF-IDF这种词语加权方法 常常与<a href="https://spring-quan.github.io/2020/06/22/%E5%B8%83%E5%B0%94%E6%A3%80%E7%B4%A2/" target="_blank" rel="noopener">倒排索引</a>方法联合使用，来实现文本检索。</p>
+<p><strong>逆文档频率(inverse document frequency)</strong><br>由于常见词 ‘的’在文档中的出现频率会比较大，词频(term frequency)会错误地给 使用”的”次数更多的文档更大的权重分数，而没有给 “中国”、”蜜蜂”、”养殖”给予足够的重视。像”的”这样的常用词没有实际的意义，不是适合区分文档相关度的好的关键词，而少见词”中国”、”蜜蜂”、”养殖”可以更好地反映文档的相关程度。因此，引入逆文档频率(inverse document frequency)来给常见词分配更小的权重，给少见词分配更大的权重。<br>逆文档频率的计算方式如下: $$逆文档频率IDF = \frac{语料库中的文档数}{包含该词的文档数 + 1}$$ 一个词越常见，那么分母越大，逆文档频率越小。分母之所以要加1，是为了避免分母为0。</p>
+<p><strong>词频-逆文档频率(TF-IDF)</strong><br>TF-IDF定义为 词频和逆文档频率这两个统计量的乘积。$$TF-IDF = 词频TF \times 逆文档频率IDF$$ 一个词的tf-idf分数反映了这个词对文档的重要性，这个词在多大程度上反映了这篇文档的特征。<br>回到”中国的蜜蜂养殖”这个检索问题上，对于每个文档，分别计算”中国”、”的”、”蜜蜂”、”养殖”这四个词的tf-idf分数，并求和作为这篇文档总的分数。用同样的方法对所有包含这四个词的文档打分，并排序。这样就得到了query”中国的蜜蜂养殖”的查询结果。 TF-IDF这种词语加权方法 常常与<a href="https://spring-quan.github.io/2020/06/22/%E5%B8%83%E5%B0%94%E6%A3%80%E7%B4%A2/" target="_blank" rel="noopener">倒排索引</a>方法联合使用，来实现文本检索。</p>
 <blockquote>
 <p>参考链接：<br><a href="https://www.ruanyifeng.com/blog/2013/03/tf-idf.html" target="_blank" rel="noopener">TF-IDF与余弦相似性的应用（一）：自动提取关键词</a><br><a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf" target="_blank" rel="noopener">TF-IDF_wikipedia</a></p>
 </blockquote>
@@ -236,7 +236,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-07-14T08:55:34.000Z" itemprop="dateUpdated">2020-07-14 16:55:34</time>
+    最后更新时间：<time datetime="2020-07-14T09:14:11.000Z" itemprop="dateUpdated">2020-07-14 17:14:11</time>
 </span><br>
 
 
