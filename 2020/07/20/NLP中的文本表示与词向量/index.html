@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>NLP中的文本表示与词向量 | spring&#39;s Blog | 游龙当归海，海不迎我自来也。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="词向量,TextRank">
+    <meta name="description" content="TextRankTF-IDF算法从词的统计信息（词频、逆文档频率）出发，反映了一个词对一篇文档的重要程度。TFIDF并没有考虑到词与词之间的语义信息，而TextRank算法考虑到了词与词之间的语义关系，是一种基于图的关键词提取算法。另外，TFIDF需要一个语料库来计算词的逆文档频率，而TextRank算法脱离了语料库的背景，仅对单篇文档进行分析就可以提取关键词。TextRank算法的核心思想是：">
+<meta name="keywords" content="词向量,TextRank">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP中的文本表示与词向量">
+<meta property="og:url" content="http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/index.html">
+<meta property="og:site_name" content="spring&#39;s Blog">
+<meta property="og:description" content="TextRankTF-IDF算法从词的统计信息（词频、逆文档频率）出发，反映了一个词对一篇文档的重要程度。TFIDF并没有考虑到词与词之间的语义信息，而TextRank算法考虑到了词与词之间的语义关系，是一种基于图的关键词提取算法。另外，TFIDF需要一个语料库来计算词的逆文档频率，而TextRank算法脱离了语料库的背景，仅对单篇文档进行分析就可以提取关键词。TextRank算法的核心思想是：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/pagerank.jpg">
+<meta property="og:updated_time" content="2020-07-20T11:35:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP中的文本表示与词向量">
+<meta name="twitter:description" content="TextRankTF-IDF算法从词的统计信息（词频、逆文档频率）出发，反映了一个词对一篇文档的重要程度。TFIDF并没有考虑到词与词之间的语义信息，而TextRank算法考虑到了词与词之间的语义关系，是一种基于图的关键词提取算法。另外，TFIDF需要一个语料库来计算词的逆文档频率，而TextRank算法脱离了语料库的背景，仅对单篇文档进行分析就可以提取关键词。TextRank算法的核心思想是：">
+<meta name="twitter:image" content="http://yoursite.com/images/pagerank.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.jpg">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">spring</h5>
+          <a href="mailto:ccq1996@bupt.edu.cn" title="ccq1996@bupt.edu.cn" class="mail">ccq1996@bupt.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/spring-quan" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-users"></i>
+                友链
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/collection"  >
+                <i class="icon icon-lg icon-heart"></i>
+                收藏
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">NLP中的文本表示与词向量</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">NLP中的文本表示与词向量</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-20T09:23:05.000Z" itemprop="datePublished" class="page-time">
+  2020-07-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/nlp/">nlp</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#TextRank"><span class="post-toc-number">1.</span> <span class="post-toc-text">TextRank</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PageRank算法"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">PageRank算法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TextRank算法提取关键词"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">TextRank算法提取关键词</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#用textrank算法-TF-IDF算法-进行文本表示"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">用textrank算法/TF-IDF算法 进行文本表示</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-NLP中的文本表示与词向量"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">NLP中的文本表示与词向量</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-20 17:23:05" datetime="2020-07-20T09:23:05.000Z"  itemprop="datePublished">2020-07-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/nlp/">nlp</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <a id="more"></a>
+<h3 id="TextRank"><a href="#TextRank" class="headerlink" title="TextRank"></a>TextRank</h3><p>TF-IDF算法从词的统计信息（词频、逆文档频率）出发，反映了一个词对一篇文档的重要程度。TFIDF并没有考虑到词与词之间的语义信息，而TextRank算法考虑到了词与词之间的语义关系，是一种基于图的关键词提取算法。另外，TFIDF需要一个语料库来计算词的逆文档频率，而TextRank算法脱离了语料库的背景，仅对单篇文档进行分析就可以提取关键词。<br>TextRank算法的核心思想是：通过词之间的相邻共现关系来构建网络，然后用<a href="https://en.wikipedia.org/wiki/PageRank" target="_blank" rel="noopener">PageRank</a>算法来计算每个节点(词)的rank值，排序rank值即可得到关键词。</p>
+<h4 id="PageRank算法"><a href="#PageRank算法" class="headerlink" title="PageRank算法"></a>PageRank算法</h4><p>PageRank算法是Google创始人拉里$\cdot$佩奇和谢尔盖$\cdot$布林提出的一种网页排序的链接分析算法。基本思想有两条：</p>
+<ul>
+<li>链接数量。一个网页有越多的入链，也就是被越多的其他网页所链接，那么这个网页的重要性越高。</li>
+<li>链接质量。一个网页被一个越高权重的网页所链接，那么这个网页的重要性越高。</li>
+</ul>
+<p>如果把网页看作是一个个节点，把网页之间的链接看作节点之间的有向边，那么可以得到一个有向图$G = (V,E)$。计算节点$V_i$的PR(pagerank)值的迭代公式为：$$PR(V_i) = (1-d) + d \times \sum_{V_j \in In(V_i)}\frac{PR(V_j)}{|Out(V_j)|}$$ $PR(V_i)$表示节点$V_i$的pagerank值；$In(V_i)$表示节点$V_i$入链集合；$Out(V_i)$表示节点$V_i$的出链集合；$d$表示damping factor，阻尼系数，一般设置为0.85，便于快速收敛。</p>
+<div align="center"><img src="/images/pagerank.jpg" width="50%" height="50%"></div>  
+<div align="center"><font color="grey" size="2">Fig.1 PageRank算法示意图</font></div>
+网页之间的链接关系用图来表示很容易理解，接下来的问题是 如何把一篇文档构建成图呢？我们用窗口的概念来判断词与词之间的共现关系，设置一个长度为$K$的滑动窗口，当且仅当两个节点在长度为$K$的窗口内共现，则两个节点之间存在边。textrank构建的词图为无向图。textrank算法计算每个节点rank值的迭代公式为: $$WS(V_i) = (1-d) + d\times\sum_{V_j \in In(V_i)} \frac{w_{ij}}{\sum_{V_k\in In(V_j)}w_{jk}}WS(V_j)$$ 其中，$w_{ij}$表示节点$V_i$与节点$V_j$之间的共现次数，$\sum_{V_j\in In(V_j)}w_{jk}$表示节点$V_j$总的共现次数。与pagerank算法相比，textrank算法多了权重项，用来表示两个节点之间的边有着不同的重要程度。
+
+<h4 id="TextRank算法提取关键词"><a href="#TextRank算法提取关键词" class="headerlink" title="TextRank算法提取关键词"></a>TextRank算法提取关键词</h4><p>（1）文档$T$由多个句子组成$T = \lbrace{S_1, S_2, …, S_m}\rbrace$，对每个句子进行分词和词性标注，过滤停用词，只保留特定词性的词语（比如：名词、形容词、动词），第$i$个句子可表示为$S_i = \lbrace{w_{i,1}, w_{i,2}, …, w_{i,n_i}}\rbrace$。<br>（2）构建词图$G = (V,E)$，其中$V$为节点集合。对于每个句子$S_i = \lbrace{w_{i,1}, w_{i,2}, …, w_{i,n_i}}\rbrace$，给定一个长度为$K$的滑动窗口，当且仅当两个词在滑动窗口内共现时，两个词之间存在边。两个词之间边的权重为两个词的共现次数。<br>（3）随机初始化每个节点的rank值。<br>（4）根据textrank算法的迭代公式，迭代计算每个节点的rank值，直至收敛。<br>（5）按照节点的rank值倒序排列，排序靠前的候选词可以作为关键词。</p>
+<h4 id="用textrank算法-TF-IDF算法-进行文本表示"><a href="#用textrank算法-TF-IDF算法-进行文本表示" class="headerlink" title="用textrank算法/TF-IDF算法 进行文本表示"></a>用textrank算法/TF-IDF算法 进行文本表示</h4><p>我们可以将 文档中关键词的textrank值（或 tfidf值）作为向量来表示文本。得到两个文本的向量表示之后，就可以用余弦相似度等度量方法来计算两个文本之间的相似度。计算两个文本之间相似度的步骤如下：<br>（1）使用textrank算法（或 TF-IDF算法）来提取两个文本的关键词。<br>（2）将两个文本的关键词合并起来，计算每个文本中关键词的textrank值。<br>（3）生成两个文本各自的textrank值 向量表示。<br>（4）计算两个文本的余弦相似度，值越大，表示这两个文本越相似。</p>
+<blockquote>
+<p>参考链接：<br><a href="https://www.cnblogs.com/rubinorth/p/5799848.html" target="_blank" rel="noopener">PageRank算法–从原理到实现</a><br><a href="https://www.cnblogs.com/en-heng/p/6626210.html" target="_blank" rel="noopener">关键词提取算法TextRank</a><br><a href="https://www.cnblogs.com/Micang/p/10366954.html" target="_blank" rel="noopener">关键字提取算法TF-IDF和TextRank（python3）</a><br><a href="https://zhuanlan.zhihu.com/p/126733456" target="_blank" rel="noopener">关键词提取和摘要算法TextRank详解与实战</a></p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-07-20T11:35:00.000Z" itemprop="dateUpdated">2020-07-20 19:35:00</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="spring">
+            spring
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TextRank/">TextRank</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/词向量/">词向量</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&title=《NLP中的文本表示与词向量》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&title=《NLP中的文本表示与词向量》 — spring's Blog&source=游龙当归海，海不迎我自来也。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NLP中的文本表示与词向量》 — spring's Blog&url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/07/13/文本相似度的计算方法/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">文本相似度的计算方法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'true';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "",
+            appKey: "",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢支持~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/images/wechatpay.jpg" data-alipay="/images/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>spring &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&title=《NLP中的文本表示与词向量》 — spring's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&title=《NLP中的文本表示与词向量》 — spring's Blog&source=游龙当归海，海不迎我自来也。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NLP中的文本表示与词向量》 — spring's Blog&url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'spring's Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'spring's Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

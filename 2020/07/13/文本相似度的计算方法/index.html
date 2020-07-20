@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="spring&#39;s Blog">
 <meta property="og:description" content="在nlp任务中，我们常常需要判断两个文本的相似程度，计算这两个文本的相似度。比如，在文本聚类任务中，需要将相似度高的文本聚到同一个簇；在文本预处理过程中，基于文本相似度把重复的文本过滤掉；在检索式对话系统中，通过计算用户的query与数据库中的query的相似度，来选择回复。文本相似度计算 有2个关键组件：文本表示模型 和 相似度度量方法。文本表示模型 负责将文本表示为可计算的数值向量，也就是提供">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-14T09:14:11.000Z">
+<meta property="og:updated_time" content="2020-07-15T06:16:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="文本相似度的计算方法">
 <meta name="twitter:description" content="在nlp任务中，我们常常需要判断两个文本的相似程度，计算这两个文本的相似度。比如，在文本聚类任务中，需要将相似度高的文本聚到同一个簇；在文本预处理过程中，基于文本相似度把重复的文本过滤掉；在检索式对话系统中，通过计算用户的query与数据库中的query的相似度，来选择回复。文本相似度计算 有2个关键组件：文本表示模型 和 相似度度量方法。文本表示模型 负责将文本表示为可计算的数值向量，也就是提供">
@@ -181,7 +181,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#特征构建方式"><span class="post-toc-number">1.</span> <span class="post-toc-text">特征构建方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TF-IDF"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">TF-IDF</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#距离的度量方式"><span class="post-toc-number">2.</span> <span class="post-toc-text">距离的度量方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#jaccard相似度"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">jaccard相似度</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#特征构建方式"><span class="post-toc-number">1.</span> <span class="post-toc-text">特征构建方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TF-IDF"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">TF-IDF</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#距离的度量方式"><span class="post-toc-number">2.</span> <span class="post-toc-text">距离的度量方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#闵可夫斯基距离"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">闵可夫斯基距离</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#jaccard相似度"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">jaccard相似度</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
         </nav>
     </aside>
 
@@ -221,12 +221,16 @@
 <blockquote>
 <p>参考链接：<br><a href="https://www.ruanyifeng.com/blog/2013/03/tf-idf.html" target="_blank" rel="noopener">TF-IDF与余弦相似性的应用（一）：自动提取关键词</a><br><a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf" target="_blank" rel="noopener">TF-IDF_wikipedia</a></p>
 </blockquote>
-<h3 id="距离的度量方式"><a href="#距离的度量方式" class="headerlink" title="距离的度量方式"></a>距离的度量方式</h3><h4 id="jaccard相似度"><a href="#jaccard相似度" class="headerlink" title="jaccard相似度"></a>jaccard相似度</h4><p>jaccard相似度系数(jaccard similarity coefficient)，也称为并交比(intersection over union)，可以用来衡量两个有限样本集合之间的相似度。jaccard相似度定义为 两个集合交集大小 与并集大小的比例: $$J(A,B) = \frac{|A \cap B|}{|A \cup B|} = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}$$<br>jaccard相似度的思想很简单：如果两个集合共有的元素越多，那么这两个集合就越相似。<br>如果集合$A$和集合$B$完全重合，则$J(A,B) = 1$。jaccard相似度的取值范围是: $0 \le J(A,B) \le 1$。<br>jaccard距离(jaccard distance)用于衡量样本集之间的不相似度，定义为1减去jaccard相似度。$$d_{J}(A,B) = 1 - J(A,B) = \frac{|A \cup B| - |A \cap B|}{|A \cup B|}$$<br>与欧式距离、余弦相似度等距离度量方式相比，jaccard相似度的优点在于：不需要把文本表示成数值化的向量表示，就可以计算两个文本之间的相似度。<br>在文本聚类任务中，可以先通过jaccard相似度来计算数据集中文本之间的相似度，再用<a href="https://github.com/networkx/networkx" target="_blank" rel="noopener">networkx</a>来构建无向图；在无向图的基础上可以用<a href="https://github.com/taynaud/python-louvain" target="_blank" rel="noopener">louvain算法</a>或<a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html" target="_blank" rel="noopener">DBSCAN算法</a>来对文本进行聚类。 需要注意的是，<code>louvain算法</code>的无向图边的权重应该是 文本之间的jaccard相似度，来计算模块度。而<code>DBSCAN算法</code>的无向图边的权重应该是 文本之间的jaccard距离，来计算$\epsilon$-邻域内样本点的数量。</p>
+<h3 id="距离的度量方式"><a href="#距离的度量方式" class="headerlink" title="距离的度量方式"></a>距离的度量方式</h3><h4 id="闵可夫斯基距离"><a href="#闵可夫斯基距离" class="headerlink" title="闵可夫斯基距离"></a>闵可夫斯基距离</h4><p>闵可夫斯基距离(<a href="https://en.wikipedia.org/wiki/Minkowski_distance" target="_blank" rel="noopener">Minkowski distance</a>)是衡量数值点之间距离的常见方法。闵可夫斯基距离可以看作是曼哈顿距离和欧式距离的推广。<br>假设n维空间中的两个数值点：$X= {x_1, x_2, …, x_n}, Y= {y_1, y_2, …, y_n}$，那么闵可夫斯基距离的定义为: $$D_{p}(X,Y) = (\sum_{i=1}^{n}|x_i - y_i|^p)^{\frac{1}{p}}$$ 当$p = 2$时，闵可夫斯基距离转化为<strong>欧式距离</strong>(<a href="https://en.wikipedia.org/wiki/Euclidean_distance" target="_blank" rel="noopener">Euclidean_distance</a>): $$\sqrt{\sum_{i=1}^{n}(x_i - y_i)^2}$$ 当$p = 1$时，闵可夫斯基距离转化为<strong>曼哈顿距离</strong>(<a href="https://en.wikipedia.org/wiki/Manhattan_distance" target="_blank" rel="noopener">Manhattan_distance</a>): $$\sum_{i=1}^{n}|x_i - y_j|$$ 当$p \to \infty$时，闵可夫斯基距离转化为<strong>切比雪夫距离</strong>(<a href="https://en.wikipedia.org/wiki/Chebyshev_distance" target="_blank" rel="noopener">Chebyshev_distance</a>): $$lim_{p \to \infty}(\sum_{i=1}^{n}|x_i - y_i|^p)^{\frac{1}{p}} = max_{i=1}^{n}|x_i - y_i|$$</p>
+<blockquote>
+<p>参考链接：<br><a href="https://www.luogu.com.cn/blog/xuxing/Distance-Algorithm" target="_blank" rel="noopener">常用距离算法详解</a><br><a href="https://oi-wiki.org/geometry/distance/" target="_blank" rel="noopener">计算几何-距离</a></p>
+</blockquote>
+<h4 id="jaccard相似度"><a href="#jaccard相似度" class="headerlink" title="jaccard相似度"></a>jaccard相似度</h4><p>jaccard相似度系数(jaccard similarity coefficient)，也称为并交比(intersection over union)，可以用来衡量两个有限样本集合之间的相似度。jaccard相似度定义为 两个集合交集大小 与并集大小的比例: $$J(A,B) = \frac{|A \cap B|}{|A \cup B|} = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}$$<br>jaccard相似度的思想很简单：如果两个集合共有的元素越多，那么这两个集合就越相似。<br>如果集合$A$和集合$B$完全重合，则$J(A,B) = 1$。jaccard相似度的取值范围是: $0 \le J(A,B) \le 1$。<br>jaccard距离(jaccard distance)用于衡量样本集之间的不相似度，定义为1减去jaccard相似度。$$d_{J}(A,B) = 1 - J(A,B) = \frac{|A \cup B| - |A \cap B|}{|A \cup B|}$$<br>与欧式距离、余弦相似度等距离度量方式相比，jaccard相似度的优点在于：不需要把文本表示成数值化的向量表示，就可以计算两个文本之间的相似度。<br>在文本聚类任务中，可以先通过jaccard相似度来计算数据集中文本之间的相似度，再用<a href="https://github.com/networkx/networkx" target="_blank" rel="noopener">networkx</a>来构建无向图；在无向图的基础上可以用<a href="https://github.com/taynaud/python-louvain" target="_blank" rel="noopener">louvain算法</a>或<a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html" target="_blank" rel="noopener">DBSCAN算法</a>来对文本进行聚类。 需要注意的是，<code>louvain算法</code>的无向图边的权重应该是 文本之间的jaccard相似度，来计算模块度。而<code>DBSCAN算法</code>的无向图边的权重应该是 文本之间的jaccard距离，来计算$\epsilon$-邻域内样本点的数量。</p>
 <blockquote>
 <p>参考链接：<br><a href="https://zh.wikipedia.org/wiki/%E9%9B%85%E5%8D%A1%E5%B0%94%E6%8C%87%E6%95%B0" target="_blank" rel="noopener">wikipedia-雅卡尔系数</a></p>
 </blockquote>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/88938220" target="_blank" rel="noopener">常见文本相似度计算方法简介–哈工大李鹏宇</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/88938220" target="_blank" rel="noopener">常见文本相似度计算方法简介–哈工大李鹏宇</a> </li>
 </ul>
 
         </div>
@@ -236,7 +240,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-07-14T09:14:11.000Z" itemprop="dateUpdated">2020-07-14 17:14:11</time>
+    最后更新时间：<time datetime="2020-07-15T06:16:21.000Z" itemprop="dateUpdated">2020-07-15 14:16:21</time>
 </span><br>
 
 
@@ -315,7 +319,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/07/20/NLP中的文本表示与词向量/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">NLP中的文本表示与词向量</h4>
+      </a>
+    </div>
   
 
   
