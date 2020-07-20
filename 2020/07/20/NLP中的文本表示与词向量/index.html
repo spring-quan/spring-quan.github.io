@@ -30,7 +30,8 @@
 <meta property="og:description" content="TextRankTF-IDF算法从词的统计信息（词频、逆文档频率）出发，反映了一个词对一篇文档的重要程度。TFIDF并没有考虑到词与词之间的语义信息，而TextRank算法考虑到了词与词之间的语义关系，是一种基于图的关键词提取算法。另外，TFIDF需要一个语料库来计算词的逆文档频率，而TextRank算法脱离了语料库的背景，仅对单篇文档进行分析就可以提取关键词。TextRank算法的核心思想是：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/pagerank.jpg">
-<meta property="og:updated_time" content="2020-07-20T11:35:00.000Z">
+<meta property="og:image" content="http://yoursite.com/images/textrank.png">
+<meta property="og:updated_time" content="2020-07-20T11:43:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP中的文本表示与词向量">
 <meta name="twitter:description" content="TextRankTF-IDF算法从词的统计信息（词频、逆文档频率）出发，反映了一个词对一篇文档的重要程度。TFIDF并没有考虑到词与词之间的语义信息，而TextRank算法考虑到了词与词之间的语义关系，是一种基于图的关键词提取算法。另外，TFIDF需要一个语料库来计算词的逆文档频率，而TextRank算法脱离了语料库的背景，仅对单篇文档进行分析就可以提取关键词。TextRank算法的核心思想是：">
@@ -218,10 +219,13 @@
 </ul>
 <p>如果把网页看作是一个个节点，把网页之间的链接看作节点之间的有向边，那么可以得到一个有向图$G = (V,E)$。计算节点$V_i$的PR(pagerank)值的迭代公式为：$$PR(V_i) = (1-d) + d \times \sum_{V_j \in In(V_i)}\frac{PR(V_j)}{|Out(V_j)|}$$ $PR(V_i)$表示节点$V_i$的pagerank值；$In(V_i)$表示节点$V_i$入链集合；$Out(V_i)$表示节点$V_i$的出链集合；$d$表示damping factor，阻尼系数，一般设置为0.85，便于快速收敛。</p>
 <div align="center"><img src="/images/pagerank.jpg" width="50%" height="50%"></div>  
-<div align="center"><font color="grey" size="2">Fig.1 PageRank算法示意图</font></div>
+<div align="center"><font color="grey" size="2">Fig.1 PageRank算法示意图 <br> src: https://en.wikipedia.org/wiki/PageRank</font></div>
 网页之间的链接关系用图来表示很容易理解，接下来的问题是 如何把一篇文档构建成图呢？我们用窗口的概念来判断词与词之间的共现关系，设置一个长度为$K$的滑动窗口，当且仅当两个节点在长度为$K$的窗口内共现，则两个节点之间存在边。textrank构建的词图为无向图。textrank算法计算每个节点rank值的迭代公式为: $$WS(V_i) = (1-d) + d\times\sum_{V_j \in In(V_i)} \frac{w_{ij}}{\sum_{V_k\in In(V_j)}w_{jk}}WS(V_j)$$ 其中，$w_{ij}$表示节点$V_i$与节点$V_j$之间的共现次数，$\sum_{V_j\in In(V_j)}w_{jk}$表示节点$V_j$总的共现次数。与pagerank算法相比，textrank算法多了权重项，用来表示两个节点之间的边有着不同的重要程度。
 
 <h4 id="TextRank算法提取关键词"><a href="#TextRank算法提取关键词" class="headerlink" title="TextRank算法提取关键词"></a>TextRank算法提取关键词</h4><p>（1）文档$T$由多个句子组成$T = \lbrace{S_1, S_2, …, S_m}\rbrace$，对每个句子进行分词和词性标注，过滤停用词，只保留特定词性的词语（比如：名词、形容词、动词），第$i$个句子可表示为$S_i = \lbrace{w_{i,1}, w_{i,2}, …, w_{i,n_i}}\rbrace$。<br>（2）构建词图$G = (V,E)$，其中$V$为节点集合。对于每个句子$S_i = \lbrace{w_{i,1}, w_{i,2}, …, w_{i,n_i}}\rbrace$，给定一个长度为$K$的滑动窗口，当且仅当两个词在滑动窗口内共现时，两个词之间存在边。两个词之间边的权重为两个词的共现次数。<br>（3）随机初始化每个节点的rank值。<br>（4）根据textrank算法的迭代公式，迭代计算每个节点的rank值，直至收敛。<br>（5）按照节点的rank值倒序排列，排序靠前的候选词可以作为关键词。</p>
+<div align="center"><img src="/images/textrank.png" width="80%" height="80%"></div>  
+<div align="center"><font color="grey" size="2">Fig.2 TextRank算法的词图 <br> src: https://www.cnblogs.com/en-heng/p/6626210.html</font></div>
+
 <h4 id="用textrank算法-TF-IDF算法-进行文本表示"><a href="#用textrank算法-TF-IDF算法-进行文本表示" class="headerlink" title="用textrank算法/TF-IDF算法 进行文本表示"></a>用textrank算法/TF-IDF算法 进行文本表示</h4><p>我们可以将 文档中关键词的textrank值（或 tfidf值）作为向量来表示文本。得到两个文本的向量表示之后，就可以用余弦相似度等度量方法来计算两个文本之间的相似度。计算两个文本之间相似度的步骤如下：<br>（1）使用textrank算法（或 TF-IDF算法）来提取两个文本的关键词。<br>（2）将两个文本的关键词合并起来，计算每个文本中关键词的textrank值。<br>（3）生成两个文本各自的textrank值 向量表示。<br>（4）计算两个文本的余弦相似度，值越大，表示这两个文本越相似。</p>
 <blockquote>
 <p>参考链接：<br><a href="https://www.cnblogs.com/rubinorth/p/5799848.html" target="_blank" rel="noopener">PageRank算法–从原理到实现</a><br><a href="https://www.cnblogs.com/en-heng/p/6626210.html" target="_blank" rel="noopener">关键词提取算法TextRank</a><br><a href="https://www.cnblogs.com/Micang/p/10366954.html" target="_blank" rel="noopener">关键字提取算法TF-IDF和TextRank（python3）</a><br><a href="https://zhuanlan.zhihu.com/p/126733456" target="_blank" rel="noopener">关键词提取和摘要算法TextRank详解与实战</a></p>
@@ -234,7 +238,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-07-20T11:35:00.000Z" itemprop="dateUpdated">2020-07-20 19:35:00</time>
+    最后更新时间：<time datetime="2020-07-20T11:43:25.000Z" itemprop="dateUpdated">2020-07-20 19:43:25</time>
 </span><br>
 
 
