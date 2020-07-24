@@ -20,9 +20,9 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="LDA,主题模型">
+    <meta name="keywords" content="主题模型,PLSA,LDA,Unigram Model">
     <meta name="description" content="LDA(Latent Dirichlet Allocation, 隐含狄利克雷分布)是一种主题模型，将文档集中每篇文档的主题以概率分布的形式给出。LDA模型是一种词袋(bag-of-words)模型，也就是把一篇文档看作是一组词的集合，而不考虑词与词之间的先后顺序关系。">
-<meta name="keywords" content="LDA,主题模型">
+<meta name="keywords" content="主题模型,PLSA,LDA,Unigram Model">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LDA主题模型">
 <meta property="og:url" content="http://yoursite.com/2020/07/21/LDA主题模型/index.html">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://yoursite.com/images/LDA_4.png">
 <meta property="og:image" content="http://yoursite.com/images/LDA_2.png">
 <meta property="og:image" content="http://yoursite.com/images/LDA_3.png">
-<meta property="og:updated_time" content="2020-07-24T01:57:04.000Z">
+<meta property="og:updated_time" content="2020-07-24T02:01:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LDA主题模型">
 <meta name="twitter:description" content="LDA(Latent Dirichlet Allocation, 隐含狄利克雷分布)是一种主题模型，将文档集中每篇文档的主题以概率分布的形式给出。LDA模型是一种词袋(bag-of-words)模型，也就是把一篇文档看作是一组词的集合，而不考虑词与词之间的先后顺序关系。">
@@ -278,7 +278,7 @@
 <div align="center"><img src="/images/plsa.png" width="50%" height="50%"></div>  
 <div align="center"><font color="grey" size="2">Fig.5 PLSA模型的文本生成过程. src: LDA数学八卦</font></div>
 
-<h6 id="参数估计-2"><a href="#参数估计-2" class="headerlink" title="参数估计"></a>参数估计</h6><p>PLSA模型有两类参数，也就是doc-topic骰子每个面的概率$p(topic_k|doc_i)$，和$K$个topic-word骰子每个面的概率$p(word_j|topic_k)$。对于包含$M$篇文档的语料$C = ({d_1, d_2, …, d_M})$，每篇文档对应一个特定的doc-topic骰子，所有对应的骰子记为$(\vec{\theta_1}, \vec{\theta_2}, …, \vec{\theta_M})$; 游戏中总共有$K$个topic-word骰子，记为$\vec{varphi_i}, \vec{\varphi_2}, …, \vec{\varphi_K}$。</p>
+<h6 id="参数估计-2"><a href="#参数估计-2" class="headerlink" title="参数估计"></a>参数估计</h6><p>PLSA模型有两类参数，也就是doc-topic骰子每个面的概率$p(topic_k|doc_i)$，和$K$个topic-word骰子每个面的概率$p(word_j|topic_k)$。对于包含$M$篇文档的语料$C = ({d_1, d_2, …, d_M})$，每篇文档对应一个特定的doc-topic骰子，所有对应的骰子记为$(\vec{\theta_1}, \vec{\theta_2}, …, \vec{\theta_M})$; 游戏中总共有$K$个topic-word骰子，记为$(\vec{\varphi_1}, \vec{\varphi_2}, …, \vec{\varphi_K})$。</p>
 <p>可以使用著名的<a href="https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm" target="_blank" rel="noopener">EM算法</a>来估计PLSA模型的参数。参数估计的求解参见：<a href="https://blog.csdn.net/v_july_v/article/details/41209515#t15" target="_blank" rel="noopener">通俗理解LDA主题模型-CSDN</a><br>估计模型参数的过程，实际上就是：根据文档中的词序列来反推其主题分布的过程。doc-topic骰子每个面的概率$p(topic_k|doc_i)$表征了文档的主题分布，topic-word骰子每个面的概率$p(word_j|topic_k)$表征了主题的词分布（PLSA模型认为 topic是在词汇上的概率分布）。</p>
 <h4 id="LDA主题模型"><a href="#LDA主题模型" class="headerlink" title="LDA主题模型"></a>LDA主题模型</h4><p>对于上述的PLSA模型，doc-topic骰子$\theta_m$和topic-word骰子$\varphi_k$都是模型中的参数，贝叶斯学派认为 参数都是随机变量。类似于Unigram Model的贝叶斯改造，在两个骰子参数前加上先验分布，从而将PLSA的抛骰子游戏过程改造成一个贝叶斯的游戏过程。由于$\varphi_k$和$\theta_m$都对应多项分布，因此先验分布采用Dirichlet分布，于是就得到了LDA(Latent Dirichlet Allocation)模型。总的来说，LDA模型是对PLSA模型的贝叶斯版本。</p>
 <h5 id="文本生成-3"><a href="#文本生成-3" class="headerlink" title="文本生成"></a>文本生成</h5><p>在LDA模型中，上帝是按照以下的规则来玩文档生成的游戏的：</p>
@@ -334,7 +334,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-07-24T01:57:04.000Z" itemprop="dateUpdated">2020-07-24 09:57:04</time>
+    最后更新时间：<time datetime="2020-07-24T02:01:48.000Z" itemprop="dateUpdated">2020-07-24 10:01:48</time>
 </span><br>
 
 
@@ -358,7 +358,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主题模型/">主题模型</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PLSA/">PLSA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unigram-Model/">Unigram Model</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主题模型/">主题模型</a></li></ul>
 
 
             

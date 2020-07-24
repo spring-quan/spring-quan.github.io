@@ -210,7 +210,7 @@
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主题模型/">主题模型</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PLSA/">PLSA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unigram-Model/">Unigram Model</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主题模型/">主题模型</a></li></ul>
 
     </div>
     
@@ -247,9 +247,15 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        
-one-hot向量表示先构建一个词汇表，词所在位置的值为1，其他值都是0。one-hot向量表示有两个缺点:（1）维度灾难。one-hot向量表示的维度等于词汇表的大小，且向量过于稀疏而浪费内存。（2）语义鸿沟。词汇表中任意两个词的one-hot向量表示都是正交的，不能通过余弦相似度方法来衡量两个词之间的相似性。
-TF-IDFTF-IDF计算一个词对与一篇文档的重要程度。如果一个词在一篇文...
+        文本表示是将文本中的字词进行数值化或向量化表示。文本表示是各种NLP任务的基础。如何将一篇文本用数学语言来表示呢？下面对不同的文本表示方法做一个归纳：
+
+离散式表示(Discrete Representation):
+one-hot向量表示。
+tf-idf
+
+
+分布式表示(Distributed Representation):
+
     
 
         <a href="/2020/07/20/NLP中的文本表示与词向量/" class="post-more waves-effect waves-button">

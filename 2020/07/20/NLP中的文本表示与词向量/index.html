@@ -21,20 +21,20 @@
     
     
     <meta name="keywords" content="词向量,TextRank">
-    <meta name="description" content="one-hot向量表示先构建一个词汇表，词所在位置的值为1，其他值都是0。one-hot向量表示有两个缺点:（1）维度灾难。one-hot向量表示的维度等于词汇表的大小，且向量过于稀疏而浪费内存。（2）语义鸿沟。词汇表中任意两个词的one-hot向量表示都是正交的，不能通过余弦相似度方法来衡量两个词之间的相似性。 TF-IDFTF-IDF计算一个词对与一篇文档的重要程度。如果一个词在一篇文档中出">
+    <meta name="description" content="文本表示是将文本中的字词进行数值化或向量化表示。文本表示是各种NLP任务的基础。如何将一篇文本用数学语言来表示呢？下面对不同的文本表示方法做一个归纳：  离散式表示(Discrete Representation): one-hot向量表示。 tf-idf   分布式表示(Distributed Representation):">
 <meta name="keywords" content="词向量,TextRank">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP中的文本表示与词向量">
 <meta property="og:url" content="http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/index.html">
 <meta property="og:site_name" content="spring&#39;s Blog">
-<meta property="og:description" content="one-hot向量表示先构建一个词汇表，词所在位置的值为1，其他值都是0。one-hot向量表示有两个缺点:（1）维度灾难。one-hot向量表示的维度等于词汇表的大小，且向量过于稀疏而浪费内存。（2）语义鸿沟。词汇表中任意两个词的one-hot向量表示都是正交的，不能通过余弦相似度方法来衡量两个词之间的相似性。 TF-IDFTF-IDF计算一个词对与一篇文档的重要程度。如果一个词在一篇文档中出">
+<meta property="og:description" content="文本表示是将文本中的字词进行数值化或向量化表示。文本表示是各种NLP任务的基础。如何将一篇文本用数学语言来表示呢？下面对不同的文本表示方法做一个归纳：  离散式表示(Discrete Representation): one-hot向量表示。 tf-idf   分布式表示(Distributed Representation):">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/pagerank.jpg">
 <meta property="og:image" content="http://yoursite.com/images/textrank.png">
-<meta property="og:updated_time" content="2020-07-20T12:03:09.000Z">
+<meta property="og:updated_time" content="2020-07-24T08:59:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP中的文本表示与词向量">
-<meta name="twitter:description" content="one-hot向量表示先构建一个词汇表，词所在位置的值为1，其他值都是0。one-hot向量表示有两个缺点:（1）维度灾难。one-hot向量表示的维度等于词汇表的大小，且向量过于稀疏而浪费内存。（2）语义鸿沟。词汇表中任意两个词的one-hot向量表示都是正交的，不能通过余弦相似度方法来衡量两个词之间的相似性。 TF-IDFTF-IDF计算一个词对与一篇文档的重要程度。如果一个词在一篇文档中出">
+<meta name="twitter:description" content="文本表示是将文本中的字词进行数值化或向量化表示。文本表示是各种NLP任务的基础。如何将一篇文本用数学语言来表示呢？下面对不同的文本表示方法做一个归纳：  离散式表示(Discrete Representation): one-hot向量表示。 tf-idf   分布式表示(Distributed Representation):">
 <meta name="twitter:image" content="http://yoursite.com/images/pagerank.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="spring&#39;s Blog" href="/atom.xml">
@@ -210,7 +210,16 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <a id="more"></a>
+            <p>文本表示是将文本中的字词进行数值化或向量化表示。文本表示是各种NLP任务的基础。如何将一篇文本用数学语言来表示呢？下面对不同的文本表示方法做一个归纳：</p>
+<ul>
+<li>离散式表示(Discrete Representation):<ol>
+<li><a href="#one-hot向量表示">one-hot向量表示</a>。</li>
+<li>tf-idf</li>
+</ol>
+</li>
+<li>分布式表示(Distributed Representation):</li>
+</ul>
+<a id="more"></a>
 <h4 id="one-hot向量表示"><a href="#one-hot向量表示" class="headerlink" title="one-hot向量表示"></a>one-hot向量表示</h4><p>先构建一个词汇表，词所在位置的值为1，其他值都是0。one-hot向量表示有两个缺点:<br>（1）维度灾难。one-hot向量表示的维度等于词汇表的大小，且向量过于稀疏而浪费内存。<br>（2）语义鸿沟。词汇表中任意两个词的one-hot向量表示都是正交的，不能通过余弦相似度方法来衡量两个词之间的相似性。</p>
 <h4 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h4><p>TF-IDF计算一个词对与一篇文档的重要程度。如果一个词在一篇文档中出现的次数越多，那么这个词对这篇文档的重要性越大。$$TF词频 = \frac{一个词在文档中出现的次数}{这篇文档的总词数}$$另一方面，如果这个词出现在越多的文档中，说明这个词越常见，这个词包含的特征越少。$$IDF逆文档频率 = log({\frac{语料库中文档的数量}{包含这个词的文档数 + 1}})$$综合考虑这两个方面，将TF与IDF相乘作为这个词的tfidf值: $$TF-IDF = 词频TF \times 逆文档频率IDF$$<br>参考链接：<a href="https://spring-quan.github.io/2020/07/13/%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/#TF-IDF" target="_blank" rel="noopener">TF-IDF算法</a></p>
 <h4 id="TextRank"><a href="#TextRank" class="headerlink" title="TextRank"></a>TextRank</h4><p>TF-IDF算法从词的统计信息（词频、逆文档频率）出发，反映了一个词对一篇文档的重要程度。TFIDF并没有考虑到词与词之间的语义信息，而TextRank算法考虑到了词与词之间的语义关系，是一种基于图的关键词提取算法。另外，TFIDF需要一个语料库来计算词的逆文档频率，而TextRank算法脱离了语料库的背景，仅对单篇文档进行分析就可以提取关键词。<br>TextRank算法的核心思想是：通过词之间的相邻共现关系来构建网络，然后用<a href="https://en.wikipedia.org/wiki/PageRank" target="_blank" rel="noopener">PageRank</a>算法来计算每个节点(词)的rank值，排序rank值即可得到关键词。</p>
@@ -240,7 +249,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-07-20T12:03:09.000Z" itemprop="dateUpdated">2020-07-20 20:03:09</time>
+    最后更新时间：<time datetime="2020-07-24T08:59:34.000Z" itemprop="dateUpdated">2020-07-24 16:59:34</time>
 </span><br>
 
 
@@ -284,7 +293,9 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&title=《NLP中的文本表示与词向量》 — spring's Blog&source=游龙当归海，海不迎我自来也。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&title=《NLP中的文本表示与词向量》 — spring's Blog&source=文本表示是将文本中的字词进行数值化或向量化表示。文本表示是各种NLP任务的基础。如何将一篇文本用数学语言来表示呢？下面对不同的文本表示方法做一个归纳：
+
+..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -476,7 +487,9 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&title=《NLP中的文本表示与词向量》 — spring's Blog&source=游龙当归海，海不迎我自来也。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/20/NLP中的文本表示与词向量/&title=《NLP中的文本表示与词向量》 — spring's Blog&source=文本表示是将文本中的字词进行数值化或向量化表示。文本表示是各种NLP任务的基础。如何将一篇文本用数学语言来表示呢？下面对不同的文本表示方法做一个归纳：
+
+..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
